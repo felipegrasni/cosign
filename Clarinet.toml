@@ -1,0 +1,10 @@
+[project]
+name = "cosign"
+description = "Mutual onchain collaboration cards."
+authors = ["CoSign"]
+telemetry = false
+
+[contracts.cosign-registry]
+path = "stacks/contracts/cosign-registry.clar"
+clarity_version = 4
+epoch = "latest"

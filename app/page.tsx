@@ -1,0 +1,26 @@
+import Link from "next/link";
+import { ArrowRight, Blocks, Check, Eye, Link2, LockKeyhole, MessageCircle, QrCode, ShieldCheck, Sparkles, WalletCards } from "lucide-react";
+import { BrandMark } from "@/components/brand-mark";
+import { CategoryIcon } from "@/components/category-icon";
+import { LandingDemo } from "@/components/landing-demo";
+import { kinds } from "@/lib/cosign";
+
+export default function HomePage() {
+  return (
+    <main className="landing-page">
+      <header className="landing-nav"><Link href="/" className="landing-brand"><BrandMark /><strong>CoSign</strong></Link><nav><a href="#how">How it works</a><a href="#public">What is public</a><Link className="button compact" href="/app">Open app <ArrowRight /></Link></nav></header>
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hero-copy"><span className="eyebrow"><Sparkles /> Two wallets · one shared receipt</span><h1 id="hero-title">Make the moment <em>mutual.</em></h1><p>Write a small card for something you shared. Pass the link. When the other wallet co-signs, the memory belongs to both of you.</p><div className="hero-actions"><Link className="button large" href="/app">Create a CoSign <ArrowRight /></Link><a className="text-link" href="#preview">Try the preview <span>↓</span></a></div><div className="hero-foot"><span><Check /> No account</span><span><Check /> No database</span><span><Check /> Just your wallets</span></div></div>
+        <div className="hero-visual" id="preview"><span className="orbit orbit-one" /><span className="orbit orbit-two" /><LandingDemo /></div>
+      </section>
+      <section className="trust-strip" aria-label="CoSign highlights"><span><WalletCards /> Two wallets</span><span><ShieldCheck /> Public receipt</span><span><LockKeyhole /> No account</span><span><Blocks /> Celo + Stacks</span></section>
+      <section className="how-section" id="how"><header className="section-title"><span className="eyebrow">A mutual record in three moves</span><h2>Small enough to use.<br />Meaningful enough to keep.</h2></header><div className="step-list"><article><span>01</span><MessageCircle /><h3>Write the card</h3><p>Choose what happened and capture the moment in a few honest words.</p></article><article><span>02</span><QrCode /><h3>Pass the signal</h3><p>Share one clean link or let the other person scan your QR code.</p></article><article><span>03</span><Link2 /><h3>Make it mutual</h3><p>The second wallet co-signs. Both addresses now share the same receipt.</p></article></div></section>
+      <section className="use-section"><div><span className="eyebrow">Made for real collaboration</span><h2>Not a score.<br />A shared signal.</h2><p>Use CoSign when the story belongs to more than one person.</p></div><div className="use-grid">{kinds.map((item) => <article key={item.id}><span><CategoryIcon kind={item.id} size={24} /></span><h3>{item.label}</h3><p>{item.description}</p></article>)}</div></section>
+      <section className="demo-section"><div className="demo-copy-large"><span className="eyebrow">Try the whole idea</span><h2>One tap changes the card.</h2><p>The preview is simulated and never connects a wallet. Live app routes only show data read from their configured contracts.</p></div><LandingDemo compact /></section>
+      <section className="networks-section"><header className="section-title"><span className="eyebrow">Choose your signal path</span><h2>Same promise.<br />Two networks.</h2></header><div className="network-panels"><article className="celo"><span>C</span><div><small>Mobile first</small><h3>Celo</h3><p>Open inside MiniPay and move from invitation to co-signature without another account.</p><Link href="/app/celo">Open Celo <ArrowRight /></Link></div></article><article className="stacks"><span>S</span><div><small>Bitcoin secured</small><h3>Stacks</h3><p>Connect your Stacks wallet and keep the same simple, public collaboration receipt.</p><Link href="/app/stacks">Open Stacks <ArrowRight /></Link></div></article></div></section>
+      <section className="public-section" id="public"><div className="public-icon"><Eye /></div><div><span className="eyebrow">Clear before you sign</span><h2>Public means public.</h2><p>Category, context, note, timestamps and participating wallet addresses are written to the selected network. They can be read by anyone and cannot be edited or deleted.</p></div><ul><li><Check /> No private messages</li><li><Check /> No hidden profile data</li><li><Check /> No arbitrary links in cards</li><li><Check /> No custody or payments</li></ul></section>
+      <section className="final-cta"><BrandMark /><span className="eyebrow">A good moment is already shared</span><h2>Now make it mutual.</h2><Link className="button large" href="/app">Create your first CoSign <ArrowRight /></Link></section>
+      <footer className="landing-footer"><Link href="/" className="landing-brand"><BrandMark /><strong>CoSign</strong></Link><p>Public collaboration cards for Celo and Stacks.</p><Link href="/app">Open app <ArrowRight /></Link></footer>
+    </main>
+  );
+}

@@ -1,0 +1,20 @@
+import "dotenv/config";
+import fs from "node:fs";
+import { broadcastTransaction, makeContractDeploy, privateKeyToAddress } from "@stacks/transactions";
+
+const network = process.env.STACKS_NETWORK || "testnet";
+if (!new Set(["testnet", "mainnet"]).has(network)) throw new Error("STACKS_NETWORK must be testnet or mainnet.");
+const senderKey = process.env.STACKS_PRIVATE_KEY?.trim();
+if (!senderKey) throw new Error("Missing STACKS_PRIVATE_KEY.");
+const fee = Number.parseInt(process.env.STACKS_DEPLOY_FEE_MICROSTX || "300000", 10);
+if (!Number.isInteger(fee) || fee <= 0) throw new Error("STACKS_DEPLOY_FEE_MICROSTX must be positive.");
+const codeBody = fs.readFileSync("stacks/contracts/cosign-registry.clar", "utf8");
+const transaction = await makeContractDeploy({ contractName: "cosign-registry", codeBody, senderKey, network, fee });
+const response = await broadcastTransaction({ transaction, network });
+const txId = response.txid || response.txId || "";
+const address = privateKeyToAddress(senderKey, network);
+console.log("CoSign Stacks contract submitted");
+console.log("network:", network);
+console.log("contractId:", `${address}.cosign-registry`);
+console.log("txId:", txId);
+console.log("explorer:", `https://explorer.stacks.co/txid/${txId}?chain=${network}`);

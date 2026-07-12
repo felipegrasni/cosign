@@ -1,0 +1,29 @@
+"use client";
+
+import { ArrowLeft, ArrowRight, Inbox } from "lucide-react";
+import Link from "next/link";
+import { AddressGlyph } from "./address-glyph";
+import { AppShell } from "./app-shell";
+import { HandshakeCard } from "./handshake-card";
+import { useHandshakeList } from "./use-handshakes";
+import { useNetworkClient } from "./network-client";
+import { shortAddress } from "@/lib/cosign";
+import type { Network } from "@/lib/types";
+
+export function ProfileView({ network, address }: { network: Network; address: string }) {
+  const client = useNetworkClient(network);
+  const created = useHandshakeList(client.repository, address, "created");
+  const signed = useHandshakeList(client.repository, address, "signed");
+  return (
+    <AppShell network={network} account={client.account} connecting={client.connecting} isMiniPay={client.isMiniPay} onConnect={() => void client.connect()} onDisconnect={() => void client.disconnect()}>
+      <Link className="back-link" href={`/app/${network}`}><ArrowLeft size={17} /> Back to cards</Link>
+      <section className="profile-head"><AddressGlyph address={address} size={76} /><div><span className="eyebrow">Public wallet history · {network}</span><h1>{shortAddress(address, 8)}</h1><p>{created.total} created · {signed.total} co-signed</p></div></section>
+      {!client.repository.configured ? <section className="state-panel"><Inbox /><h2>Contract connection pending</h2></section> : <div className="profile-columns"><section><header><h2>Created</h2><span>{created.total}</span></header>{created.loading ? <span className="loader" /> : created.items.length ? <><div className="card-stack">{created.items.map((item) => <HandshakeCard key={item.id} handshake={item} />)}</div><Pagination previous={created.hasPrevious} next={created.hasNext} onPrevious={() => created.setPage(created.page - 1)} onNext={() => created.setPage(created.page + 1)} /></> : <div className="empty-mini">No public cards created.</div>}</section><section><header><h2>Co-signed</h2><span>{signed.total}</span></header>{signed.loading ? <span className="loader" /> : signed.items.length ? <><div className="card-stack">{signed.items.map((item) => <HandshakeCard key={item.id} handshake={item} />)}</div><Pagination previous={signed.hasPrevious} next={signed.hasNext} onPrevious={() => signed.setPage(signed.page - 1)} onNext={() => signed.setPage(signed.page + 1)} /></> : <div className="empty-mini">No public cards co-signed.</div>}</section></div>}
+    </AppShell>
+  );
+}
+
+function Pagination({ previous, next, onPrevious, onNext }: { previous: boolean; next: boolean; onPrevious(): void; onNext(): void }) {
+  if (!previous && !next) return null;
+  return <nav className="pagination" aria-label="Profile history pages"><button disabled={!previous} onClick={onPrevious}><ArrowLeft /> Newer</button><button disabled={!next} onClick={onNext}>Older <ArrowRight /></button></nav>;
+}
