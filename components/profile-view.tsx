@@ -25,5 +25,5 @@ export function ProfileView({ network, address }: { network: Network; address: s
 
 function Pagination({ previous, next, onPrevious, onNext }: { previous: boolean; next: boolean; onPrevious(): void; onNext(): void }) {
   if (!previous && !next) return null;
-  return <nav className="pagination" aria-label="Profile history pages"><button disabled={!previous} onClick={onPrevious}><ArrowLeft /> Newer</button><button disabled={!next} onClick={onNext}>Older <ArrowRight /></button></nav>;
+  return <nav className="pagination" aria-label="Profile history pages"><button type="button" disabled={!previous} onClick={onPrevious}><ArrowLeft /> Newer</button><button type="button" disabled={!next} onClick={onNext}>Older <ArrowRight /></button></nav>;
 }
