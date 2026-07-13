@@ -10,7 +10,7 @@ import { ShareSheet } from "./share-sheet";
 import { useNetworkClient } from "./network-client";
 import { canonicalHandshakeUrl, formatMoment, getStatus, kindLabel, shortAddress } from "@/lib/cosign";
 import { contractExplorerUrl, publicEnv, txExplorerUrl } from "@/lib/env";
-import type { Handshake, Network } from "@/lib/types";
+import type { Handshake, Network, TransactionState } from "@/lib/types";
 
 export function HandshakeDetail({ network, id }: { network: Network; id: bigint }) {
   const client = useNetworkClient(network);
@@ -21,6 +21,7 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
   const [message, setMessage] = useState("");
   const [share, setShare] = useState(false);
   const [lastTx, setLastTx] = useState("");
+  const [transaction, setTransaction] = useState<TransactionState>({ phase: "idle", message: "" });
 
   const load = useCallback(async () => {
     if (!client.repository.configured) { setLoading(false); return; }
@@ -38,14 +39,24 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
   const wrongWallet = card && status === "pending" && client.account && card.intendedSigner && !same(card.intendedSigner, client.account) && !isCreator;
 
   const act = async (kind: "cosign" | "cancel") => {
-    setAction(kind); setMessage("");
+    setAction(kind); setMessage(""); setTransaction({ phase: "awaiting-signature", message: `Approve the transaction in your ${network === "celo" ? "Celo" : "Stacks"} wallet.` });
     try {
-      const result = kind === "cosign" ? await client.repository.cosign(id) : await client.repository.cancel(id);
+      const result = kind === "cosign" ? await client.repository.cosign(id, setTransaction) : await client.repository.cancel(id, setTransaction);
       setLastTx(result.hash); setMessage(kind === "cosign" ? "Signal sent. This moment is now mutual." : "Invitation cancelled.");
       await load();
-    } catch (reason) { setMessage(reason instanceof Error ? reason.message : "The transaction could not be completed."); }
+    } catch (reason) {
+      const message = reason instanceof Error ? reason.message : "The transaction could not be completed.";
+      setTransaction((current) => ({ ...current, phase: "failed", message }));
+    }
     finally { setAction(""); }
   };
+
+  const transactionActive = transaction.phase !== "idle" && transaction.phase !== "confirmed";
+  const actionLabel = transaction.phase === "awaiting-signature"
+    ? "Approve in wallet…"
+    : transaction.phase === "submitted" || transaction.phase === "confirming"
+      ? `Confirming on ${network === "celo" ? "Celo" : "Stacks"}…`
+      : action === "cancel" ? "Cancelling…" : "Waiting for wallet…";
 
   const stateCopy = useMemo(() => {
     if (!card || !status) return null;
@@ -70,11 +81,12 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
         <div className="receipt-copy"><span>#{card.id.toString()} · {network}</span><h1>{card.context}</h1><p>{card.note}</p></div>
         <dl className="receipt-meta"><div><dt>Created</dt><dd>{formatMoment(card.createdAt)}</dd></div><div><dt>Expires</dt><dd>{formatMoment(card.expiresAt)}</dd></div>{card.completedAt ? <div><dt>Completed</dt><dd>{formatMoment(card.completedAt)}</dd></div> : null}</dl>
         {stateCopy ? <div className="receipt-state">{stateCopy.icon}<div><strong>{stateCopy.title}</strong><p>{stateCopy.text}</p></div></div> : null}
+        {transactionActive ? <p className={`action-message phase-${transaction.phase}`} role={transaction.phase === "failed" ? "alert" : "status"}>{transaction.message}{transaction.explorerUrl ? <a href={transaction.explorerUrl} target="_blank" rel="noreferrer">View transaction <ExternalLink size={14} /></a> : null}</p> : null}
         {message ? <p className="action-message" role="status">{message}{lastTx ? <a href={txExplorerUrl(network, lastTx)} target="_blank" rel="noreferrer">View transaction <ExternalLink size={14} /></a> : null}</p> : null}
         <div className="receipt-actions">
           {status === "pending" && !client.connected && !client.isMiniPay ? <button className="button" onClick={() => void client.connect()}>Connect to continue</button> : null}
-          {eligible ? <button className="button" onClick={() => void act("cosign")} disabled={Boolean(action)}>{action === "cosign" ? "Waiting for wallet…" : "Co-sign this moment"}</button> : null}
-          {isCreator && status === "pending" ? <><button className="button" onClick={() => setShare(true)}><Share2 /> Share invitation</button><button className="button danger" onClick={() => void act("cancel")} disabled={Boolean(action)}>{action === "cancel" ? "Cancelling…" : "Cancel invitation"}</button></> : null}
+          {eligible ? <button className="button" onClick={() => void act("cosign")} disabled={Boolean(action)}>{action === "cosign" ? actionLabel : "Co-sign this moment"}</button> : null}
+          {isCreator && status === "pending" ? <><button className="button" onClick={() => setShare(true)}><Share2 /> Share invitation</button><button className="button danger" onClick={() => void act("cancel")} disabled={Boolean(action)}>{action === "cancel" ? actionLabel : "Cancel invitation"}</button></> : null}
           {status === "completed" ? <button className="button" onClick={() => setShare(true)}><Share2 /> Share receipt</button> : null}
         </div>
       </section>}

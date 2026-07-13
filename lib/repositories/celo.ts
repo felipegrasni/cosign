@@ -10,7 +10,7 @@ import {
 import { coSignCeloAbi } from "../celo-abi";
 import { ZERO_EVM_ADDRESS } from "../cosign";
 import { getCeloChainId, getCeloExplorer, getCeloRpc, publicEnv } from "../env";
-import type { CreateHandshakeInput, Handshake, HandshakeRepository, TransactionResult } from "../types";
+import type { CreateHandshakeInput, Handshake, HandshakeRepository, TransactionObserver, TransactionResult } from "../types";
 
 export type InjectedProvider = EIP1193Provider & { isMiniPay?: boolean };
 
@@ -55,12 +55,16 @@ export function createCeloRepository(provider?: InjectedProvider, account?: stri
   const read = async <T>(functionName: string, args: readonly unknown[] = []) => publicClient.readContract({
     address, abi: coSignCeloAbi, functionName: functionName as never, args: args as never
   }) as Promise<T>;
-  const write = async (functionName: string, args: readonly unknown[]): Promise<TransactionResult> => {
+  const write = async (functionName: string, args: readonly unknown[], onTransaction?: TransactionObserver): Promise<TransactionResult> => {
     if (!wallet || !account) throw new Error("Connect a Celo wallet first.");
+    onTransaction?.({ phase: "awaiting-signature", message: "Approve the transaction in your Celo wallet." });
     try {
       const hash = await wallet.writeContract({ address, abi: coSignCeloAbi, functionName: functionName as never, args: args as never, account: account as Address, chain });
+      const explorerUrl = `${getCeloExplorer()}/tx/${hash}`;
+      onTransaction?.({ phase: "confirming", message: "Transaction submitted. Waiting for Celo confirmation.", hash, explorerUrl });
       await publicClient.waitForTransactionReceipt({ hash });
-      return { hash, explorerUrl: `${getCeloExplorer()}/tx/${hash}` };
+      onTransaction?.({ phase: "confirmed", message: "Transaction confirmed on Celo.", hash, explorerUrl });
+      return { hash, explorerUrl };
     } catch (error) { throw friendlyError(error); }
   };
 
@@ -75,9 +79,9 @@ export function createCeloRepository(provider?: InjectedProvider, account?: stri
     getSignedCount: (owner) => read<bigint>("getSignedCount", [owner as Address]),
     async getCreatedIds(owner, start, count) { return Promise.all(Array.from({ length: count }, (_, i) => read<bigint>("getCreatedId", [owner as Address, start + BigInt(i)]))); },
     async getSignedIds(owner, start, count) { return Promise.all(Array.from({ length: count }, (_, i) => read<bigint>("getSignedId", [owner as Address, start + BigInt(i)]))); },
-    create: (input: CreateHandshakeInput) => write("createHandshake", [input.kind, input.context, input.note, (input.intendedSigner || ZERO_EVM_ADDRESS) as Address, BigInt(input.expiresAt)]),
-    cosign: (id) => write("cosign", [id]),
-    cancel: (id) => write("cancelHandshake", [id])
+    create: (input: CreateHandshakeInput, onTransaction) => write("createHandshake", [input.kind, input.context, input.note, (input.intendedSigner || ZERO_EVM_ADDRESS) as Address, BigInt(input.expiresAt)], onTransaction),
+    cosign: (id, onTransaction) => write("cosign", [id], onTransaction),
+    cancel: (id, onTransaction) => write("cancelHandshake", [id], onTransaction)
   };
 }
 

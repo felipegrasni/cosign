@@ -1,11 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, LockKeyhole, Radio, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ExternalLink, LockKeyhole, Radio, X } from "lucide-react";
 import { isAddress } from "viem";
 import { CategoryIcon } from "./category-icon";
 import { CONTEXT_LIMIT, NOTE_LIMIT, cleanAscii, expiryOptions, kinds, validateCard } from "@/lib/cosign";
-import type { HandshakeKind, HandshakeRepository, Network, TransactionResult } from "@/lib/types";
+import type { HandshakeKind, HandshakeRepository, Network, TransactionResult, TransactionState } from "@/lib/types";
 
 const stacksAddress = /^S[PTMN][0-9A-Z]{20,50}$/;
 
@@ -22,27 +22,38 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
   const [expiry, setExpiry] = useState(604_800);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [transaction, setTransaction] = useState<TransactionState>({ phase: "idle", message: "" });
   const validation = useMemo(() => validateCard(context, note), [context, note]);
   const addressValid = mode === "open" || (network === "celo" ? isAddress(intendedSigner) : stacksAddress.test(intendedSigner));
 
   async function submit() {
-    setSubmitting(true); setError("");
+    setSubmitting(true); setError(""); setTransaction({ phase: "awaiting-signature", message: `Approve the transaction in your ${network === "celo" ? "Celo" : "Stacks"} wallet.` });
     try {
       const result = await repository.create({
         kind, context: validation.context, note: validation.note,
         intendedSigner: mode === "addressed" ? intendedSigner : null,
         expiresAt: Math.floor(Date.now() / 1000) + expiry
-      });
+      }, setTransaction);
       const id = await repository.getTotal();
       onCreated(id, result);
-    } catch (reason) { setError(reason instanceof Error ? reason.message : "Could not create this CoSign."); }
+    } catch (reason) {
+      const message = reason instanceof Error ? reason.message : "Could not create this CoSign.";
+      setError(message); setTransaction((current) => ({ ...current, phase: "failed", message }));
+    }
     finally { setSubmitting(false); }
   }
+
+  const activeTransaction = transaction.phase !== "idle" && transaction.phase !== "confirmed";
+  const submitLabel = transaction.phase === "awaiting-signature"
+    ? "Approve in wallet…"
+    : transaction.phase === "submitted" || transaction.phase === "confirming"
+      ? `Confirming on ${network === "celo" ? "Celo" : "Stacks"}…`
+      : "Create CoSign";
 
   return (
     <div className="modal-backdrop" role="presentation">
       <section className="wizard" role="dialog" aria-modal="true" aria-labelledby="wizard-title">
-        <header><div><span className="eyebrow">New CoSign · {step}/3</span><h2 id="wizard-title">{step === 1 ? "What happened?" : step === 2 ? "Add the signal." : "Make it public."}</h2></div><button className="icon-button" onClick={onClose} aria-label="Close"><X /></button></header>
+        <header><div><span className="eyebrow">New CoSign · {step}/3</span><h2 id="wizard-title">{step === 1 ? "What happened?" : step === 2 ? "Add the signal." : "Make it public."}</h2></div><button className="icon-button" onClick={onClose} aria-label="Close" disabled={submitting}><X /></button></header>
         <div className="wizard-progress"><i style={{ width: `${step * 33.333}%` }} /></div>
         {step === 1 ? <div className="kind-grid">{kinds.map((item) => <button key={item.id} className={kind === item.id ? "selected" : ""} onClick={() => setKind(item.id)}><CategoryIcon kind={item.id} size={25} /><strong>{item.label}</strong><span>{item.description}</span></button>)}</div> : null}
         {step === 2 ? <div className="form-stack">
@@ -56,9 +67,10 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
           <span className="category"><CategoryIcon kind={kind} /> {kinds[kind].label}</span><h3>{validation.context}</h3><p>{validation.note}</p>
           <dl><div><dt>Creator</dt><dd>{account}</dd></div><div><dt>Signer</dt><dd>{mode === "open" ? "First eligible wallet" : intendedSigner}</dd></div><div><dt>Expiry</dt><dd>{expiryOptions.find((item) => item.seconds === expiry)?.label}</dd></div></dl>
           <div className="public-warning"><LockKeyhole size={20} /><p><strong>Public and permanent.</strong> This text and both wallet addresses will remain readable onchain. It cannot be edited or deleted.</p></div>
-          {error ? <p className="form-error" role="alert">{error}</p> : null}
+          {activeTransaction ? <div className={`transaction-progress phase-${transaction.phase}`} role={transaction.phase === "failed" ? "alert" : "status"}>{transaction.phase !== "failed" ? <span className="loader" /> : null}<div><strong>{transaction.phase === "awaiting-signature" ? "Wallet approval required" : transaction.phase === "failed" ? "Transaction needs attention" : "Transaction submitted"}</strong><p>{transaction.message}</p>{transaction.explorerUrl ? <a href={transaction.explorerUrl} target="_blank" rel="noreferrer">View transaction <ExternalLink size={14} /></a> : null}</div></div> : null}
+          {error && !activeTransaction ? <p className="form-error" role="alert">{error}</p> : null}
         </div> : null}
-        <footer>{step > 1 ? <button className="button secondary" onClick={() => setStep(step - 1)} disabled={submitting}><ArrowLeft size={18} /> Back</button> : <span />}{step < 3 ? <button className="button" onClick={() => setStep(step + 1)} disabled={step === 2 && (Boolean(validation.errors.context || validation.errors.note) || !addressValid)}>Continue <ArrowRight size={18} /></button> : <button className="button" onClick={submit} disabled={submitting}>{submitting ? "Waiting for wallet…" : <>Create CoSign <Check size={18} /></>}</button>}</footer>
+        <footer>{step > 1 ? <button className="button secondary" onClick={() => setStep(step - 1)} disabled={submitting}><ArrowLeft size={18} /> Back</button> : <span />}{step < 3 ? <button className="button" onClick={() => setStep(step + 1)} disabled={step === 2 && (Boolean(validation.errors.context || validation.errors.note) || !addressValid)}>Continue <ArrowRight size={18} /></button> : <button className="button" onClick={submit} disabled={submitting}>{submitting ? submitLabel : <>Create CoSign <Check size={18} /></>}</button>}</footer>
       </section>
     </div>
   );

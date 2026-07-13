@@ -43,6 +43,8 @@ export type TransactionState = {
   explorerUrl?: string;
 };
 
+export type TransactionObserver = (state: TransactionState) => void;
+
 export interface HandshakeRepository {
   readonly network: Network;
   readonly configured: boolean;
@@ -52,7 +54,7 @@ export interface HandshakeRepository {
   getSignedCount(address: string): Promise<bigint>;
   getCreatedIds(address: string, start: bigint, count: number): Promise<bigint[]>;
   getSignedIds(address: string, start: bigint, count: number): Promise<bigint[]>;
-  create(input: CreateHandshakeInput): Promise<TransactionResult>;
-  cosign(id: bigint): Promise<TransactionResult>;
-  cancel(id: bigint): Promise<TransactionResult>;
+  create(input: CreateHandshakeInput, onTransaction?: TransactionObserver): Promise<TransactionResult>;
+  cosign(id: bigint, onTransaction?: TransactionObserver): Promise<TransactionResult>;
+  cancel(id: bigint, onTransaction?: TransactionObserver): Promise<TransactionResult>;
 }

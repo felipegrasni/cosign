@@ -1,5 +1,5 @@
 import { getStacksApi, publicEnv, txExplorerUrl } from "../env";
-import type { Handshake, HandshakeRepository, TransactionResult } from "../types";
+import type { Handshake, HandshakeRepository, TransactionObserver, TransactionResult } from "../types";
 
 type ClarityJson = { type?: string; value?: unknown };
 
@@ -73,9 +73,10 @@ export function createStacksRepository(account = ""): HandshakeRepository {
     }
     throw new Error("The Stacks transaction is still pending. Refresh the card after it confirms.");
   };
-  const call = async (functionName: string, functionArgs: unknown[]): Promise<TransactionResult> => {
+  const call = async (functionName: string, functionArgs: unknown[], onTransaction?: TransactionObserver): Promise<TransactionResult> => {
     if (!account) throw new Error("Connect a Stacks wallet first.");
     const { request } = await import("@stacks/connect");
+    onTransaction?.({ phase: "awaiting-signature", message: "Approve the transaction in your Stacks wallet." });
     try {
       const response = await request("stx_callContract", {
         contract: `${contract().address}.${contract().name}` as `${string}.${string}`,
@@ -84,8 +85,12 @@ export function createStacksRepository(account = ""): HandshakeRepository {
         network: publicEnv.stacksNetwork
       });
       const hash = response.txid || "";
+      if (!hash) throw new Error("The wallet did not return a transaction ID. Check your wallet activity before trying again.");
+      const explorerUrl = txExplorerUrl("stacks", hash);
+      onTransaction?.({ phase: "confirming", message: "Transaction submitted. Waiting for Stacks confirmation.", hash, explorerUrl });
       await waitForConfirmation(hash);
-      return { hash, explorerUrl: txExplorerUrl("stacks", hash) };
+      onTransaction?.({ phase: "confirmed", message: "Transaction confirmed on Stacks.", hash, explorerUrl });
+      return { hash, explorerUrl };
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       if (message.includes("u407")) throw new Error("You cannot co-sign your own card.");
@@ -105,12 +110,12 @@ export function createStacksRepository(account = ""): HandshakeRepository {
     async getSignedCount(owner) { const { Cl } = await import("@stacks/transactions"); return asBigInt(await readOnly("get-signed-count", [Cl.principal(owner)], owner)); },
     async getCreatedIds(owner, start, count) { const { Cl } = await import("@stacks/transactions"); return Promise.all(Array.from({ length: count }, (_, i) => readOnly("get-created-id", [Cl.principal(owner), Cl.uint(start + BigInt(i))], owner).then(asBigInt))); },
     async getSignedIds(owner, start, count) { const { Cl } = await import("@stacks/transactions"); return Promise.all(Array.from({ length: count }, (_, i) => readOnly("get-signed-id", [Cl.principal(owner), Cl.uint(start + BigInt(i))], owner).then(asBigInt))); },
-    async create(input) {
+    async create(input, onTransaction) {
       const { Cl } = await import("@stacks/transactions");
-      return call("create-handshake", [Cl.uint(input.kind), Cl.stringAscii(input.context), Cl.stringAscii(input.note), input.intendedSigner ? Cl.some(Cl.principal(input.intendedSigner)) : Cl.none(), Cl.uint(input.expiresAt)]);
+      return call("create-handshake", [Cl.uint(input.kind), Cl.stringAscii(input.context), Cl.stringAscii(input.note), input.intendedSigner ? Cl.some(Cl.principal(input.intendedSigner)) : Cl.none(), Cl.uint(input.expiresAt)], onTransaction);
     },
-    async cosign(id) { const { Cl } = await import("@stacks/transactions"); return call("cosign", [Cl.uint(id)]); },
-    async cancel(id) { const { Cl } = await import("@stacks/transactions"); return call("cancel-handshake", [Cl.uint(id)]); }
+    async cosign(id, onTransaction) { const { Cl } = await import("@stacks/transactions"); return call("cosign", [Cl.uint(id)], onTransaction); },
+    async cancel(id, onTransaction) { const { Cl } = await import("@stacks/transactions"); return call("cancel-handshake", [Cl.uint(id)], onTransaction); }
   };
 }
 
