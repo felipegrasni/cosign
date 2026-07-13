@@ -25,6 +25,9 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
   const [transaction, setTransaction] = useState<TransactionState>({ phase: "idle", message: "" });
   const validation = useMemo(() => validateCard(context, note), [context, note]);
   const addressValid = mode === "open" || (network === "celo" ? isAddress(intendedSigner) : stacksAddress.test(intendedSigner));
+  const contextErrorId = "context-error";
+  const noteErrorId = "note-error";
+  const signerErrorId = "signer-address-error";
 
   async function submit() {
     setSubmitting(true); setError(""); setTransaction({ phase: "awaiting-signature", message: `Approve the transaction in your ${network === "celo" ? "Celo" : "Stacks"} wallet.` });
@@ -57,10 +60,10 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
         <div className="wizard-progress"><i style={{ width: `${step * 33.333}%` }} /></div>
         {step === 1 ? <div className="kind-grid">{kinds.map((item) => <button type="button" key={item.id} className={kind === item.id ? "selected" : ""} onClick={() => setKind(item.id)}><CategoryIcon kind={item.id} size={25} /><strong>{item.label}</strong><span>{item.description}</span></button>)}</div> : null}
         {step === 2 ? <div className="form-stack">
-          <label>Context <span>{cleanAscii(context, CONTEXT_LIMIT).length}/{CONTEXT_LIMIT}</span><input value={context} maxLength={CONTEXT_LIMIT} onChange={(event) => setContext(event.target.value)} placeholder="ETH Lisbon · Open source lounge" />{validation.errors.context && context ? <small className="field-error">{validation.errors.context}</small> : null}</label>
-          <label>Note <span>{cleanAscii(note, NOTE_LIMIT).length}/{NOTE_LIMIT}</span><textarea value={note} maxLength={NOTE_LIMIT} onChange={(event) => setNote(event.target.value)} placeholder="We paired on the release flow and got it over the line." />{validation.errors.note && note ? <small className="field-error">{validation.errors.note}</small> : null}</label>
+          <label>Context <span>{cleanAscii(context, CONTEXT_LIMIT).length}/{CONTEXT_LIMIT}</span><input value={context} maxLength={CONTEXT_LIMIT} onChange={(event) => setContext(event.target.value)} placeholder="ETH Lisbon · Open source lounge" aria-invalid={Boolean(validation.errors.context && context)} aria-describedby={validation.errors.context && context ? contextErrorId : undefined} />{validation.errors.context && context ? <small id={contextErrorId} className="field-error">{validation.errors.context}</small> : null}</label>
+          <label>Note <span>{cleanAscii(note, NOTE_LIMIT).length}/{NOTE_LIMIT}</span><textarea value={note} maxLength={NOTE_LIMIT} onChange={(event) => setNote(event.target.value)} placeholder="We paired on the release flow and got it over the line." aria-invalid={Boolean(validation.errors.note && note)} aria-describedby={validation.errors.note && note ? noteErrorId : undefined} />{validation.errors.note && note ? <small id={noteErrorId} className="field-error">{validation.errors.note}</small> : null}</label>
           <fieldset><legend>Who can co-sign?</legend><div className="segmented"><button type="button" className={mode === "open" ? "active" : ""} onClick={() => setMode("open")}><Radio size={17} /> Open link</button><button type="button" className={mode === "addressed" ? "active" : ""} onClick={() => setMode("addressed")}><LockKeyhole size={17} /> One wallet</button></div></fieldset>
-          {mode === "addressed" ? <label>Signer address<input value={intendedSigner} onChange={(event) => setIntendedSigner(event.target.value.trim())} placeholder={network === "celo" ? "0x..." : "SP..."} />{intendedSigner && !addressValid ? <small className="field-error">Enter a valid {network === "celo" ? "Celo" : "Stacks"} address.</small> : null}</label> : null}
+          {mode === "addressed" ? <label>Signer address<input value={intendedSigner} onChange={(event) => setIntendedSigner(event.target.value.trim())} placeholder={network === "celo" ? "0x..." : "SP..."} aria-invalid={Boolean(intendedSigner && !addressValid)} aria-describedby={intendedSigner && !addressValid ? signerErrorId : undefined} />{intendedSigner && !addressValid ? <small id={signerErrorId} className="field-error">Enter a valid {network === "celo" ? "Celo" : "Stacks"} address.</small> : null}</label> : null}
           <fieldset><legend>Expires</legend><div className="segmented">{expiryOptions.map((item) => <button type="button" key={item.seconds} className={expiry === item.seconds ? "active" : ""} onClick={() => setExpiry(item.seconds)}>{item.label}</button>)}</div></fieldset>
         </div> : null}
         {step === 3 ? <div className="review-card">
