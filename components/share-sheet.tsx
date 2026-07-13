@@ -14,14 +14,14 @@ export function ShareSheet({ url, explorerUrl, onClose }: { url: string; explore
   return (
     <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
       <section className="share-sheet" role="dialog" aria-modal="true" aria-labelledby="share-title" aria-describedby="share-description">
-        <button className="icon-button close" onClick={onClose} aria-label="Close"><X /></button>
+        <button type="button" className="icon-button close" onClick={onClose} aria-label="Close"><X /></button>
         <span className="eyebrow">Invitation ready</span>
         <h2 id="share-title">Pass the signal.</h2>
         <p id="share-description">Let the other person scan this code or send them the link.</p>
         <div className="qr-wrap"><QRCodeSVG value={url} size={210} bgColor="#fffaf2" fgColor="#17151f" level="M" /></div>
-        <div className="copy-row"><code>{url}</code><button onClick={copy} aria-label="Copy invitation link">{copied ? <Check /> : <Copy />}</button></div>
+        <div className="copy-row"><code>{url}</code><button type="button" onClick={copy} aria-label="Copy invitation link">{copied ? <Check /> : <Copy />}</button></div>
         <p className="sr-only" role="status" aria-live="polite">{copied ? "Invitation link copied to clipboard." : ""}</p>
-        <div className="share-actions"><button className="button" onClick={share}><Share2 size={18} /> Share invitation</button>{explorerUrl ? <a className="button secondary" href={explorerUrl} target="_blank" rel="noreferrer">Explorer <ExternalLink size={17} /></a> : null}</div>
+        <div className="share-actions"><button type="button" className="button" onClick={share}><Share2 size={18} /> Share invitation</button>{explorerUrl ? <a className="button secondary" href={explorerUrl} target="_blank" rel="noreferrer">Explorer <ExternalLink size={17} /></a> : null}</div>
       </section>
     </div>
   );
