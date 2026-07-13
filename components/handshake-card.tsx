@@ -7,6 +7,8 @@ import type { Handshake } from "@/lib/types";
 
 export function HandshakeCard({ handshake, linked = true }: { handshake: Handshake; linked?: boolean }) {
   const status = getStatus(handshake);
+  const counterpartLabel = handshake.signer ? shortAddress(handshake.signer, 4) : handshake.intendedSigner ? "invited signer" : "open signer";
+  const linkLabel = `Open ${kindLabel(handshake.kind)} card, ${status}, from ${shortAddress(handshake.creator, 4)} to ${counterpartLabel}`;
   const content = (
     <article className={`handshake-card status-${status}`}>
       <header>
@@ -23,5 +25,5 @@ export function HandshakeCard({ handshake, linked = true }: { handshake: Handsha
       <footer><span><Clock3 size={15} aria-hidden="true" /> {formatMoment(handshake.createdAt)}</span>{linked ? <ArrowUpRight size={18} aria-hidden="true" /> : null}</footer>
     </article>
   );
-  return linked ? <Link className="card-link" href={`/app/${handshake.network}/handshake/${handshake.id}`}>{content}</Link> : content;
+  return linked ? <Link className="card-link" href={`/app/${handshake.network}/handshake/${handshake.id}`} aria-label={linkLabel}>{content}</Link> : content;
 }
