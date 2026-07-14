@@ -8,6 +8,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Create a public collaboration card and let the other wallet make it mutual on Celo or Stacks.",
     lang: "en",
     start_url: "/app",
+    scope: "/app",
     display: "standalone",
     background_color: "#F5F0E7",
     theme_color: "#F5F0E7",
