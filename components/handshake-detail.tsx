@@ -90,7 +90,7 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
           {status === "completed" ? <button type="button" className="button" onClick={() => setShare(true)}><Share2 /> Share receipt</button> : null}
         </div>
       </section>}
-      {share ? <ShareSheet url={canonicalHandshakeUrl(publicEnv.appUrl, network, id)} explorerUrl={lastTx ? txExplorerUrl(network, lastTx) : contractExplorerUrl(network)} onClose={() => setShare(false)} /> : null}
+      {share ? <ShareSheet url={canonicalHandshakeUrl(publicEnv.appUrl, network, id)} explorerUrl={lastTx ? txExplorerUrl(network, lastTx) : contractExplorerUrl(network)} variant={status === "completed" ? "receipt" : "invitation"} onClose={() => setShare(false)} /> : null}
     </AppShell>
   );
 }
