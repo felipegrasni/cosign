@@ -12,7 +12,7 @@ export function AddressGlyph({ address, size = 44 }: { address: string; size?: n
   }, [address]);
 
   return (
-    <svg width={size} height={size} viewBox="0 0 50 50" className="address-glyph" role="img" aria-label="Wallet pattern">
+    <svg width={size} height={size} viewBox="0 0 50 50" className="address-glyph" aria-hidden="true" focusable="false">
       <rect width="50" height="50" rx="14" fill="#fffaf2" />
       {Array.from({ length: 5 }, (_, y) => Array.from({ length: 5 }, (_, x) => {
         const sourceX = x > 2 ? 4 - x : x;
