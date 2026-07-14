@@ -13,6 +13,6 @@ export default function AppEntryPage() {
     if (ethereum?.isMiniPay) router.replace("/app/celo");
   }, [router]);
   return (
-    <main className="network-entry"><Link href="/" className="landing-brand" aria-label="CoSign home"><BrandMark /><strong>CoSign</strong></Link><section><span className="eyebrow">Choose a network</span><h1>Where does your wallet live?</h1><p>Pick the network both wallets can sign on. Cards stay on the network you choose and are never mirrored automatically.</p><div className="entry-grid"><Link href="/app/celo"><Smartphone /><span>Celo</span><strong>MiniPay-ready</strong><ArrowRight /></Link><Link href="/app/stacks"><WalletCards /><span>Stacks</span><strong>Bitcoin-secured</strong><ArrowRight /></Link></div></section></main>
+    <main className="network-entry"><Link href="/" className="landing-brand" aria-label="CoSign home"><BrandMark /><strong>CoSign</strong></Link><section><span className="eyebrow">Choose a network</span><h1>Where does your wallet live?</h1><p>Pick the one network both wallets can sign on. If the wallets live on different chains, create separate cards because CoSign never mirrors a receipt automatically.</p><div className="entry-grid"><Link href="/app/celo"><Smartphone /><span>Celo</span><strong>MiniPay-ready</strong><ArrowRight /></Link><Link href="/app/stacks"><WalletCards /><span>Stacks</span><strong>Bitcoin-secured</strong><ArrowRight /></Link></div></section></main>
   );
 }
