@@ -60,18 +60,18 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
 
   const stateCopy = useMemo(() => {
     if (!card || !status) return null;
-    if (status === "completed") return { icon: <Check />, title: "Made mutual", text: "Both wallets have confirmed this moment." };
-    if (status === "cancelled") return { icon: <Ban />, title: "Invitation cancelled", text: "The original public card remains readable." };
-    if (status === "expired") return { icon: <Clock3 />, title: "Invitation expired", text: "This card can no longer receive a co-signature." };
-    if (isCreator) return { icon: <Share2 />, title: "Waiting for the other wallet", text: "Share the invitation link or QR code." };
-    if (wrongWallet) return { icon: <UserRoundX />, title: "Addressed to another wallet", text: "You can read this card, but only its intended signer can complete it." };
-    return { icon: <Share2 />, title: "An invitation for you", text: "Co-sign to confirm this shared moment." };
+    if (status === "completed") return { icon: <Check aria-hidden="true" />, title: "Made mutual", text: "Both wallets have confirmed this moment." };
+    if (status === "cancelled") return { icon: <Ban aria-hidden="true" />, title: "Invitation cancelled", text: "The original public card remains readable." };
+    if (status === "expired") return { icon: <Clock3 aria-hidden="true" />, title: "Invitation expired", text: "This card can no longer receive a co-signature." };
+    if (isCreator) return { icon: <Share2 aria-hidden="true" />, title: "Waiting for the other wallet", text: "Share the invitation link or QR code." };
+    if (wrongWallet) return { icon: <UserRoundX aria-hidden="true" />, title: "Addressed to another wallet", text: "You can read this card, but only its intended signer can complete it." };
+    return { icon: <Share2 aria-hidden="true" />, title: "An invitation for you", text: "Co-sign to confirm this shared moment." };
   }, [card, isCreator, status, wrongWallet]);
 
   return (
     <AppShell network={network} account={client.account} connecting={client.connecting} isMiniPay={client.isMiniPay} onConnect={() => void client.connect()} onDisconnect={() => void client.disconnect()}>
-      <Link className="back-link" href={`/app/${network}`}><ArrowLeft size={17} /> Back to cards</Link>
-      {!client.repository.configured ? <section className="state-panel"><AlertTriangle /><h1>Contract connection pending</h1><p>This route needs its deployed {network} contract address.</p></section> : loading ? <section className="state-panel"><span className="loader" /><p>Reading the signal…</p></section> : error ? <section className="state-panel"><AlertTriangle /><h1>Could not load this card</h1><p>{error}</p><button type="button" className="button secondary" onClick={() => void load()}><RefreshCw /> Try again</button></section> : !card ? <section className="state-panel"><AlertTriangle /><h1>CoSign not found</h1><p>Check the invitation link and selected network.</p></section> : <section className={`receipt status-${status}`}>
+      <Link className="back-link" href={`/app/${network}`}><ArrowLeft size={17} aria-hidden="true" /> Back to cards</Link>
+      {!client.repository.configured ? <section className="state-panel"><AlertTriangle aria-hidden="true" /><h1>Contract connection pending</h1><p>This route needs its deployed {network} contract address.</p></section> : loading ? <section className="state-panel"><span className="loader" /><p>Reading the signal…</p></section> : error ? <section className="state-panel"><AlertTriangle aria-hidden="true" /><h1>Could not load this card</h1><p>{error}</p><button type="button" className="button secondary" onClick={() => void load()}><RefreshCw aria-hidden="true" /> Try again</button></section> : !card ? <section className="state-panel"><AlertTriangle aria-hidden="true" /><h1>CoSign not found</h1><p>Check the invitation link and selected network.</p></section> : <section className={`receipt status-${status}`}>
         <div className="receipt-top"><span className="category"><CategoryIcon kind={card.kind} /> {kindLabel(card.kind)}</span><span className="status-stamp">{status}</span></div>
         <div className="receipt-people">
           <Link href={`/app/${network}/profile/${card.creator}`}><AddressGlyph address={card.creator} size={62} /><span>Creator</span><strong>{shortAddress(card.creator)}</strong></Link>
@@ -81,13 +81,13 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
         <div className="receipt-copy"><span>#{card.id.toString()} · {network}</span><h1>{card.context}</h1><p>{card.note}</p></div>
         <dl className="receipt-meta"><div><dt>Created</dt><dd>{formatMoment(card.createdAt)}</dd></div><div><dt>Expires</dt><dd>{formatMoment(card.expiresAt)}</dd></div>{card.completedAt ? <div><dt>Completed</dt><dd>{formatMoment(card.completedAt)}</dd></div> : null}</dl>
         {stateCopy ? <div className="receipt-state">{stateCopy.icon}<div><strong>{stateCopy.title}</strong><p>{stateCopy.text}</p></div></div> : null}
-        {transactionActive ? <p className={`action-message phase-${transaction.phase}`} role={transaction.phase === "failed" ? "alert" : "status"}>{transaction.message}{transaction.explorerUrl ? <a href={transaction.explorerUrl} target="_blank" rel="noreferrer">View transaction <ExternalLink size={14} /></a> : null}</p> : null}
-        {message ? <p className="action-message" role="status">{message}{lastTx ? <a href={txExplorerUrl(network, lastTx)} target="_blank" rel="noreferrer">View transaction <ExternalLink size={14} /></a> : null}</p> : null}
+        {transactionActive ? <p className={`action-message phase-${transaction.phase}`} role={transaction.phase === "failed" ? "alert" : "status"}>{transaction.message}{transaction.explorerUrl ? <a href={transaction.explorerUrl} target="_blank" rel="noreferrer">View transaction <ExternalLink size={14} aria-hidden="true" /></a> : null}</p> : null}
+        {message ? <p className="action-message" role="status">{message}{lastTx ? <a href={txExplorerUrl(network, lastTx)} target="_blank" rel="noreferrer">View transaction <ExternalLink size={14} aria-hidden="true" /></a> : null}</p> : null}
         <div className="receipt-actions">
           {status === "pending" && !client.connected && !client.isMiniPay ? <button type="button" className="button" onClick={() => void client.connect()}>Connect to continue</button> : null}
           {eligible ? <button type="button" className="button" onClick={() => void act("cosign")} disabled={Boolean(action)}>{action === "cosign" ? actionLabel : "Co-sign this moment"}</button> : null}
-          {isCreator && status === "pending" ? <><button type="button" className="button" onClick={() => setShare(true)}><Share2 /> Share invitation</button><button type="button" className="button danger" onClick={() => void act("cancel")} disabled={Boolean(action)}>{action === "cancel" ? actionLabel : "Cancel invitation"}</button></> : null}
-          {status === "completed" ? <button type="button" className="button" onClick={() => setShare(true)}><Share2 /> Share receipt</button> : null}
+          {isCreator && status === "pending" ? <><button type="button" className="button" onClick={() => setShare(true)}><Share2 aria-hidden="true" /> Share invitation</button><button type="button" className="button danger" onClick={() => void act("cancel")} disabled={Boolean(action)}>{action === "cancel" ? actionLabel : "Cancel invitation"}</button></> : null}
+          {status === "completed" ? <button type="button" className="button" onClick={() => setShare(true)}><Share2 aria-hidden="true" /> Share receipt</button> : null}
         </div>
       </section>}
       {share ? <ShareSheet url={canonicalHandshakeUrl(publicEnv.appUrl, network, id)} explorerUrl={lastTx ? txExplorerUrl(network, lastTx) : contractExplorerUrl(network)} variant={status === "completed" ? "receipt" : "invitation"} onClose={() => setShare(false)} /> : null}
@@ -96,5 +96,5 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
 }
 
 function BrandCheck({ complete }: { complete: boolean }) {
-  return <span className={complete ? "brand-check complete" : "brand-check"}><Check size={20} /></span>;
+  return <span className={complete ? "brand-check complete" : "brand-check"}><Check size={20} aria-hidden="true" /></span>;
 }
