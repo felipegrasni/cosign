@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: { default: "CoSign — Make the moment mutual", template: "%s · CoSign" },
   description: "Create a public collaboration card and let the other wallet make it mutual on Celo or Stacks.",
   applicationName: "CoSign",
+  keywords: ["CoSign", "Celo", "Stacks", "wallet collaboration", "co-signing", "public receipt"],
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "CoSign", statusBarStyle: "default" },
   icons: { icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/icon-192.png", sizes: "192x192" }], apple: "/apple-touch-icon.png" },
