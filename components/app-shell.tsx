@@ -32,7 +32,7 @@ export function AppShell({ network, account, connecting, isMiniPay, onConnect, o
           )}
         </div>
       </header>
-      <main className="app-main">{children}</main>
+      <main id="main-content" className="app-main">{children}</main>
     </div>
   );
 }

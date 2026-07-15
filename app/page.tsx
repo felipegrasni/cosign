@@ -7,7 +7,7 @@ import { kinds } from "@/lib/cosign";
 
 export default function HomePage() {
   return (
-    <main className="landing-page">
+    <main id="main-content" className="landing-page">
       <header className="landing-nav"><Link href="/" className="landing-brand" aria-label="CoSign home"><BrandMark /><strong>CoSign</strong></Link><nav><a href="#how">How it works</a><a href="#public">What is public</a><Link className="button compact" href="/app">Open app <ArrowRight aria-hidden="true" /></Link></nav></header>
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-copy"><span className="eyebrow"><Sparkles aria-hidden="true" /> Two wallets · one shared receipt</span><h1 id="hero-title">Make the moment <em>mutual.</em></h1><p>Write a small card for something you shared. Pass the link. When the other wallet co-signs, the memory belongs to both of you.</p><div className="hero-actions"><Link className="button large" href="/app">Create a CoSign <ArrowRight aria-hidden="true" /></Link><a className="text-link" href="#preview">Try the preview <span aria-hidden="true">↓</span></a></div><div className="hero-foot"><span><Check aria-hidden="true" /> No account</span><span><Check aria-hidden="true" /> No database</span><span><Check aria-hidden="true" /> Just your wallets</span></div></div>
