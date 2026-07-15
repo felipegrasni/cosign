@@ -12,9 +12,9 @@ export function LandingDemo({ compact = false }: { compact?: boolean }) {
   return (
     <div className={`landing-demo ${complete ? "is-complete" : ""} ${compact ? "compact" : ""}`}>
       <div className="demo-label"><span>Interactive preview</span><strong id={statusId} aria-live="polite">{complete ? "Made mutual" : "Waiting"}</strong></div>
-      <div className="demo-people"><div><AddressGlyph address="0xcosigncreator" size={compact ? 42 : 56} /><span>Alex</span></div><span className="demo-signal"><i /><b><Check /></b></span><div><AddressGlyph address="SPcosignfriend" size={compact ? 42 : 56} /><span>Sam</span></div></div>
+      <div className="demo-people"><div><AddressGlyph address="0xcosigncreator" size={compact ? 42 : 56} /><span>Alex</span></div><span className="demo-signal"><i aria-hidden="true" /><b><Check aria-hidden="true" /></b></span><div><AddressGlyph address="SPcosignfriend" size={compact ? 42 : 56} /><span>Sam</span></div></div>
       <div className="demo-copy"><span>BUILT</span><h3>Open source lounge</h3><p>We paired on the release flow and got it over the line.</p></div>
-      <button type="button" disabled={!ready} aria-pressed={complete} aria-describedby={statusId} onClick={() => setComplete((value) => !value)}>{complete ? <><RotateCcw size={16} /> Reset preview</> : <>Co-sign the moment <Check size={16} /></>}</button>
+      <button type="button" disabled={!ready} aria-pressed={complete} aria-describedby={statusId} onClick={() => setComplete((value) => !value)}>{complete ? <><RotateCcw size={16} aria-hidden="true" /> Reset preview</> : <>Co-sign the moment <Check size={16} aria-hidden="true" /></>}</button>
     </div>
   );
 }
