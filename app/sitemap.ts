@@ -1,3 +1,10 @@
 import type { MetadataRoute } from "next";
 import { publicEnv } from "@/lib/env";
-export default function sitemap(): MetadataRoute.Sitemap { return [{ url: publicEnv.appUrl, changeFrequency: "weekly", priority: 1 }, { url: `${publicEnv.appUrl}/app`, changeFrequency: "monthly", priority: 0.8 }]; }
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    { url: publicEnv.appUrl, changeFrequency: "weekly", priority: 1 },
+    { url: `${publicEnv.appUrl}/app`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${publicEnv.appUrl}/app/celo`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${publicEnv.appUrl}/app/stacks`, changeFrequency: "monthly", priority: 0.7 }
+  ];
+}
