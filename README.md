@@ -9,6 +9,7 @@ Use Node 22.13.0 or newer.
 ```bash
 npm install
 cp .env.example .env
+npx playwright install
 npm run dev
 ```
 
@@ -20,6 +21,8 @@ The landing preview works without contracts. Live app routes intentionally show 
 npm run verify
 npm run test:e2e
 ```
+
+Install Playwright browsers once per machine before running `npm run test:e2e`.
 
 Individual checks are available through `lint`, `typecheck`, `compile:celo`, `test:celo`, `check:stacks`, `test:stacks`, `test:ui`, and `build` scripts.
 
