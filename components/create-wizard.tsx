@@ -56,7 +56,7 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
   return (
     <div className="modal-backdrop" role="presentation">
       <section className="wizard" role="dialog" aria-modal="true" aria-labelledby="wizard-title">
-        <header><div><span className="eyebrow">New CoSign · {step}/3</span><h2 id="wizard-title">{step === 1 ? "What happened?" : step === 2 ? "Add the signal." : "Make it public."}</h2></div><button type="button" className="icon-button" onClick={onClose} aria-label="Close" disabled={submitting}><X /></button></header>
+        <header><div><span className="eyebrow">New CoSign · {step}/3</span><h2 id="wizard-title">{step === 1 ? "What happened?" : step === 2 ? "Add the signal." : "Make it public."}</h2></div><button type="button" className="icon-button" onClick={onClose} aria-label="Close" disabled={submitting}><X aria-hidden="true" /></button></header>
         <div className="wizard-progress"><i style={{ width: `${step * 33.333}%` }} /></div>
         {step === 1 ? <div className="kind-grid">{kinds.map((item) => <button type="button" key={item.id} className={kind === item.id ? "selected" : ""} aria-pressed={kind === item.id} onClick={() => setKind(item.id)}><CategoryIcon kind={item.id} size={25} /><strong>{item.label}</strong><span>{item.description}</span></button>)}</div> : null}
         {step === 2 ? <div className="form-stack">
