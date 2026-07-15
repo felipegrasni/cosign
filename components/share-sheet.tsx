@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Check, Copy, ExternalLink, Share2, X } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 
@@ -18,6 +18,7 @@ export function ShareSheet({
   variant?: ShareSheetVariant;
 }) {
   const [copied, setCopied] = useState(false);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const copyLabel = variant === "receipt" ? "Copy receipt link" : "Copy invitation link";
   const statusMessage = variant === "receipt" ? "Receipt link copied to clipboard." : "Invitation link copied to clipboard.";
   const title = variant === "receipt" ? "Share the receipt." : "Pass the signal.";
@@ -34,10 +35,22 @@ export function ShareSheet({
     });
     else await copy();
   };
+
+  useEffect(() => {
+    closeButtonRef.current?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [onClose]);
+
   return (
     <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
       <section className="share-sheet" role="dialog" aria-modal="true" aria-labelledby="share-title" aria-describedby="share-description">
-        <button type="button" className="icon-button close" onClick={onClose} aria-label="Close"><X aria-hidden="true" /></button>
+        <button ref={closeButtonRef} type="button" className="icon-button close" onClick={onClose} aria-label="Close"><X aria-hidden="true" /></button>
         <span className="eyebrow">{variant === "receipt" ? "Receipt ready" : "Invitation ready"}</span>
         <h2 id="share-title">{title}</h2>
         <p id="share-description">{description}</p>
