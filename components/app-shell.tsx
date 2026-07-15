@@ -12,19 +12,24 @@ export function AppShell({ network, account, connecting, isMiniPay, onConnect, o
   network: Network; account: string; connecting: boolean; isMiniPay: boolean;
   onConnect(): void; onDisconnect(): void; onCreate?(): void; children: ReactNode;
 }) {
+  const networkLabel = network === "celo" ? "Celo" : "Stacks";
+
   return (
     <div className="app-page">
       <header className="app-topbar">
         <Link href="/" className="app-brand" aria-label="CoSign home"><BrandMark /><strong>CoSign</strong></Link>
         <div className="app-actions">
           <details className="network-menu">
-            <summary aria-label={`Choose network, current network ${network === "celo" ? "Celo" : "Stacks"}`}><span className={`network-dot ${network}`} aria-hidden="true" />{network === "celo" ? "Celo" : "Stacks"}<ChevronDown size={15} aria-hidden="true" /></summary>
-            <div><Link href="/app/celo">Celo</Link><Link href="/app/stacks">Stacks</Link></div>
+            <summary aria-label={`Choose network. Current network: ${networkLabel}.`}><span className={`network-dot ${network}`} aria-hidden="true" />{networkLabel}<ChevronDown size={15} aria-hidden="true" /></summary>
+            <div>
+              <Link href="/app/celo" aria-current={network === "celo" ? "page" : undefined}>Celo</Link>
+              <Link href="/app/stacks" aria-current={network === "stacks" ? "page" : undefined}>Stacks</Link>
+            </div>
           </details>
           {onCreate ? <button type="button" className="button compact" onClick={onCreate}><Plus size={17} aria-hidden="true" /> New card</button> : null}
           {account ? (
             <details className="wallet-menu">
-              <summary aria-label="Open wallet menu"><AddressGlyph address={account} size={34} /><span>{shortAddress(account, 4)}</span></summary>
+              <summary aria-label={`Open wallet menu for ${account}`} title={account}><AddressGlyph address={account} size={34} /><span>{shortAddress(account, 4)}</span></summary>
               <div><Link href={`/app/${network}/profile/${account}`}>Public profile</Link><button type="button" onClick={onDisconnect}><LogOut size={15} aria-hidden="true" /> Disconnect</button></div>
             </details>
           ) : isMiniPay ? <span className="connecting-note">Connecting MiniPay…</span> : (
