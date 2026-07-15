@@ -20,6 +20,7 @@ export function ShareSheet({
   const [copied, setCopied] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const copyLabel = variant === "receipt" ? "Copy receipt link" : "Copy invitation link";
+  const copyButtonText = copied ? "Copied" : "Copy link";
   const statusMessage = variant === "receipt" ? "Receipt link copied to clipboard." : "Invitation link copied to clipboard.";
   const title = variant === "receipt" ? "Share the receipt." : "Pass the signal.";
   const description = variant === "receipt"
@@ -55,7 +56,13 @@ export function ShareSheet({
         <h2 id="share-title">{title}</h2>
         <p id="share-description">{description}</p>
         <div className="qr-wrap"><QRCodeSVG value={url} size={210} bgColor="#fffaf2" fgColor="#17151f" level="M" aria-hidden="true" focusable="false" /></div>
-        <div className="copy-row"><code>{url}</code><button type="button" onClick={copy} aria-label={copyLabel}>{copied ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}</button></div>
+        <div className="copy-row">
+          <code>{url}</code>
+          <button type="button" onClick={copy} aria-label={copyLabel}>
+            {copied ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
+            <span>{copyButtonText}</span>
+          </button>
+        </div>
         <p className="sr-only" role="status" aria-live="polite">{copied ? statusMessage : ""}</p>
         <div className="share-actions"><button type="button" className="button" onClick={share}><Share2 size={18} aria-hidden="true" /> {shareLabel}</button>{explorerUrl ? <a className="button secondary" href={explorerUrl} target="_blank" rel="noreferrer" aria-label="Open in explorer (opens in a new tab)">Explorer <ExternalLink size={17} aria-hidden="true" /></a> : null}</div>
       </section>
