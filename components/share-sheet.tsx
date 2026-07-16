@@ -27,6 +27,7 @@ export function ShareSheet({
     ? "Let someone scan this code or open the link to view the shared receipt."
     : "Let the other person scan this code or send them the link.";
   const shareLabel = variant === "receipt" ? "Share receipt" : "Share invitation";
+  const closeLabel = variant === "receipt" ? "Close share receipt dialog" : "Close share invitation dialog";
   const copy = async () => { await navigator.clipboard.writeText(url); setCopied(true); window.setTimeout(() => setCopied(false), 1600); };
   const share = async () => {
     if (navigator.share) await navigator.share({
@@ -51,7 +52,7 @@ export function ShareSheet({
   return (
     <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
       <section className="share-sheet" role="dialog" aria-modal="true" aria-labelledby="share-title" aria-describedby="share-description">
-        <button ref={closeButtonRef} type="button" className="icon-button close" onClick={onClose} aria-label="Close"><X aria-hidden="true" /></button>
+        <button ref={closeButtonRef} type="button" className="icon-button close" onClick={onClose} aria-label={closeLabel}><X aria-hidden="true" /></button>
         <span className="eyebrow">{variant === "receipt" ? "Receipt ready" : "Invitation ready"}</span>
         <h2 id="share-title">{title}</h2>
         <p id="share-description">{description}</p>
