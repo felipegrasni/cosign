@@ -4,7 +4,7 @@ test("landing preview completes and respects primary navigation", async ({ page 
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /Make the moment mutual/ })).toBeVisible();
   await page.getByRole("button", { name: /Co-sign the moment/ }).first().click();
-  await expect(page.getByText("Made mutual").first()).toBeVisible();
+  await expect(page.getByText("Mutual moment created").first()).toBeVisible();
   await Promise.all([
     page.waitForURL(/\/app$/, { timeout: 20_000 }),
     page.getByRole("link", { name: /Create a CoSign/ }).first().click()

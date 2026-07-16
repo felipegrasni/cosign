@@ -66,7 +66,7 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
 
   const stateCopy = useMemo(() => {
     if (!card || !status) return null;
-    if (status === "completed") return { icon: <Check aria-hidden="true" />, title: "Made mutual", text: "Both wallets have confirmed this moment." };
+    if (status === "completed") return { icon: <Check aria-hidden="true" />, title: "Mutual moment created", text: "Both wallets have confirmed this moment." };
     if (status === "cancelled") return { icon: <Ban aria-hidden="true" />, title: "Invitation cancelled", text: "The original public card remains readable." };
     if (status === "expired") return { icon: <Clock3 aria-hidden="true" />, title: "Invitation expired", text: "This card can no longer receive a co-signature." };
     if (isCreator) return { icon: <Share2 aria-hidden="true" />, title: "Waiting for the other wallet", text: "Share the invitation link or QR code." };
