@@ -57,6 +57,12 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
     : transaction.phase === "submitted" || transaction.phase === "confirming"
       ? `Confirming on ${network === "celo" ? "Celo" : "Stacks"}…`
       : action === "cancel" ? "Cancelling…" : "Waiting for wallet…";
+  const creatorLabel = `View creator profile for ${card?.creator ?? ""}`;
+  const signerLabel = card?.signer
+    ? `View co-signer profile for ${card.signer}`
+    : card?.intendedSigner
+      ? `Invitation intended for ${card.intendedSigner}`
+      : "Open invitation available to any eligible wallet";
 
   const stateCopy = useMemo(() => {
     if (!card || !status) return null;
@@ -74,9 +80,9 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
       {!client.repository.configured ? <section className="state-panel"><AlertTriangle aria-hidden="true" /><h1>Contract connection pending</h1><p>This route needs its deployed {network} contract address.</p></section> : loading ? <section className="state-panel"><span className="loader" /><p>Reading the signal…</p></section> : error ? <section className="state-panel"><AlertTriangle aria-hidden="true" /><h1>Could not load this card</h1><p>{error}</p><button type="button" className="button secondary" onClick={() => void load()}><RefreshCw aria-hidden="true" /> Try again</button></section> : !card ? <section className="state-panel"><AlertTriangle aria-hidden="true" /><h1>CoSign not found</h1><p>Check the invitation link and selected network.</p></section> : <section className={`receipt status-${status}`}>
         <div className="receipt-top"><span className="category"><CategoryIcon kind={card.kind} /> {kindLabel(card.kind)}</span><span className="status-stamp">{status}</span></div>
         <div className="receipt-people">
-          <Link href={`/app/${network}/profile/${card.creator}`}><AddressGlyph address={card.creator} size={62} /><span>Creator</span><strong>{shortAddress(card.creator)}</strong></Link>
+          <Link href={`/app/${network}/profile/${card.creator}`} aria-label={creatorLabel}><AddressGlyph address={card.creator} size={62} /><span>Creator</span><strong>{shortAddress(card.creator)}</strong></Link>
           <div className="big-connection" aria-hidden="true"><i /><BrandCheck complete={status === "completed"} /></div>
-          {card.signer ? <Link href={`/app/${network}/profile/${card.signer}`}><AddressGlyph address={card.signer} size={62} /><span>Co-signer</span><strong>{shortAddress(card.signer)}</strong></Link> : <div><AddressGlyph address={card.intendedSigner || "open"} size={62} /><span>{card.intendedSigner ? "Invited wallet" : "Open invitation"}</span><strong>{card.intendedSigner ? shortAddress(card.intendedSigner) : "Anyone eligible"}</strong></div>}
+          {card.signer ? <Link href={`/app/${network}/profile/${card.signer}`} aria-label={signerLabel}><AddressGlyph address={card.signer} size={62} /><span>Co-signer</span><strong>{shortAddress(card.signer)}</strong></Link> : <div aria-label={signerLabel}><AddressGlyph address={card.intendedSigner || "open"} size={62} /><span>{card.intendedSigner ? "Invited wallet" : "Open invitation"}</span><strong>{card.intendedSigner ? shortAddress(card.intendedSigner) : "Anyone eligible"}</strong></div>}
         </div>
         <div className="receipt-copy"><span>#{card.id.toString()} · {network}</span><h1>{card.context}</h1><p>{card.note}</p></div>
         <dl className="receipt-meta"><div><dt>Created</dt><dd>{formatMoment(card.createdAt)}</dd></div><div><dt>Expires</dt><dd>{formatMoment(card.expiresAt)}</dd></div>{card.completedAt ? <div><dt>Completed</dt><dd>{formatMoment(card.completedAt)}</dd></div> : null}</dl>
