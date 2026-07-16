@@ -25,6 +25,7 @@ export function Dashboard({ network }: { network: Network }) {
   const items = tab === "created" ? created.items : tab === "signed" ? signed.items : pending;
   const state = tab === "signed" ? signed : created;
   const tabPanelId = `dashboard-panel-${tab}`;
+  const refreshing = created.loading || signed.loading;
 
   return (
     <AppShell network={network} account={client.account} connecting={client.connecting} isMiniPay={client.isMiniPay} onConnect={() => void client.connect()} onDisconnect={() => void client.disconnect()} onCreate={client.connected && client.repository.configured ? () => setWizard(true) : undefined}>
@@ -38,7 +39,9 @@ export function Dashboard({ network }: { network: Network }) {
           <button type="button" id="dashboard-tab-created" role="tab" className={tab === "created" ? "active" : ""} aria-selected={tab === "created"} aria-controls="dashboard-panel-created" onClick={() => setTab("created")}>Created <span>{created.total}</span></button>
           <button type="button" id="dashboard-tab-signed" role="tab" className={tab === "signed" ? "active" : ""} aria-selected={tab === "signed"} aria-controls="dashboard-panel-signed" onClick={() => setTab("signed")}>Co-signed <span>{signed.total}</span></button>
           <button type="button" id="dashboard-tab-pending" role="tab" className={tab === "pending" ? "active" : ""} aria-selected={tab === "pending"} aria-controls="dashboard-panel-pending" onClick={() => setTab("pending")}>Pending <span>{pending.length}</span></button>
-          <button type="button" className="refresh-button" onClick={() => void Promise.all([created.refresh(), signed.refresh()])} aria-label="Refresh card lists"><RefreshCw size={17} aria-hidden="true" /></button>
+          <button type="button" className="refresh-button" onClick={() => void Promise.all([created.refresh(), signed.refresh()])} aria-label={refreshing ? "Refreshing card lists" : "Refresh card lists"} aria-busy={refreshing} disabled={refreshing}>
+            <RefreshCw size={17} aria-hidden="true" className={refreshing ? "is-spinning" : undefined} />
+          </button>
         </nav>
         <div id={tabPanelId} role="tabpanel" aria-labelledby={`dashboard-tab-${tab}`}>
           {state.loading ? <section className="state-panel compact"><span className="loader" /><p>Listening for your cards…</p></section> : state.error ? <section className="state-panel compact"><Inbox aria-hidden="true" /><p>{state.error}</p><button type="button" className="button secondary" onClick={() => void state.refresh()}>Try again</button></section> : items.length ? <div className="card-grid">{items.map((item) => <HandshakeCard key={`${network}-${item.id}`} handshake={item} />)}</div> : <section className="empty-cards"><Inbox aria-hidden="true" /><h2>No cards here yet.</h2><p>{tab === "signed" ? "Cards you co-sign will collect here." : tab === "pending" ? "Invitations waiting for a co-sign will collect here." : "Create the first signal and invite someone in."}</p>{tab !== "signed" ? <button type="button" className="button" onClick={() => setWizard(true)}><Plus aria-hidden="true" /> Create a CoSign</button> : null}</section>}
