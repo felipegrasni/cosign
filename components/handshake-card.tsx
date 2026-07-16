@@ -9,6 +9,13 @@ export function HandshakeCard({ handshake, linked = true }: { handshake: Handsha
   const status = getStatus(handshake);
   const counterpartLabel = handshake.signer ? shortAddress(handshake.signer, 4) : handshake.intendedSigner ? "invited signer" : "open signer";
   const linkLabel = `Open ${kindLabel(handshake.kind)} card, ${status}, from ${shortAddress(handshake.creator, 4)} to ${counterpartLabel}`;
+  const creatorLabel = `Creator wallet ${handshake.creator}`;
+  const signerText = handshake.signer ? shortAddress(handshake.signer, 4) : handshake.intendedSigner ? "Invited" : "Open";
+  const signerLabel = handshake.signer
+    ? `Co-signer wallet ${handshake.signer}`
+    : handshake.intendedSigner
+      ? `Invited wallet ${handshake.intendedSigner}`
+      : "Open invitation";
   const content = (
     <article className={`handshake-card status-${status}`}>
       <header>
@@ -16,9 +23,9 @@ export function HandshakeCard({ handshake, linked = true }: { handshake: Handsha
         <span className="status-stamp">{status}</span>
       </header>
       <div className="card-people">
-        <div><AddressGlyph address={handshake.creator} size={38} /><span>{shortAddress(handshake.creator, 4)}</span></div>
+        <div><AddressGlyph address={handshake.creator} size={38} /><span aria-label={creatorLabel} title={handshake.creator}>{shortAddress(handshake.creator, 4)}</span></div>
         <span className="connection-line" aria-hidden="true"><i /></span>
-        <div><AddressGlyph address={handshake.signer || handshake.intendedSigner || "open"} size={38} /><span>{handshake.signer ? shortAddress(handshake.signer, 4) : handshake.intendedSigner ? "Invited" : "Open"}</span></div>
+        <div><AddressGlyph address={handshake.signer || handshake.intendedSigner || "open"} size={38} /><span aria-label={signerLabel} title={handshake.signer || handshake.intendedSigner || undefined}>{signerText}</span></div>
       </div>
       <h3>{handshake.context}</h3>
       <p>{handshake.note}</p>
