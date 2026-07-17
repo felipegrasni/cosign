@@ -7,8 +7,6 @@ import type { Handshake } from "@/lib/types";
 
 export function HandshakeCard({ handshake, linked = true }: { handshake: Handshake; linked?: boolean }) {
   const status = getStatus(handshake);
-  const counterpartLabel = handshake.signer ? shortAddress(handshake.signer, 4) : handshake.intendedSigner ? "invited signer" : "open signer";
-  const linkLabel = `Open ${kindLabel(handshake.kind)} card, ${status}, from ${shortAddress(handshake.creator, 4)} to ${counterpartLabel}`;
   const creatorLabel = `Creator wallet ${handshake.creator}`;
   const signerText = handshake.signer ? shortAddress(handshake.signer, 4) : handshake.intendedSigner ? "Invited" : "Open";
   const signerLabel = handshake.signer
@@ -16,6 +14,7 @@ export function HandshakeCard({ handshake, linked = true }: { handshake: Handsha
     : handshake.intendedSigner
       ? `Invited wallet ${handshake.intendedSigner}`
       : "Open invitation";
+  const linkLabel = `Open ${kindLabel(handshake.kind)} card, ${status}, from ${creatorLabel.toLowerCase()} to ${signerLabel.toLowerCase()}`;
   const content = (
     <article className={`handshake-card status-${status}`}>
       <header>
