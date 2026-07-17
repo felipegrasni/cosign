@@ -73,12 +73,13 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
     if (wrongWallet) return { icon: <UserRoundX aria-hidden="true" />, title: "Addressed to another wallet", text: "You can read this card, but only its intended signer can complete it." };
     return { icon: <Share2 aria-hidden="true" />, title: "An invitation for you", text: "Co-sign to confirm this shared moment." };
   }, [card, isCreator, status, wrongWallet]);
+  const statusLabel = status ? status[0].toUpperCase() + status.slice(1) : "";
 
   return (
     <AppShell network={network} account={client.account} connecting={client.connecting} isMiniPay={client.isMiniPay} onConnect={() => void client.connect()} onDisconnect={() => void client.disconnect()}>
       <Link className="back-link" href={`/app/${network}`}><ArrowLeft size={17} aria-hidden="true" /> Back to cards</Link>
       {!client.repository.configured ? <section className="state-panel"><AlertTriangle aria-hidden="true" /><h1>Contract connection pending</h1><p>This route needs its deployed {network} contract address.</p></section> : loading ? <section className="state-panel"><span className="loader" /><p>Reading the signal…</p></section> : error ? <section className="state-panel"><AlertTriangle aria-hidden="true" /><h1>Could not load this card</h1><p>{error}</p><button type="button" className="button secondary" onClick={() => void load()}><RefreshCw aria-hidden="true" /> Try again</button></section> : !card ? <section className="state-panel"><AlertTriangle aria-hidden="true" /><h1>CoSign not found</h1><p>Check the invitation link and selected network.</p></section> : <section className={`receipt status-${status}`}>
-        <div className="receipt-top"><span className="category"><CategoryIcon kind={card.kind} /> {kindLabel(card.kind)}</span><span className="status-stamp">{status}</span></div>
+        <div className="receipt-top"><span className="category"><CategoryIcon kind={card.kind} /> {kindLabel(card.kind)}</span><span className="status-stamp">{statusLabel}</span></div>
         <div className="receipt-people">
           <Link href={`/app/${network}/profile/${card.creator}`} aria-label={creatorLabel}><AddressGlyph address={card.creator} size={62} /><span>Creator</span><strong>{shortAddress(card.creator)}</strong></Link>
           <div className="big-connection" aria-hidden="true"><i /><BrandCheck complete={status === "completed"} /></div>
