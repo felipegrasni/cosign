@@ -32,8 +32,10 @@ export function AppShell({ network, account, connecting, isMiniPay, onConnect, o
               <summary aria-label={`Open wallet menu for ${account}`} title={account}><AddressGlyph address={account} size={34} /><span>{shortAddress(account, 4)}</span></summary>
               <div><Link href={`/app/${network}/profile/${account}`}>Public profile</Link><button type="button" onClick={onDisconnect}><LogOut size={15} aria-hidden="true" /> Disconnect</button></div>
             </details>
-          ) : isMiniPay ? <span className="connecting-note">Connecting MiniPay…</span> : (
-            <button type="button" className="button secondary compact" onClick={onConnect} disabled={connecting}><Wallet size={17} aria-hidden="true" /> {connecting ? "Connecting wallet" : "Connect wallet"}</button>
+          ) : isMiniPay ? <span className="connecting-note" role="status" aria-live="polite">Connecting MiniPay…</span> : (
+            <button type="button" className="button secondary compact" onClick={onConnect} disabled={connecting} aria-busy={connecting} aria-label={connecting ? "Connecting wallet" : "Connect wallet"}>
+              <Wallet size={17} aria-hidden="true" /> {connecting ? "Connecting wallet…" : "Connect wallet"}
+            </button>
           )}
         </div>
       </header>
