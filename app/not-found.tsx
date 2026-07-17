@@ -3,5 +3,5 @@ import { ArrowLeft } from "lucide-react";
 import { BrandMark } from "@/components/brand-mark";
 
 export default function NotFound() {
-  return <main id="main-content" className="not-found"><BrandMark /><span className="eyebrow">Signal lost</span><h1>This page could not be found.</h1><p>The link may be incomplete, expired, or moved. Start again from the CoSign home page.</p><Link className="button" href="/"><ArrowLeft aria-hidden="true" /> Back to home page</Link></main>;
+  return <main id="main-content" className="not-found"><BrandMark /><span className="eyebrow">Signal lost</span><h1>This page could not be found.</h1><p>The link may be incomplete, expired, or moved. Start again by choosing the network both wallets will use.</p><Link className="button" href="/app"><ArrowLeft aria-hidden="true" /> Choose a network</Link></main>;
 }
