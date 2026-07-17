@@ -4,17 +4,20 @@ import "@fontsource-variable/manrope";
 import "./globals.css";
 import { publicEnv } from "@/lib/env";
 
+const description = "Create a public collaboration card and invite another wallet to make it mutual on Celo or Stacks.";
+const socialDescription = "Create a shared public collaboration card for two wallets on Celo or Stacks.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(publicEnv.appUrl),
   title: { default: "CoSign — Make the moment mutual", template: "%s · CoSign" },
-  description: "Create a public collaboration card and let the other wallet make it mutual on Celo or Stacks.",
+  description,
   applicationName: "CoSign",
   keywords: ["CoSign", "Celo", "Stacks", "wallet collaboration", "co-signing", "public receipt"],
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "CoSign", statusBarStyle: "default" },
   icons: { icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/icon-192.png", sizes: "192x192" }], apple: "/apple-touch-icon.png" },
-  openGraph: { title: "CoSign — Make the moment mutual", description: "Two wallets. One shared public receipt.", images: [{ url: "/og.png", width: 1200, height: 630 }], type: "website" },
-  twitter: { card: "summary_large_image", title: "CoSign — Make the moment mutual", description: "Two wallets. One shared public receipt.", images: ["/og.png"] },
+  openGraph: { title: "CoSign — Make the moment mutual", description: socialDescription, images: [{ url: "/og.png", width: 1200, height: 630 }], type: "website" },
+  twitter: { card: "summary_large_image", title: "CoSign — Make the moment mutual", description: socialDescription, images: ["/og.png"] },
   other: publicEnv.talentVerification ? { "talentapp:project_verification": publicEnv.talentVerification } : undefined
 };
 
