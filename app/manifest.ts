@@ -14,10 +14,27 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     background_color: "#F5F0E7",
     theme_color: "#F5F0E7",
+    categories: ["social", "productivity"],
     icons: [
       { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
       { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
       { src: "/icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" }
+    ],
+    shortcuts: [
+      {
+        name: "Open Celo",
+        short_name: "Celo",
+        description: "Jump straight into the Celo CoSign app.",
+        url: "/app/celo",
+        icons: [{ src: "/icon-192.png", sizes: "192x192", type: "image/png" }]
+      },
+      {
+        name: "Open Stacks",
+        short_name: "Stacks",
+        description: "Jump straight into the Stacks CoSign app.",
+        url: "/app/stacks",
+        icons: [{ src: "/icon-192.png", sizes: "192x192", type: "image/png" }]
+      }
     ]
   };
 }
