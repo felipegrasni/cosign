@@ -16,6 +16,7 @@ export function AppShell({ network, account, connecting, isMiniPay, onConnect, o
 
   return (
     <div className="app-page">
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <header className="app-topbar">
         <Link href="/" className="app-brand" aria-label="CoSign home"><BrandMark /><strong>CoSign</strong></Link>
         <div className="app-actions">
