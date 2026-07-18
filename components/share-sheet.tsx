@@ -23,6 +23,8 @@ export function ShareSheet({
   const copyButtonText = copied ? "Copied" : "Copy link";
   const statusMessage = variant === "receipt" ? "Receipt link copied to clipboard." : "Invitation link copied to clipboard.";
   const title = variant === "receipt" ? "Share the receipt." : "Pass the signal.";
+  const descriptionId = "share-description";
+  const hintId = "share-hint";
   const description = variant === "receipt"
     ? "Let someone scan this code or open the link to view the shared receipt."
     : "Let the other person scan this code or send them the link.";
@@ -54,13 +56,13 @@ export function ShareSheet({
 
   return (
     <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
-      <section className="share-sheet" role="dialog" aria-modal="true" aria-labelledby="share-title" aria-describedby="share-description">
+      <section className="share-sheet" role="dialog" aria-modal="true" aria-labelledby="share-title" aria-describedby={`${descriptionId} ${hintId}`}>
         <button ref={closeButtonRef} type="button" className="icon-button close" onClick={onClose} aria-label={closeLabel}><X aria-hidden="true" /></button>
         <span className="eyebrow">{variant === "receipt" ? "Receipt ready" : "Invitation ready"}</span>
         <h2 id="share-title">{title}</h2>
-        <p id="share-description">{description}</p>
+        <p id={descriptionId}>{description}</p>
         <div className="qr-wrap"><QRCodeSVG value={url} size={210} bgColor="#fffaf2" fgColor="#17151f" level="M" aria-hidden="true" focusable="false" /></div>
-        <p className="share-hint">{qrHint}</p>
+        <p id={hintId} className="share-hint">{qrHint}</p>
         <div className="copy-row">
           <code>{url}</code>
           <button type="button" onClick={copy} aria-label={copyLabel}>
