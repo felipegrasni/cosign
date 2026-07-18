@@ -22,8 +22,8 @@ export function AppShell({ network, account, connecting, isMiniPay, onConnect, o
           <details className="network-menu">
             <summary aria-label={`Choose network. Current network: ${networkLabel}.`}><span className={`network-dot ${network}`} aria-hidden="true" />{networkLabel}<ChevronDown size={15} aria-hidden="true" /></summary>
             <div>
-              <Link href="/app/celo" aria-current={network === "celo" ? "page" : undefined}>Celo</Link>
-              <Link href="/app/stacks" aria-current={network === "stacks" ? "page" : undefined}>Stacks</Link>
+              <Link href="/app/celo" aria-current={network === "celo" ? "page" : undefined} aria-label="Switch to the Celo network dashboard">Celo</Link>
+              <Link href="/app/stacks" aria-current={network === "stacks" ? "page" : undefined} aria-label="Switch to the Stacks network dashboard">Stacks</Link>
             </div>
           </details>
           {onCreate ? <button type="button" className="button compact" onClick={onCreate}><Plus size={17} aria-hidden="true" /> Create a CoSign</button> : null}
