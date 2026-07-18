@@ -193,6 +193,7 @@ summary::-webkit-details-marker { display: none; }
 .field-error, .form-error { color: var(--coral-dark); font-weight: 700; }
 .form-stack fieldset { border: 0; padding: 0; margin: 0; }
 .form-stack legend { margin-bottom: 8px; font-weight: 800; font-size: .83rem; }
+.field-hint { margin: 10px 2px 0; color: var(--muted); font-size: .75rem; line-height: 1.5; }
 .segmented { display: flex; padding: 4px; border: 1px solid var(--line); border-radius: 13px; background: var(--paper); }
 .segmented button { flex: 1; min-height: 41px; border: 0; border-radius: 9px; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 750; font-size: .78rem; }
 .segmented button.active { background: var(--ink); color: white; }
