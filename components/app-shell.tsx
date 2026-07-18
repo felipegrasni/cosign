@@ -34,8 +34,8 @@ export function AppShell({ network, account, connecting, isMiniPay, onConnect, o
               <div><Link href={`/app/${network}/profile/${account}`} aria-label={`Open the ${networkLabel} public profile for ${account}`}>Public profile</Link><button type="button" onClick={onDisconnect} aria-label={`Disconnect ${account} from CoSign`}><LogOut size={15} aria-hidden="true" /> Disconnect</button></div>
             </details>
           ) : isMiniPay ? <span className="connecting-note" role="status" aria-live="polite">Connecting MiniPay…</span> : (
-            <button type="button" className="button secondary compact" onClick={onConnect} disabled={connecting} aria-busy={connecting} aria-label={connecting ? "Connecting wallet" : "Connect wallet"}>
-              <Wallet size={17} aria-hidden="true" /> {connecting ? "Connecting wallet…" : "Connect wallet"}
+            <button type="button" className="button secondary compact" onClick={onConnect} disabled={connecting} aria-busy={connecting} aria-label={connecting ? `Connecting ${networkLabel} wallet` : `Connect ${networkLabel} wallet`}>
+              <Wallet size={17} aria-hidden="true" /> {connecting ? `Connecting ${networkLabel}…` : `Connect ${networkLabel}`}
             </button>
           )}
         </div>
