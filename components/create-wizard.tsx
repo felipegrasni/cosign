@@ -13,6 +13,7 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
   network: Network; account: string; repository: HandshakeRepository; onClose(): void;
   onCreated(id: bigint, result: TransactionResult): void;
 }) {
+  const totalSteps = 3;
   const [step, setStep] = useState(1);
   const [kind, setKind] = useState<HandshakeKind>(0);
   const [context, setContext] = useState("");
@@ -68,8 +69,8 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
   return (
     <div className="modal-backdrop" role="presentation">
       <section className="wizard" role="dialog" aria-modal="true" aria-labelledby="wizard-title">
-        <header><div><span className="eyebrow">New CoSign · {step}/3</span><h2 id="wizard-title">{step === 1 ? "What happened?" : step === 2 ? "Add the signal." : "Review before publishing."}</h2></div><button ref={closeButtonRef} type="button" className="icon-button" onClick={onClose} aria-label="Close create wizard" disabled={submitting}><X aria-hidden="true" /></button></header>
-        <div className="wizard-progress"><i style={{ width: `${step * 33.333}%` }} /></div>
+        <header><div><span className="eyebrow">New CoSign · {step}/{totalSteps}</span><h2 id="wizard-title">{step === 1 ? "What happened?" : step === 2 ? "Add the signal." : "Review before publishing."}</h2></div><button ref={closeButtonRef} type="button" className="icon-button" onClick={onClose} aria-label="Close create wizard" disabled={submitting}><X aria-hidden="true" /></button></header>
+        <div className="wizard-progress" role="progressbar" aria-label="Create CoSign progress" aria-valuemin={1} aria-valuemax={totalSteps} aria-valuenow={step} aria-valuetext={`Step ${step} of ${totalSteps}`}><i style={{ width: `${(step / totalSteps) * 100}%` }} /></div>
         {step === 1 ? <div className="kind-grid" role="radiogroup" aria-label="CoSign category">{kinds.map((item) => <button type="button" role="radio" key={item.id} className={kind === item.id ? "selected" : ""} aria-checked={kind === item.id} onClick={() => setKind(item.id)}><CategoryIcon kind={item.id} size={25} /><strong>{item.label}</strong><span>{item.description}</span></button>)}</div> : null}
         {step === 2 ? <div className="form-stack">
           <label>Context <span>{cleanAscii(context, CONTEXT_LIMIT).length}/{CONTEXT_LIMIT}</span><input value={context} maxLength={CONTEXT_LIMIT} onChange={(event) => setContext(event.target.value)} placeholder="ETH Lisbon · Open source lounge" aria-invalid={Boolean(validation.errors.context && context)} aria-describedby={validation.errors.context && context ? contextErrorId : undefined} />{validation.errors.context && context ? <small id={contextErrorId} className="field-error">{validation.errors.context}</small> : null}</label>
