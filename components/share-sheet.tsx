@@ -26,6 +26,9 @@ export function ShareSheet({
   const description = variant === "receipt"
     ? "Let someone scan this code or open the link to view the shared receipt."
     : "Let the other person scan this code or send them the link.";
+  const qrHint = variant === "receipt"
+    ? "Scan with another device or copy the receipt link below."
+    : "Scan with another device or copy the invitation link below.";
   const shareLabel = variant === "receipt" ? "Share receipt" : "Share invitation";
   const closeLabel = variant === "receipt" ? "Close share receipt dialog" : "Close share invitation dialog";
   const copy = async () => { await navigator.clipboard.writeText(url); setCopied(true); window.setTimeout(() => setCopied(false), 1600); };
@@ -57,6 +60,7 @@ export function ShareSheet({
         <h2 id="share-title">{title}</h2>
         <p id="share-description">{description}</p>
         <div className="qr-wrap"><QRCodeSVG value={url} size={210} bgColor="#fffaf2" fgColor="#17151f" level="M" aria-hidden="true" focusable="false" /></div>
+        <p className="share-hint">{qrHint}</p>
         <div className="copy-row">
           <code>{url}</code>
           <button type="button" onClick={copy} aria-label={copyLabel}>

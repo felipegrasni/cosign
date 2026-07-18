@@ -216,6 +216,7 @@ summary::-webkit-details-marker { display: none; }
 .share-sheet .close { position: absolute; right: 18px; top: 18px; }
 .share-sheet > p { color: var(--muted); }
 .qr-wrap { width: fit-content; margin: 25px auto; padding: 17px; background: var(--paper-soft); border: 2px solid var(--ink); border-radius: 18px; box-shadow: 6px 6px 0 var(--aqua); }
+.share-hint { margin: -4px 0 18px; color: var(--muted); font-size: .8rem; }
 .copy-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; text-align: left; }
 .copy-row code { padding: 12px; background: var(--paper); border-radius: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .71rem; }
 .copy-row button { border: 1px solid var(--line); border-radius: 10px; background: white; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 12px; min-width: 118px; font: inherit; font-weight: 600; white-space: nowrap; }
