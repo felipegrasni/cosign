@@ -272,6 +272,7 @@ summary::-webkit-details-marker { display: none; }
 .entry-grid a > svg:first-child { grid-column: 1 / -1; margin-bottom: 55px; color: var(--coral); width: 32px; height: 32px; }
 .entry-grid a span { font: 550 2.7rem "Fraunces Variable"; }
 .entry-grid a strong { grid-row: 3; color: var(--muted); font-size: .72rem; }
+.entry-grid a p { grid-column: 1 / -1; margin: 12px 0 0; color: var(--muted); font-size: .84rem; line-height: 1.55; }
 .not-found { place-content: center; text-align: center; justify-items: center; }
 .not-found > svg { width: 80px; color: var(--coral); }
 .not-found h1 { max-width: 770px; }
