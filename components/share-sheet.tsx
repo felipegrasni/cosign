@@ -33,6 +33,10 @@ export function ShareSheet({
     : "Scan with another device or copy the invitation link below.";
   const shareLabel = variant === "receipt" ? "Share receipt" : "Share invitation";
   const closeLabel = variant === "receipt" ? "Close share receipt dialog" : "Close share invitation dialog";
+  const explorerLabel = variant === "receipt" ? "View receipt on explorer" : "View invitation on explorer";
+  const explorerAriaLabel = variant === "receipt"
+    ? "View this receipt on the blockchain explorer (opens in a new tab)"
+    : "View this invitation on the blockchain explorer (opens in a new tab)";
   const copy = async () => { await navigator.clipboard.writeText(url); setCopied(true); window.setTimeout(() => setCopied(false), 1600); };
   const share = async () => {
     if (navigator.share) await navigator.share({
@@ -71,7 +75,7 @@ export function ShareSheet({
           </button>
         </div>
         <p className="sr-only" role="status" aria-live="polite">{copied ? statusMessage : ""}</p>
-        <div className="share-actions"><button type="button" className="button" onClick={share}><Share2 size={18} aria-hidden="true" /> {shareLabel}</button>{explorerUrl ? <a className="button secondary" href={explorerUrl} target="_blank" rel="noreferrer" aria-label="Open in explorer (opens in a new tab)">Explorer <ExternalLink size={17} aria-hidden="true" /></a> : null}</div>
+        <div className="share-actions"><button type="button" className="button" onClick={share}><Share2 size={18} aria-hidden="true" /> {shareLabel}</button>{explorerUrl ? <a className="button secondary" href={explorerUrl} target="_blank" rel="noreferrer" aria-label={explorerAriaLabel}>{explorerLabel} <ExternalLink size={17} aria-hidden="true" /></a> : null}</div>
       </section>
     </div>
   );
