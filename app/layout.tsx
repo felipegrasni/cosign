@@ -12,11 +12,13 @@ export const metadata: Metadata = {
   title: { default: "CoSign — Make the moment mutual", template: "%s · CoSign" },
   description,
   applicationName: "CoSign",
+  alternates: { canonical: "/" },
+  category: "social networking",
   keywords: ["CoSign", "Celo", "Stacks", "wallet collaboration", "co-signing", "public receipt"],
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "CoSign", statusBarStyle: "default" },
   icons: { icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/icon-192.png", sizes: "192x192" }], apple: "/apple-touch-icon.png" },
-  openGraph: { title: "CoSign — Make the moment mutual", description: socialDescription, images: [{ url: "/og.png", width: 1200, height: 630 }], type: "website" },
+  openGraph: { title: "CoSign — Make the moment mutual", description: socialDescription, url: "/", siteName: "CoSign", images: [{ url: "/og.png", width: 1200, height: 630 }], type: "website" },
   twitter: { card: "summary_large_image", title: "CoSign — Make the moment mutual", description: socialDescription, images: ["/og.png"] },
   other: publicEnv.talentVerification ? { "talentapp:project_verification": publicEnv.talentVerification } : undefined
 };
