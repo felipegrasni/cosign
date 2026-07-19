@@ -64,7 +64,7 @@ export function ShareSheet({
         <div className="qr-wrap"><QRCodeSVG value={url} size={210} bgColor="#fffaf2" fgColor="#17151f" level="M" aria-hidden="true" focusable="false" /></div>
         <p id={hintId} className="share-hint">{qrHint}</p>
         <div className="copy-row">
-          <code>{url}</code>
+          <code aria-label={variant === "receipt" ? "Receipt link" : "Invitation link"} title={url}>{url}</code>
           <button type="button" onClick={copy} aria-label={copyLabel}>
             {copied ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
             <span>{copyButtonText}</span>
