@@ -15,7 +15,7 @@ describe("CreateWizard", () => {
     const user = userEvent.setup();
     const created = vi.fn();
     render(<CreateWizard network="celo" account="0x1111111111111111111111111111111111111111" repository={repository} onClose={vi.fn()} onCreated={created} />);
-    await user.click(screen.getByRole("button", { name: /Built/ }));
+    await user.click(screen.getByRole("radio", { name: /Built/ }));
     await user.click(screen.getByRole("button", { name: /Continue/ }));
     await user.type(screen.getByLabelText(/Context/), "Open source lounge");
     await user.type(screen.getByLabelText(/Note/), "We shipped together.");
@@ -60,5 +60,16 @@ describe("CreateWizard", () => {
     expect(screen.getByRole("button", { name: /Confirming on Stacks/ })).toBeDisabled();
     confirm({ hash: "0xabc", explorerUrl: "https://example.test/0xabc" });
     await waitFor(() => expect(created).toHaveBeenCalledWith(1n, expect.objectContaining({ hash: "0xabc" })));
+  });
+
+  it("describes the required signer network for addressed invitations", async () => {
+    const user = userEvent.setup();
+    render(<CreateWizard network="stacks" account="SP3SABCDE123456789012345678901234567890" repository={repository} onClose={vi.fn()} onCreated={vi.fn()} />);
+    await user.click(screen.getByRole("button", { name: /Continue/ }));
+    await user.type(screen.getByLabelText(/Context/), "Open source lounge");
+    await user.type(screen.getByLabelText(/Note/), "We shipped together.");
+    await user.click(screen.getByRole("radio", { name: /One wallet/ }));
+    expect(screen.getByText("Use a Stacks address for the wallet that should co-sign this card.")).toBeInTheDocument();
+    expect(screen.getByLabelText(/Signer address/)).toHaveAttribute("aria-describedby", "signer-address-hint");
   });
 });
