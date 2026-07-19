@@ -4,6 +4,21 @@
   "description": "Mutual onchain collaboration cards for Celo and Stacks.",
   "private": true,
   "type": "module",
+  "homepage": "https://github.com/felipegrasni/cosign#readme",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-felipegrasni:felipegrasni/cosign.git"
+  },
+  "bugs": {
+    "url": "https://github.com/felipegrasni/cosign/issues"
+  },
+  "keywords": [
+    "celo",
+    "stacks",
+    "wallet",
+    "dapp",
+    "collaboration"
+  ],
   "engines": {
     "node": ">=22.13.0"
   },
