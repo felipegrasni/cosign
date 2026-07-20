@@ -66,6 +66,11 @@ export function formatMoment(timestamp: number | null) {
   }).format(new Date(timestamp * 1000));
 }
 
+export function formatMomentDateTime(timestamp: number | null) {
+  if (!timestamp) return undefined;
+  return new Date(timestamp * 1000).toISOString();
+}
+
 export function canonicalHandshakeUrl(appUrl: string, network: Network, id: bigint | number | string) {
   return `${appUrl.replace(/\/$/, "")}/app/${network}/handshake/${id}`;
 }

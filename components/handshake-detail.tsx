@@ -8,7 +8,7 @@ import { AddressGlyph } from "./address-glyph";
 import { CategoryIcon } from "./category-icon";
 import { ShareSheet } from "./share-sheet";
 import { useNetworkClient } from "./network-client";
-import { canonicalHandshakeUrl, formatMoment, getStatus, kindLabel, shortAddress } from "@/lib/cosign";
+import { canonicalHandshakeUrl, formatMoment, formatMomentDateTime, getStatus, kindLabel, shortAddress } from "@/lib/cosign";
 import { contractExplorerUrl, publicEnv, txExplorerUrl } from "@/lib/env";
 import type { Handshake, Network, TransactionState } from "@/lib/types";
 
@@ -65,6 +65,9 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
       ? `Invitation intended for ${card.intendedSigner}`
       : "Open invitation available to any eligible wallet";
   const completedMeta = card?.completedAt ? formatMoment(card.completedAt) : "Pending co-signature";
+  const createdDateTime = card ? formatMomentDateTime(card.createdAt) : undefined;
+  const expiresDateTime = card ? formatMomentDateTime(card.expiresAt) : undefined;
+  const completedDateTime = card?.completedAt ? formatMomentDateTime(card.completedAt) : undefined;
 
   const stateCopy = useMemo(() => {
     if (!card || !status) return null;
@@ -88,7 +91,7 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
           {card.signer ? <Link href={`/app/${network}/profile/${card.signer}`} aria-label={signerLabel}><AddressGlyph address={card.signer} size={62} /><span>Co-signer</span><strong>{shortAddress(card.signer)}</strong></Link> : <div aria-label={signerLabel}><AddressGlyph address={card.intendedSigner || "open"} size={62} /><span>{card.intendedSigner ? "Invited wallet" : "Open invitation"}</span><strong>{card.intendedSigner ? shortAddress(card.intendedSigner) : "Anyone eligible"}</strong></div>}
         </div>
         <div className="receipt-copy"><span>#{card.id.toString()} · {networkLabel}</span><h1>{card.context}</h1><p>{card.note}</p></div>
-        <dl className="receipt-meta"><div><dt>Created</dt><dd>{formatMoment(card.createdAt)}</dd></div><div><dt>Expires</dt><dd>{formatMoment(card.expiresAt)}</dd></div><div><dt>Completed</dt><dd>{completedMeta}</dd></div></dl>
+        <dl className="receipt-meta"><div><dt>Created</dt><dd><time dateTime={createdDateTime}>{formatMoment(card.createdAt)}</time></dd></div><div><dt>Expires</dt><dd><time dateTime={expiresDateTime}>{formatMoment(card.expiresAt)}</time></dd></div><div><dt>Completed</dt><dd>{completedDateTime ? <time dateTime={completedDateTime}>{completedMeta}</time> : completedMeta}</dd></div></dl>
         {stateCopy ? <div className="receipt-state">{stateCopy.icon}<div><strong>{stateCopy.title}</strong><p>{stateCopy.text}</p></div></div> : null}
         {transactionActive ? <p className={`action-message phase-${transaction.phase}`} role={transaction.phase === "failed" ? "alert" : "status"}>{transaction.message}{transaction.explorerUrl ? <a href={transaction.explorerUrl} target="_blank" rel="noreferrer" aria-label="View transaction in explorer (opens in a new tab)">View transaction <ExternalLink size={14} aria-hidden="true" /></a> : null}</p> : null}
         {message ? <p className="action-message" role="status">{message}{lastTx ? <a href={txExplorerUrl(network, lastTx)} target="_blank" rel="noreferrer" aria-label="View transaction in explorer (opens in a new tab)">View transaction <ExternalLink size={14} aria-hidden="true" /></a> : null}</p> : null}

@@ -2,12 +2,14 @@ import Link from "next/link";
 import { ArrowUpRight, Clock3 } from "lucide-react";
 import { AddressGlyph } from "./address-glyph";
 import { CategoryIcon } from "./category-icon";
-import { formatMoment, getStatus, kindLabel, shortAddress } from "@/lib/cosign";
+import { formatMoment, formatMomentDateTime, getStatus, kindLabel, shortAddress } from "@/lib/cosign";
 import type { Handshake } from "@/lib/types";
 
 export function HandshakeCard({ handshake, linked = true }: { handshake: Handshake; linked?: boolean }) {
   const status = getStatus(handshake);
   const statusLabel = status[0].toUpperCase() + status.slice(1);
+  const createdLabel = formatMoment(handshake.createdAt);
+  const createdDateTime = formatMomentDateTime(handshake.createdAt);
   const creatorLabel = `Creator wallet ${handshake.creator}`;
   const signerText = handshake.signer ? shortAddress(handshake.signer, 4) : handshake.intendedSigner ? "Invited" : "Open";
   const signerLabel = handshake.signer
@@ -29,7 +31,7 @@ export function HandshakeCard({ handshake, linked = true }: { handshake: Handsha
       </div>
       <h3>{handshake.context}</h3>
       <p>{handshake.note}</p>
-      <footer><span><Clock3 size={15} aria-hidden="true" /> {formatMoment(handshake.createdAt)}</span>{linked ? <ArrowUpRight size={18} aria-hidden="true" /> : null}</footer>
+      <footer><span><Clock3 size={15} aria-hidden="true" /> <time dateTime={createdDateTime}>{createdLabel}</time></span>{linked ? <ArrowUpRight size={18} aria-hidden="true" /> : null}</footer>
     </article>
   );
   return linked ? <Link className="card-link" href={`/app/${handshake.network}/handshake/${handshake.id}`} aria-label={linkLabel}>{content}</Link> : content;
