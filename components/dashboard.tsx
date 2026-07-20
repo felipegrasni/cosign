@@ -41,6 +41,7 @@ export function Dashboard({ network }: { network: Network }) {
           <button type="button" id="dashboard-tab-pending" role="tab" className={tab === "pending" ? "active" : ""} aria-selected={tab === "pending"} aria-controls="dashboard-panel-pending" aria-label={`Show invitations awaiting a co-signature (${pending.length})`} onClick={() => setTab("pending")}>Awaiting co-sign <span>{pending.length}</span></button>
           <button type="button" className="refresh-button" onClick={() => void Promise.all([created.refresh(), signed.refresh()])} aria-label={refreshing ? "Refreshing card lists" : "Refresh card lists"} aria-busy={refreshing} disabled={refreshing}>
             <RefreshCw size={17} aria-hidden="true" className={refreshing ? "is-spinning" : undefined} />
+            <span className="refresh-button-label">{refreshing ? "Refreshing" : "Refresh"}</span>
           </button>
         </nav>
         <div id={tabPanelId} role="tabpanel" aria-labelledby={`dashboard-tab-${tab}`}>
