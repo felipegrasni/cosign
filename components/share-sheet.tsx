@@ -20,7 +20,9 @@ export function ShareSheet({
   const [copied, setCopied] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const copyLabel = variant === "receipt" ? "Copy receipt link" : "Copy invitation link";
-  const copyButtonText = copied ? "Copied" : "Copy link";
+  const copyButtonText = copied
+    ? variant === "receipt" ? "Receipt copied" : "Invitation copied"
+    : variant === "receipt" ? "Copy receipt" : "Copy invitation";
   const statusMessage = variant === "receipt" ? "Receipt link copied to clipboard." : "Invitation link copied to clipboard.";
   const title = variant === "receipt" ? "Share the receipt." : "Pass the signal.";
   const descriptionId = "share-description";
