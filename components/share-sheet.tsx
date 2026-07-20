@@ -19,6 +19,7 @@ export function ShareSheet({
 }) {
   const [copied, setCopied] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const canNativeShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
   const copyLabel = variant === "receipt" ? "Copy receipt link" : "Copy invitation link";
   const copyButtonText = copied
     ? variant === "receipt" ? "Receipt copied" : "Invitation copied"
@@ -41,7 +42,7 @@ export function ShareSheet({
     : "View this invitation on the blockchain explorer (opens in a new tab)";
   const copy = async () => { await navigator.clipboard.writeText(url); setCopied(true); window.setTimeout(() => setCopied(false), 1600); };
   const share = async () => {
-    if (navigator.share) await navigator.share({
+    if (canNativeShare) await navigator.share({
       title: variant === "receipt" ? "CoSign receipt" : "CoSign invitation",
       text: variant === "receipt" ? "View this shared CoSign receipt." : "Make this moment mutual.",
       url
@@ -77,7 +78,7 @@ export function ShareSheet({
           </button>
         </div>
         <p className="sr-only" role="status" aria-live="polite">{copied ? statusMessage : ""}</p>
-        <div className="share-actions"><button type="button" className="button" onClick={share}><Share2 size={18} aria-hidden="true" /> {shareLabel}</button>{explorerUrl ? <a className="button secondary" href={explorerUrl} target="_blank" rel="noreferrer" aria-label={explorerAriaLabel}>{explorerLabel} <ExternalLink size={17} aria-hidden="true" /></a> : null}</div>
+        <div className="share-actions">{canNativeShare ? <button type="button" className="button" onClick={share}><Share2 size={18} aria-hidden="true" /> {shareLabel}</button> : null}{explorerUrl ? <a className="button secondary" href={explorerUrl} target="_blank" rel="noreferrer" aria-label={explorerAriaLabel}>{explorerLabel} <ExternalLink size={17} aria-hidden="true" /></a> : null}</div>
       </section>
     </div>
   );
