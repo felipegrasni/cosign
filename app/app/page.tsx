@@ -33,14 +33,14 @@ export default function AppEntryPage() {
             <Smartphone aria-hidden="true" />
             <span id={celoTitleId}>Celo</span>
             <strong>MiniPay-ready</strong>
-            <p id={celoDescriptionId}>Best when both wallets will sign with MiniPay or another Celo wallet.</p>
+            <p id={celoDescriptionId}>Best when both wallets will sign with MiniPay or another Celo wallet. MiniPay opens this route automatically.</p>
             <ArrowRight aria-hidden="true" />
           </Link>
           <Link href="/app/stacks" role="listitem" aria-labelledby={stacksTitleId} aria-describedby={stacksDescriptionId}>
             <WalletCards aria-hidden="true" />
             <span id={stacksTitleId}>Stacks</span>
             <strong>Bitcoin-secured</strong>
-            <p id={stacksDescriptionId}>Best when both wallets will sign with a Stacks wallet.</p>
+            <p id={stacksDescriptionId}>Best when both wallets already use a Stacks wallet for this shared receipt.</p>
             <ArrowRight aria-hidden="true" />
           </Link>
         </div>
