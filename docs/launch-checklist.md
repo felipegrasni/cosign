@@ -7,7 +7,7 @@
 - Deploy and verify the Celo contract; save address, block, transaction, and explorer links.
 - Deploy the Stacks contract; save contract ID, transaction, and explorer links.
 - Rebuild with both public contract configurations.
-- Test open, addressed, completed, cancelled, expired, wrong-wallet, rejected-wallet, and direct-link flows.
+- Test open-link, one-wallet invitation, co-signed, cancelled, expired, wrong-wallet, creator-self-sign, and direct-link flows.
 - Test MiniPay automatic connection on a physical mobile device.
 - Test a current Stacks wallet and confirm addresses refresh after reconnect.
 - Confirm every public text warning appears before creation.
