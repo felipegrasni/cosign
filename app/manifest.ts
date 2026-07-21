@@ -22,16 +22,16 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
     shortcuts: [
       {
-        name: "Open Celo",
+        name: "Choose Celo",
         short_name: "Celo",
-        description: "Jump straight into the Celo CoSign app.",
+        description: "Choose the Celo network in CoSign.",
         url: "/app/celo",
         icons: [{ src: "/icon-192.png", sizes: "192x192", type: "image/png" }]
       },
       {
-        name: "Open Stacks",
+        name: "Choose Stacks",
         short_name: "Stacks",
-        description: "Jump straight into the Stacks CoSign app.",
+        description: "Choose the Stacks network in CoSign.",
         url: "/app/stacks",
         icons: [{ src: "/icon-192.png", sizes: "192x192", type: "image/png" }]
       }
