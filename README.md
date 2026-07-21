@@ -26,9 +26,11 @@ npm run verify
 npm run test:e2e
 ```
 
-Install Playwright browsers once per machine before running `npm run test:e2e`.
+`npm run verify` covers lint, typecheck, Celo contract compilation, unit/UI tests, and a production build. It does not run `check:stacks`, `check:stacks:clarinet`, or Playwright end-to-end coverage.
 
-Individual checks are available through `lint`, `typecheck`, `compile:celo`, `test:celo`, `check:stacks`, `test:stacks`, `test:ui`, and `build` scripts.
+Install Playwright browsers once per machine before running `npm run test:e2e` against a local dev server.
+
+Individual checks are available through `lint`, `typecheck`, `compile:celo`, `test:celo`, `check:stacks`, `check:stacks:clarinet`, `test:stacks`, `test:ui`, and `build` scripts.
 
 ## Architecture
 
