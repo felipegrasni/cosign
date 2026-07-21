@@ -15,6 +15,8 @@ npm run dev
 
 The landing preview works without contracts. Live app routes intentionally show an unconfigured state until their public contract values are supplied.
 
+CoSign cards are public and permanent on the selected network. If two wallets do not share the same network, create separate cards because CoSign does not mirror receipts between Celo and Stacks.
+
 ## Verify
 
 ```bash
