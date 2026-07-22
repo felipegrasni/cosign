@@ -1,9 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Blocks, Check, Eye, Link2, LockKeyhole, MessageCircle, QrCode, ShieldCheck, Sparkles, WalletCards } from "lucide-react";
 import { BrandMark } from "@/components/brand-mark";
 import { CategoryIcon } from "@/components/category-icon";
 import { LandingDemo } from "@/components/landing-demo";
 import { kinds } from "@/lib/cosign";
+
+export const metadata: Metadata = {
+  title: "Make the moment mutual",
+  description: "Create a public collaboration card, pass one clean link, and let a second wallet co-sign it on Celo or Stacks.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "CoSign — Make the moment mutual",
+    description: "Create a shared public collaboration card for two wallets on Celo or Stacks.",
+    url: "/"
+  },
+  twitter: {
+    title: "CoSign — Make the moment mutual",
+    description: "Create a shared public collaboration card for two wallets on Celo or Stacks."
+  }
+};
 
 export default function HomePage() {
   return (
