@@ -8,11 +8,23 @@ export async function generateMetadata({ params }: { params: Promise<{ network: 
   if (!isNetwork(network) || !/^\d+$/.test(id) || id === "0") return {};
 
   const networkLabel = network === "celo" ? "Celo" : "Stacks";
+  const title = `${networkLabel} card #${id}`;
+  const description = `Open public CoSign card #${id} on ${networkLabel}.`;
+  const url = `/app/${network}/handshake/${id}`;
 
   return {
-    title: `${networkLabel} card #${id}`,
-    description: `Open public CoSign card #${id} on ${networkLabel}.`,
-    alternates: { canonical: `/app/${network}/handshake/${id}` }
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${title} · CoSign`,
+      description,
+      url
+    },
+    twitter: {
+      title: `${title} · CoSign`,
+      description
+    }
   };
 }
 

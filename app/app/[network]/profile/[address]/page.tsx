@@ -10,11 +10,23 @@ export async function generateMetadata({ params }: { params: Promise<{ network: 
   const networkLabel = network === "celo" ? "Celo" : "Stacks";
   const decodedAddress = decodeURIComponent(address);
   const compactAddress = decodedAddress.length > 12 ? `${decodedAddress.slice(0, 6)}…${decodedAddress.slice(-4)}` : decodedAddress;
+  const title = `${networkLabel} profile ${compactAddress}`;
+  const description = `Review public CoSign collaboration cards for ${compactAddress} on ${networkLabel}.`;
+  const url = `/app/${network}/profile/${address}`;
 
   return {
-    title: `${networkLabel} profile ${compactAddress}`,
-    description: `Review public CoSign collaboration cards for ${compactAddress} on ${networkLabel}.`,
-    alternates: { canonical: `/app/${network}/profile/${address}` }
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${title} · CoSign`,
+      description,
+      url
+    },
+    twitter: {
+      title: `${title} · CoSign`,
+      description
+    }
   };
 }
 
