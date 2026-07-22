@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Check, Copy, ExternalLink, Share2, X } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 
@@ -19,6 +19,9 @@ export function ShareSheet({
 }) {
   const [copied, setCopied] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const titleId = useId();
+  const descriptionId = useId();
+  const hintId = useId();
   const canNativeShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
   const copyLabel = variant === "receipt" ? "Copy receipt link" : "Copy invitation link";
   const copyButtonText = copied
@@ -26,8 +29,6 @@ export function ShareSheet({
     : variant === "receipt" ? "Copy receipt" : "Copy invitation";
   const statusMessage = variant === "receipt" ? "Receipt link copied to clipboard." : "Invitation link copied to clipboard.";
   const title = variant === "receipt" ? "Share the receipt." : "Pass the signal.";
-  const descriptionId = "share-description";
-  const hintId = "share-hint";
   const description = variant === "receipt"
     ? "Let someone scan this code or open the link to view the shared receipt."
     : "Let the other person scan this code or send them the link.";
@@ -63,10 +64,10 @@ export function ShareSheet({
 
   return (
     <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
-      <section className="share-sheet" role="dialog" aria-modal="true" aria-labelledby="share-title" aria-describedby={`${descriptionId} ${hintId}`}>
+      <section className="share-sheet" role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={`${descriptionId} ${hintId}`}>
         <button ref={closeButtonRef} type="button" className="icon-button close" onClick={onClose} aria-label={closeLabel}><X aria-hidden="true" /></button>
         <span className="eyebrow">{variant === "receipt" ? "Receipt ready" : "Invitation ready"}</span>
-        <h2 id="share-title">{title}</h2>
+        <h2 id={titleId}>{title}</h2>
         <p id={descriptionId}>{description}</p>
         <div className="qr-wrap"><QRCodeSVG value={url} size={210} bgColor="#fffaf2" fgColor="#17151f" level="M" aria-hidden="true" focusable="false" /></div>
         <p id={hintId} className="share-hint">{qrHint}</p>
