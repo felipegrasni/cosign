@@ -17,7 +17,8 @@ export function HandshakeCard({ handshake, linked = true }: { handshake: Handsha
     : handshake.intendedSigner
       ? `Invited wallet ${handshake.intendedSigner}`
       : "Open invitation";
-  const linkLabel = `Open ${kindLabel(handshake.kind)} card. Status: ${statusLabel}. ${creatorLabel}. ${signerLabel}.`;
+  const contextLabel = `Context: ${handshake.context}.`;
+  const linkLabel = `Open ${kindLabel(handshake.kind)} card. ${contextLabel} Status: ${statusLabel}. ${creatorLabel}. ${signerLabel}.`;
   const content = (
     <article className={`handshake-card status-${status}`}>
       <header>
