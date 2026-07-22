@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { Check, RotateCcw } from "lucide-react";
 import { AddressGlyph } from "./address-glyph";
 
 export function LandingDemo({ compact = false }: { compact?: boolean }) {
   const [complete, setComplete] = useState(false);
   const [ready, setReady] = useState(false);
-  const statusId = compact ? "landing-demo-status-compact" : "landing-demo-status";
+  const statusId = useId();
   const statusLabel = !ready ? "Preview is preparing interactive controls" : complete ? "Preview shows a mutual moment" : "Preview shows a waiting invitation";
   const buttonLabel = !ready
     ? "Preview controls are loading"
