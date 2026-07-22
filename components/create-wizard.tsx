@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, ExternalLink, LockKeyhole, Radio, X } from "lucide-react";
 import { isAddress } from "viem";
 import { CategoryIcon } from "./category-icon";
@@ -31,7 +31,8 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
   const noteErrorId = "note-error";
   const signerErrorId = "signer-address-error";
   const signerHintId = "signer-address-hint";
-  const descriptionId = "wizard-description";
+  const titleId = useId();
+  const descriptionId = useId();
 
   useEffect(() => {
     closeButtonRef.current?.focus();
@@ -70,8 +71,8 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
 
   return (
     <div className="modal-backdrop" role="presentation">
-      <section className="wizard" role="dialog" aria-modal="true" aria-labelledby="wizard-title" aria-describedby={descriptionId}>
-        <header><div><span className="eyebrow">New CoSign · {step}/{totalSteps}</span><h2 id="wizard-title">{step === 1 ? "What happened?" : step === 2 ? "Add the signal." : "Review before publishing."}</h2></div><button ref={closeButtonRef} type="button" className="icon-button" onClick={onClose} aria-label="Close create wizard" disabled={submitting}><X aria-hidden="true" /></button></header>
+      <section className="wizard" role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={descriptionId}>
+        <header><div><span className="eyebrow">New CoSign · {step}/{totalSteps}</span><h2 id={titleId}>{step === 1 ? "What happened?" : step === 2 ? "Add the signal." : "Review before publishing."}</h2></div><button ref={closeButtonRef} type="button" className="icon-button" onClick={onClose} aria-label="Close create wizard" disabled={submitting}><X aria-hidden="true" /></button></header>
         <p id={descriptionId} className="sr-only">Create a CoSign in three steps. The final card text and both wallet addresses will be public on the selected network.</p>
         <div className="wizard-progress" role="progressbar" aria-label="Create CoSign progress" aria-valuemin={1} aria-valuemax={totalSteps} aria-valuenow={step} aria-valuetext={`Step ${step} of ${totalSteps}`}><i style={{ width: `${(step / totalSteps) * 100}%` }} /></div>
         {step === 1 ? <div className="kind-grid" role="radiogroup" aria-label="CoSign category">{kinds.map((item) => <button type="button" role="radio" key={item.id} className={kind === item.id ? "selected" : ""} aria-checked={kind === item.id} onClick={() => setKind(item.id)}><CategoryIcon kind={item.id} size={25} /><strong>{item.label}</strong><span>{item.description}</span></button>)}</div> : null}
