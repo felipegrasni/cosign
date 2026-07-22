@@ -58,6 +58,8 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
       ? `Confirming on ${network === "celo" ? "Celo" : "Stacks"}…`
       : action === "cancel" ? "Cancelling…" : "Waiting for wallet…";
   const networkLabel = network === "celo" ? "Celo" : "Stacks";
+  const cosignBusy = action === "cosign";
+  const cancelBusy = action === "cancel";
   const creatorLabel = `View creator profile for ${card?.creator ?? ""}`;
   const signerLabel = card?.signer
     ? `View co-signer profile for ${card.signer}`
@@ -97,8 +99,8 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
         {message ? <p className="action-message" role="status">{message}{lastTx ? <a href={txExplorerUrl(network, lastTx)} target="_blank" rel="noreferrer" aria-label="View transaction in explorer (opens in a new tab)">View transaction <ExternalLink size={14} aria-hidden="true" /></a> : null}</p> : null}
         <div className="receipt-actions">
           {status === "pending" && !client.connected && !client.isMiniPay ? <button type="button" className="button" onClick={() => void client.connect()} disabled={client.connecting} aria-busy={client.connecting} aria-label={client.connecting ? `Connecting ${networkLabel} wallet to continue with this invitation` : `Connect ${networkLabel} wallet to continue with this invitation`}>{client.connecting ? `Connecting ${networkLabel}…` : `Connect ${networkLabel} to continue`}</button> : null}
-          {eligible ? <button type="button" className="button" onClick={() => void act("cosign")} disabled={Boolean(action)}>{action === "cosign" ? actionLabel : "Co-sign this moment"}</button> : null}
-          {isCreator && status === "pending" ? <><button type="button" className="button" onClick={() => setShare(true)} aria-label="Share this invitation link"><Share2 aria-hidden="true" /> Share invitation</button><button type="button" className="button danger" onClick={() => void act("cancel")} disabled={Boolean(action)}>{action === "cancel" ? actionLabel : "Cancel invitation"}</button></> : null}
+          {eligible ? <button type="button" className="button" onClick={() => void act("cosign")} disabled={Boolean(action)} aria-busy={cosignBusy} aria-label={cosignBusy ? "Co-signing this moment through your wallet" : "Co-sign this moment through your wallet"}>{cosignBusy ? actionLabel : "Co-sign this moment"}</button> : null}
+          {isCreator && status === "pending" ? <><button type="button" className="button" onClick={() => setShare(true)} aria-label="Share this invitation link"><Share2 aria-hidden="true" /> Share invitation</button><button type="button" className="button danger" onClick={() => void act("cancel")} disabled={Boolean(action)} aria-busy={cancelBusy} aria-label={cancelBusy ? "Cancelling this invitation through your wallet" : "Cancel this invitation through your wallet"}>{cancelBusy ? actionLabel : "Cancel invitation"}</button></> : null}
           {status === "completed" ? <button type="button" className="button" onClick={() => setShare(true)} aria-label="Share this mutual receipt"><Share2 aria-hidden="true" /> Share receipt</button> : null}
         </div>
       </section>}
