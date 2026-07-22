@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useId } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Smartphone, WalletCards } from "lucide-react";
@@ -9,10 +9,11 @@ import { BrandMark } from "./brand-mark";
 export function AppEntryPage() {
   const router = useRouter();
   const redirectingToMiniPay = typeof window !== "undefined" && Boolean((window as unknown as { ethereum?: { isMiniPay?: boolean } }).ethereum?.isMiniPay);
-  const celoTitleId = "network-option-celo-title";
-  const celoDescriptionId = "network-option-celo-description";
-  const stacksTitleId = "network-option-stacks-title";
-  const stacksDescriptionId = "network-option-stacks-description";
+  const chooserId = useId();
+  const celoTitleId = `${chooserId}-celo-title`;
+  const celoDescriptionId = `${chooserId}-celo-description`;
+  const stacksTitleId = `${chooserId}-stacks-title`;
+  const stacksDescriptionId = `${chooserId}-stacks-description`;
 
   useEffect(() => {
     if (redirectingToMiniPay) router.replace("/app/celo");
