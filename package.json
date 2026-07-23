@@ -7,7 +7,7 @@
   "homepage": "https://github.com/felipegrasni/cosign#readme",
   "repository": {
     "type": "git",
-    "url": "git@github.com-felipegrasni:felipegrasni/cosign.git"
+    "url": "git+https://github.com/felipegrasni/cosign.git"
   },
   "bugs": {
     "url": "https://github.com/felipegrasni/cosign/issues"
