@@ -70,7 +70,11 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
       : "Create CoSign";
 
   return (
-    <div className="modal-backdrop" role="presentation">
+    <div
+      className="modal-backdrop"
+      role="presentation"
+      onMouseDown={(event) => event.target === event.currentTarget && !submitting && onClose()}
+    >
       <section className="wizard" role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={descriptionId}>
         <header><div><span className="eyebrow">New CoSign · {step}/{totalSteps}</span><h2 id={titleId}>{step === 1 ? "What happened?" : step === 2 ? "Add the signal." : "Review before publishing."}</h2></div><button ref={closeButtonRef} type="button" className="icon-button" onClick={onClose} aria-label="Close create wizard" disabled={submitting}><X aria-hidden="true" /></button></header>
         <p id={descriptionId} className="sr-only">Create a CoSign in three steps. The final card text and both wallet addresses will be public on the selected network.</p>
