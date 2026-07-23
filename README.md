@@ -13,6 +13,8 @@ npx playwright install
 npm run dev
 ```
 
+For local UI work, fill in only the `NEXT_PUBLIC_*` values you actually need. Leave deploy-only secrets such as `PRIVATE_KEY`, `STACKS_PRIVATE_KEY`, and explorer API keys empty unless you are intentionally deploying contracts from this machine.
+
 The landing preview works without contracts. Live app routes intentionally show an unconfigured state until their public contract values are supplied.
 
 CoSign cards are public and permanent on the selected network. If two wallets do not share the same network, create separate cards because CoSign does not mirror receipts between Celo and Stacks.
