@@ -8,13 +8,17 @@ export function LandingDemo({ compact = false }: { compact?: boolean }) {
   const [complete, setComplete] = useState(false);
   const [ready, setReady] = useState(false);
   const statusId = useId();
-  const statusLabel = !ready ? "Preview is preparing interactive controls" : complete ? "Preview shows a mutual moment" : "Preview shows a waiting invitation";
+  const statusLabel = !ready
+    ? "Interactive preview is preparing controls"
+    : complete
+      ? "Preview shows a co-signed receipt shared by two wallets"
+      : "Preview shows an invitation waiting for a second wallet";
   const buttonLabel = !ready
     ? "Preview controls are loading"
     : complete
       ? "Switch this preview back to the waiting invitation state"
       : "Switch this preview to the co-signed receipt state";
-  const buttonText = !ready ? "Preparing preview..." : complete ? "Show waiting preview" : "Preview co-signed state";
+  const buttonText = !ready ? "Preparing preview..." : complete ? "Show invitation preview" : "Show co-signed preview";
   useEffect(() => { const timer = window.setTimeout(() => setReady(true), 0); return () => window.clearTimeout(timer); }, []);
   return (
     <div className={`landing-demo ${complete ? "is-complete" : ""} ${compact ? "compact" : ""}`}>
