@@ -269,8 +269,10 @@ summary::-webkit-details-marker { display: none; }
 .network-entry section > p { color: var(--muted); }
 .entry-note { margin: 18px 0 0; font-weight: 750; }
 .entry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 50px; text-align: left; }
-.entry-grid a { min-height: 220px; padding: 28px; border: 2px solid var(--ink); border-radius: 24px; background: var(--paper-soft); display: grid; grid-template-columns: 1fr auto; align-content: end; box-shadow: 7px 7px 0 var(--lilac); }
+.entry-grid a { min-height: 220px; padding: 28px; border: 2px solid var(--ink); border-radius: 24px; background: var(--paper-soft); display: grid; grid-template-columns: 1fr auto; align-content: end; box-shadow: 7px 7px 0 var(--lilac); transition: transform .18s ease, box-shadow .18s ease; }
 .entry-grid a:first-child { box-shadow: 7px 7px 0 var(--aqua); }
+.entry-grid a:hover, .entry-grid a:focus-visible { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--lilac); }
+.entry-grid a:first-child:hover, .entry-grid a:first-child:focus-visible { box-shadow: 10px 10px 0 var(--aqua); }
 .entry-grid a > svg:first-child { grid-column: 1 / -1; margin-bottom: 55px; color: var(--coral); width: 32px; height: 32px; }
 .entry-grid a span { font: 550 2.7rem "Fraunces Variable"; }
 .entry-grid a strong { grid-row: 3; color: var(--muted); font-size: .72rem; }
