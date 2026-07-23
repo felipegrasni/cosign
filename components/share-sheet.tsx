@@ -62,6 +62,15 @@ export function ShareSheet({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [onClose]);
 
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
   return (
     <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
       <section className="share-sheet" role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={`${descriptionId} ${hintId}`}>

@@ -45,6 +45,15 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [onClose, submitting]);
 
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
   async function submit() {
     setSubmitting(true); setError(""); setTransaction({ phase: "awaiting-signature", message: `Approve the transaction in your ${network === "celo" ? "Celo" : "Stacks"} wallet.` });
     try {
