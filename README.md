@@ -1,6 +1,6 @@
 # CoSign
 
-CoSign creates small public collaboration cards that become mutual when a second wallet co-signs them. It supports matching experiences on Celo and Stacks with no backend, database, indexer, account system, payments, admin role, or upgradeability.
+CoSign creates small public collaboration cards that become mutual when a second wallet co-signs them. It offers the same wallet-to-wallet flow on Celo and Stacks with no backend, database, indexer, account system, payments, admin role, or upgradeability.
 
 ## Run locally
 
@@ -15,7 +15,7 @@ npm run dev
 
 For local UI work, fill in only the `NEXT_PUBLIC_*` values you actually need. Leave deploy-only secrets such as `PRIVATE_KEY`, `STACKS_PRIVATE_KEY`, and explorer API keys empty unless you are intentionally deploying contracts from this machine.
 
-The landing preview works without contracts. Live app routes intentionally show an unconfigured state until their public contract values are supplied.
+The landing preview and `/app` network chooser both work without contracts. Live network routes intentionally show an unconfigured state until their public contract values are supplied.
 
 CoSign cards are public and permanent on the selected network. If two wallets do not share the same network, create separate cards because CoSign does not mirror receipts between Celo and Stacks.
 
