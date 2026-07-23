@@ -8,11 +8,15 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Choose network | CoSign",
     description: "Choose whether both wallets will co-sign on Celo or Stacks before creating a public CoSign card.",
-    url: "/app"
+    url: "/app",
+    siteName: "CoSign",
+    images: [{ url: "/og.png", width: 1200, height: 630 }]
   },
   twitter: {
+    card: "summary_large_image",
     title: "Choose network | CoSign",
-    description: "Choose whether both wallets will co-sign on Celo or Stacks before creating a public CoSign card."
+    description: "Choose whether both wallets will co-sign on Celo or Stacks before creating a public CoSign card.",
+    images: ["/og.png"]
   }
 };
 

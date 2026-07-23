@@ -13,11 +13,15 @@ export const metadata: Metadata = {
   openGraph: {
     title: "CoSign — Make the moment mutual",
     description: "Create a shared public collaboration card for two wallets on Celo or Stacks.",
-    url: "/"
+    url: "/",
+    siteName: "CoSign",
+    images: [{ url: "/og.png", width: 1200, height: 630 }]
   },
   twitter: {
+    card: "summary_large_image",
     title: "CoSign — Make the moment mutual",
-    description: "Create a shared public collaboration card for two wallets on Celo or Stacks."
+    description: "Create a shared public collaboration card for two wallets on Celo or Stacks.",
+    images: ["/og.png"]
   }
 };
 
