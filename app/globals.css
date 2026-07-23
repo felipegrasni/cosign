@@ -278,6 +278,7 @@ summary::-webkit-details-marker { display: none; }
 .not-found { place-content: center; text-align: center; justify-items: center; }
 .not-found > svg { width: 80px; color: var(--coral); }
 .not-found h1 { max-width: 770px; }
+.not-found-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes orbit { to { transform: rotate(360deg); } }

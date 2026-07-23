@@ -9,5 +9,20 @@ export const metadata: Metadata = {
 };
 
 export default function NotFound() {
-  return <main id="main-content" className="not-found"><BrandMark /><span className="eyebrow">Signal lost</span><h1>This CoSign route is not available.</h1><p>The invitation or receipt link may be incomplete, missing characters, or point to a route that was never published on this network. Choose the network again to recover with a valid CoSign route.</p><Link className="button" href="/app" aria-label="Choose a CoSign network to recover from a missing link"><ArrowLeft aria-hidden="true" /> Choose network</Link></main>;
+  return (
+    <main id="main-content" className="not-found">
+      <BrandMark />
+      <span className="eyebrow">Signal lost</span>
+      <h1>This CoSign route is not available.</h1>
+      <p>The invitation or receipt link may be incomplete, missing characters, or point to a route that was never published on this network. Choose the network again to recover with a valid CoSign route.</p>
+      <div className="not-found-actions">
+        <Link className="button" href="/app" aria-label="Choose a CoSign network to recover from a missing link">
+          <ArrowLeft aria-hidden="true" /> Choose network
+        </Link>
+        <Link className="button secondary" href="/" aria-label="Return to the CoSign home page">
+          Back to home
+        </Link>
+      </div>
+    </main>
+  );
 }
