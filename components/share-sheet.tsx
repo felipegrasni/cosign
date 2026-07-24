@@ -19,6 +19,7 @@ export function ShareSheet({
 }) {
   const [copied, setCopied] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const sheetRef = useRef<HTMLElement>(null);
   const titleId = useId();
   const descriptionId = useId();
   const hintId = useId();
@@ -56,6 +57,22 @@ export function ShareSheet({
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
+      if (event.key !== "Tab") return;
+
+      const focusable = sheetRef.current?.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable?.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
     window.addEventListener("keydown", onKeyDown);
@@ -73,7 +90,7 @@ export function ShareSheet({
 
   return (
     <div className="modal-backdrop" role="presentation" onPointerDown={(event) => event.target === event.currentTarget && onClose()}>
-      <section className="share-sheet" role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={`${descriptionId} ${hintId}`}>
+      <section ref={sheetRef} className="share-sheet" role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={`${descriptionId} ${hintId}`}>
         <button ref={closeButtonRef} type="button" className="icon-button close" onClick={onClose} aria-label={closeLabel}><X aria-hidden="true" /></button>
         <span className="eyebrow">{variant === "receipt" ? "Receipt ready" : "Invitation ready"}</span>
         <h2 id={titleId}>{title}</h2>
