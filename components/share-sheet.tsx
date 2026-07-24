@@ -42,14 +42,27 @@ export function ShareSheet({
   const explorerAriaLabel = variant === "receipt"
     ? "View this receipt on the blockchain explorer (opens in a new tab)"
     : "View this invitation on the blockchain explorer (opens in a new tab)";
-  const copy = async () => { await navigator.clipboard.writeText(url); setCopied(true); window.setTimeout(() => setCopied(false), 1600); };
+  const copy = async () => {
+    await navigator.clipboard.writeText(url);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
+  };
   const share = async () => {
-    if (canNativeShare) await navigator.share({
-      title: variant === "receipt" ? "CoSign receipt" : "CoSign invitation",
-      text: variant === "receipt" ? "View this shared CoSign receipt." : "Open this CoSign invitation and add the second wallet signature.",
-      url
-    });
-    else await copy();
+    if (!canNativeShare) {
+      await copy();
+      return;
+    }
+
+    try {
+      await navigator.share({
+        title: variant === "receipt" ? "CoSign receipt" : "CoSign invitation",
+        text: variant === "receipt" ? "View this shared CoSign receipt." : "Open this CoSign invitation and add the second wallet signature.",
+        url
+      });
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return;
+      await copy();
+    }
   };
 
   useEffect(() => {
