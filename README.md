@@ -8,9 +8,14 @@ Use Node 22.13.0 or newer.
 
 ```bash
 npm install
-cp .env.example .env
 npx playwright install
 npm run dev
+```
+
+Only copy `.env.example` to `.env` when you need configured network routes or contract deployment commands:
+
+```bash
+cp .env.example .env
 ```
 
 For local UI work, fill in only the `NEXT_PUBLIC_*` values you actually need. Leave deploy-only secrets such as `PRIVATE_KEY`, `STACKS_PRIVATE_KEY`, and explorer API keys empty unless you are intentionally deploying contracts from this machine.
