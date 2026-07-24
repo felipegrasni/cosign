@@ -19,11 +19,15 @@ export async function generateMetadata({ params }: { params: Promise<{ network: 
     openGraph: {
       title: `${title} · CoSign`,
       description,
-      url
+      url,
+      siteName: "CoSign",
+      images: [{ url: "/og.png", width: 1200, height: 630 }]
     },
     twitter: {
+      card: "summary_large_image",
       title: `${title} · CoSign`,
-      description
+      description,
+      images: ["/og.png"]
     }
   };
 }
