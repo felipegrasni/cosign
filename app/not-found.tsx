@@ -5,7 +5,17 @@ import { BrandMark } from "@/components/brand-mark";
 
 export const metadata: Metadata = {
   title: "CoSign route not found",
-  description: "Recover from an incomplete or unpublished CoSign invitation or receipt link by choosing a valid network route."
+  description: "Recover from an incomplete or unpublished CoSign invitation or receipt link by choosing a valid network route.",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true
+    }
+  }
 };
 
 export default function NotFound() {
