@@ -28,10 +28,10 @@ export function ShareSheet({
     ? variant === "receipt" ? "Receipt copied" : "Invitation copied"
     : variant === "receipt" ? "Copy receipt" : "Copy invitation";
   const statusMessage = variant === "receipt" ? "Receipt link copied to clipboard." : "Invitation link copied to clipboard.";
-  const title = variant === "receipt" ? "Share the receipt." : "Pass the signal.";
+  const title = variant === "receipt" ? "Share the receipt." : "Share the invitation.";
   const description = variant === "receipt"
     ? "Let someone scan this code or open the link to view the shared receipt."
-    : "Let the other person scan this code or send them the link.";
+    : "Let the other wallet scan this code or open the invitation link.";
   const qrHint = variant === "receipt"
     ? "Scan with another device or copy the receipt link below."
     : "Scan with another device or copy the invitation link below.";
@@ -45,7 +45,7 @@ export function ShareSheet({
   const share = async () => {
     if (canNativeShare) await navigator.share({
       title: variant === "receipt" ? "CoSign receipt" : "CoSign invitation",
-      text: variant === "receipt" ? "View this shared CoSign receipt." : "Make this moment mutual.",
+      text: variant === "receipt" ? "View this shared CoSign receipt." : "Open this CoSign invitation and add the second wallet signature.",
       url
     });
     else await copy();
