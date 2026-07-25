@@ -17,7 +17,9 @@ Install Playwright browsers only when you plan to run `npm run test:e2e` on this
 npx playwright install
 ```
 
-Only copy `.env.example` to `.env` when you need configured network routes or contract deployment commands:
+You can leave the repo without a `.env` file when you only need the landing page, preview, or `/app` network chooser.
+
+Only copy `.env.example` to `.env` when you need configured `/app/celo` or `/app/stacks` routes, contract deployment commands, or explorer links:
 
 ```bash
 cp .env.example .env
