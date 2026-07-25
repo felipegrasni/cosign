@@ -8,8 +8,13 @@ Use Node 22.13.0 or newer.
 
 ```bash
 npm install
-npx playwright install
 npm run dev
+```
+
+Install Playwright browsers only when you plan to run `npm run test:e2e` on this machine:
+
+```bash
+npx playwright install
 ```
 
 Only copy `.env.example` to `.env` when you need configured network routes or contract deployment commands:
