@@ -32,7 +32,12 @@ export function AppEntryPage() {
         <h1>Which network will both wallets use?</h1>
         <p>Pick the one network both wallets can actually sign on.</p>
         <p>Public cards stay readable without connecting a wallet, but creating or co-signing only works on the network you choose. If the wallets live on different networks, create separate cards because CoSign does not carry the same receipt across networks.</p>
-        {redirectingToMiniPay ? <p className="entry-note" role="status" aria-live="polite">MiniPay detected. Opening Celo…</p> : (
+        {redirectingToMiniPay ? (
+          <>
+            <p className="entry-note" role="status" aria-live="polite">MiniPay detected. Opening Celo…</p>
+            <p><Link href="/app/celo">Open Celo manually instead</Link></p>
+          </>
+        ) : (
           <ul className="entry-grid" aria-label="Available CoSign networks">
             <li>
               <Link href="/app/celo" aria-labelledby={`${celoTitleId} ${celoBadgeId}`} aria-describedby={celoDescriptionId}>
