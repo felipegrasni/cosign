@@ -17,6 +17,8 @@ Install Playwright browsers only when you plan to run `npm run test:e2e` on this
 npx playwright install
 ```
 
+You only need to install those browsers once per machine.
+
 You can leave the repo without a `.env` file when you only need the landing page, preview, or `/app` network chooser.
 
 Only copy `.env.example` to `.env` when you need configured `/app/celo` or `/app/stacks` routes, contract deployment commands, or explorer links:
@@ -42,11 +44,7 @@ npm run test:e2e
 
 `npm run verify` covers lint, typecheck, Celo contract compilation, unit/UI tests, and a production build. It does not run `check:stacks`, `check:stacks:clarinet`, or Playwright end-to-end coverage.
 
-Install Playwright browsers once per machine before running `npm run test:e2e` against a local dev server:
-
-```bash
-npx playwright install
-```
+If Playwright browsers are not installed on this machine yet, run `npx playwright install` before `npm run test:e2e`.
 
 Individual checks are available through `lint`, `typecheck`, `compile:celo`, `test:celo`, `check:stacks`, `check:stacks:clarinet`, `test:stacks`, `test:ui`, and `build` scripts.
 
