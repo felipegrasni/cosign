@@ -34,6 +34,16 @@ h1, h2 { font-family: "Fraunces Variable", serif; letter-spacing: -.045em; }
 .skip-link { position: absolute; left: 20px; top: 16px; z-index: 200; padding: .75rem 1rem; border: 2px solid var(--ink); border-radius: 12px; background: var(--paper-soft); font-weight: 800; box-shadow: 4px 4px 0 var(--coral); transform: translateY(-140%); transition: transform .18s ease; }
 .skip-link:focus-visible { transform: translateY(0); }
 
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+
 /* Landing */
 .landing-page { overflow: hidden; }
 .landing-nav { max-width: 1220px; margin: 0 auto; min-height: 82px; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; }
