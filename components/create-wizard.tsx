@@ -25,6 +25,7 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
   const [error, setError] = useState("");
   const [transaction, setTransaction] = useState<TransactionState>({ phase: "idle", message: "" });
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const wizardRef = useRef<HTMLElement>(null);
   const validation = useMemo(() => validateCard(context, note), [context, note]);
   const addressValid = mode === "open" || (network === "celo" ? isAddress(intendedSigner) : stacksAddress.test(intendedSigner));
   const contextErrorId = "context-error";
@@ -39,6 +40,22 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" && !submitting) onClose();
+      if (event.key !== "Tab") return;
+
+      const focusable = wizardRef.current?.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable?.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
     window.addEventListener("keydown", onKeyDown);
@@ -84,7 +101,7 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
       role="presentation"
       onPointerDown={(event) => event.target === event.currentTarget && !submitting && onClose()}
     >
-      <section className="wizard" role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={descriptionId}>
+      <section ref={wizardRef} className="wizard" role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={descriptionId}>
         <header><div><span className="eyebrow">New CoSign · {step}/{totalSteps}</span><h2 id={titleId}>{step === 1 ? "What happened?" : step === 2 ? "Add the signal." : "Review before publishing."}</h2></div><button ref={closeButtonRef} type="button" className="icon-button" onClick={onClose} aria-label="Close create wizard" disabled={submitting}><X aria-hidden="true" /></button></header>
         <p id={descriptionId} className="sr-only">Create a CoSign in three steps. The final card text and both wallet addresses will be public on the selected network.</p>
         <div className="wizard-progress" role="progressbar" aria-label="Create CoSign progress" aria-valuemin={1} aria-valuemax={totalSteps} aria-valuenow={step} aria-valuetext={`Step ${step} of ${totalSteps}`}><i style={{ width: `${(step / totalSteps) * 100}%` }} /></div>
