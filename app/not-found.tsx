@@ -5,7 +5,7 @@ import { BrandMark } from "@/components/brand-mark";
 
 export const metadata: Metadata = {
   title: "CoSign route not found",
-  description: "Recover from an incomplete or unpublished CoSign invitation or receipt link by choosing a valid network route.",
+  description: "Recover from an incomplete or unpublished CoSign invitation or receipt link by choosing the shared network again.",
   robots: {
     index: false,
     follow: false,
@@ -27,10 +27,10 @@ export default function NotFound() {
       </Link>
       <span className="eyebrow">Signal lost</span>
       <h1>This CoSign route is not available.</h1>
-      <p>The invitation or receipt link may be incomplete, missing characters, or point to a route that was never published on this network. Choose the network again to recover with a valid CoSign route.</p>
+      <p>The invitation or receipt link may be incomplete, missing characters, or point to a route that was never published on this network. Choose the shared network again to recover with a valid CoSign route.</p>
       <div className="not-found-actions">
-        <Link className="button" href="/app" aria-label="Choose a CoSign network to recover from a missing link">
-          Choose network <ArrowRight aria-hidden="true" />
+        <Link className="button" href="/app" aria-label="Choose the shared CoSign network to recover from a missing link">
+          Choose shared network <ArrowRight aria-hidden="true" />
         </Link>
         <Link className="button secondary" href="/app/celo" aria-label="Open the Celo CoSign route to recover from a missing link">
           Open Celo
