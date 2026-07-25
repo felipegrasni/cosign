@@ -21,7 +21,10 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <main id="main-content" className="not-found">
-      <BrandMark />
+      <Link href="/" className="not-found-brand" aria-label="Return to the CoSign home page">
+        <BrandMark />
+        <span className="sr-only">CoSign home</span>
+      </Link>
       <span className="eyebrow">Signal lost</span>
       <h1>This CoSign route is not available.</h1>
       <p>The invitation or receipt link may be incomplete, missing characters, or point to a route that was never published on this network. Choose the network again to recover with a valid CoSign route.</p>
