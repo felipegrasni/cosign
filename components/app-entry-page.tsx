@@ -30,7 +30,7 @@ export function AppEntryPage() {
       <section>
         <span className="eyebrow">Choose a network</span>
         <h1>Which network will both wallets use?</h1>
-        <p>Pick the one network both wallets can actually sign on.</p>
+        <p>Pick the same network both wallets can actually sign on.</p>
         <p>Public cards stay readable without connecting a wallet, but creating or co-signing only works on the network you choose. If the wallets live on different networks, create separate cards because CoSign does not carry the same receipt across networks.</p>
         {redirectingToMiniPay ? (
           <>
