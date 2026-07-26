@@ -11,14 +11,14 @@ export function LandingDemo({ compact = false }: { compact?: boolean }) {
   const statusLabel = !ready
     ? "Interactive preview is preparing controls"
     : complete
-      ? "Preview shows a co-signed receipt shared by two wallets"
-      : "Preview shows an invitation waiting for a second wallet";
+      ? "Preview shows a shared receipt signed by both wallets"
+      : "Preview shows a shared invitation waiting for the second wallet";
   const buttonLabel = !ready
     ? "Preview controls are loading"
     : complete
-      ? "Switch this preview back to the waiting invitation state"
-      : "Switch this preview to the co-signed receipt state";
-  const buttonText = !ready ? "Preparing preview..." : complete ? "Show invitation preview" : "Show co-signed preview";
+      ? "Switch this preview back to the shared invitation state"
+      : "Switch this preview to the shared receipt state";
+  const buttonText = !ready ? "Preparing preview..." : complete ? "Show shared invitation" : "Show shared receipt";
   useEffect(() => { const timer = window.setTimeout(() => setReady(true), 0); return () => window.clearTimeout(timer); }, []);
   return (
     <div className={`landing-demo ${complete ? "is-complete" : ""} ${compact ? "compact" : ""}`}>
