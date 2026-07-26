@@ -26,7 +26,7 @@ export function ShareSheet({
   const canNativeShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
   const copyLabel = variant === "receipt" ? "Copy receipt link" : "Copy invitation link";
   const copyButtonText = copied
-    ? variant === "receipt" ? "Receipt copied" : "Invitation copied"
+    ? variant === "receipt" ? "Receipt link copied" : "Invitation link copied"
     : variant === "receipt" ? "Copy receipt" : "Copy invitation";
   const statusMessage = variant === "receipt" ? "Receipt link copied to clipboard." : "Invitation link copied to clipboard.";
   const title = variant === "receipt" ? "Share the receipt." : "Share the invitation.";
