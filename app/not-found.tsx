@@ -27,7 +27,7 @@ export default function NotFound() {
       </Link>
       <span className="eyebrow">Signal lost</span>
       <h1>This CoSign route is not available.</h1>
-      <p>The invitation or receipt link may be incomplete, missing characters, or point to a route that was never published on this network. Choose the shared network again to recover with a valid CoSign route.</p>
+      <p>The invitation or receipt link may be incomplete, missing characters, or point to a route that was never published on this network. If someone shared it in chat, ask them to resend the full link or let you scan their QR code again. Choose the shared network again to recover with a valid CoSign route.</p>
       <div className="not-found-actions">
         <Link className="button" href="/app" aria-label="Choose the shared CoSign network to recover from a missing link">
           Choose shared network <ArrowRight aria-hidden="true" />
