@@ -32,11 +32,11 @@ export default function NotFound() {
         <Link className="button" href="/app" aria-label="Choose the shared CoSign network to recover from a missing link">
           Choose shared network <ArrowRight aria-hidden="true" />
         </Link>
-        <Link className="button secondary" href="/app/celo" aria-label="Open the Celo CoSign route to recover from a missing link">
-          Open Celo
+        <Link className="button secondary" href="/app/celo" aria-label="Choose the Celo CoSign network to recover from a missing link">
+          Choose Celo
         </Link>
-        <Link className="button secondary" href="/app/stacks" aria-label="Open the Stacks CoSign route to recover from a missing link">
-          Open Stacks
+        <Link className="button secondary" href="/app/stacks" aria-label="Choose the Stacks CoSign network to recover from a missing link">
+          Choose Stacks
         </Link>
         <Link className="button secondary" href="/" aria-label="Return to the CoSign home page">
           Back to home
