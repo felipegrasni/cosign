@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { BrandMark } from "@/components/brand-mark";
 
 export const metadata: Metadata = {
-  title: "CoSign route not found",
+  title: "CoSign link not found",
   description: "Recover from an incomplete or unpublished CoSign invitation or receipt link by choosing the shared network again.",
   robots: {
     index: false,
@@ -26,8 +26,8 @@ export default function NotFound() {
         <span className="sr-only">CoSign home</span>
       </Link>
       <span className="eyebrow">Signal lost</span>
-      <h1>This CoSign route is not available.</h1>
-      <p>The invitation or receipt link may be incomplete, missing characters, or point to a route that was never published on this network. If someone shared it in chat, ask them to resend the full link or let you scan their QR code again. Choose the shared network again to recover with a valid CoSign route.</p>
+      <h1>This CoSign link is not available.</h1>
+      <p>The invitation or receipt link may be incomplete, missing characters, or point to a card that was never published on this network. If someone shared it in chat, ask them to resend the full link or let you scan their QR code again. Choose the shared network again to recover with a valid CoSign link.</p>
       <div className="not-found-actions">
         <Link className="button" href="/app" aria-label="Choose the shared CoSign network to recover from a missing link">
           Choose shared network <ArrowRight aria-hidden="true" />
