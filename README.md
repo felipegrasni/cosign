@@ -1,6 +1,6 @@
 # CoSign
 
-CoSign creates small public collaboration cards that become mutual when a second wallet co-signs them. It offers the same wallet-to-wallet flow on Celo and Stacks with no backend, database, indexer, account system, payments, admin role, or upgradeability.
+CoSign creates small public shared cards that become mutual when a second wallet co-signs them. It offers the same wallet-to-wallet flow on Celo and Stacks with no backend, database, indexer, account system, payments, admin role, or upgradeability.
 
 ## Run locally
 
