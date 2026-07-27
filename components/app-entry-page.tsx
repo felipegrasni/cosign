@@ -30,7 +30,7 @@ export function AppEntryPage() {
       <section>
         <span className="eyebrow">Choose a network</span>
         <h1>Which network will both wallets use?</h1>
-        <p>Pick the same network both wallets can actually sign on.</p>
+        <p>Pick the one network both wallets can sign on.</p>
         <p>Public cards stay readable without connecting a wallet, but creating or co-signing only works on the network you choose. If the wallets live on different networks, create separate cards because CoSign does not carry the same receipt across networks.</p>
         {redirectingToMiniPay ? (
           <>
@@ -53,7 +53,7 @@ export function AppEntryPage() {
                 <WalletCards aria-hidden="true" />
                 <span id={stacksTitleId}>Stacks</span>
                 <strong id={stacksBadgeId}>Bitcoin-secured</strong>
-                <p id={stacksDescriptionId}>Best when both wallets already use a Stacks wallet for this shared receipt.</p>
+                <p id={stacksDescriptionId}>Best when both wallets already use a Stacks wallet on the same network.</p>
                 <ArrowRight aria-hidden="true" />
               </Link>
             </li>
