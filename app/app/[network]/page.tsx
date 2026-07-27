@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: { params: Promise<{ network: 
 
   const networkLabel = network === "celo" ? "Celo" : "Stacks";
   const title = `${networkLabel} dashboard`;
-  const description = `Create and review public CoSign collaboration cards on ${networkLabel}.`;
+  const description = `Create and review public CoSign shared cards on ${networkLabel}.`;
   const url = `/app/${network}`;
 
   return {
