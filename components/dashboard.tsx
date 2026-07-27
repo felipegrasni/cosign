@@ -38,7 +38,7 @@ export function Dashboard({ network }: { network: Network }) {
   return (
     <AppShell network={network} account={client.account} connecting={client.connecting} isMiniPay={client.isMiniPay} onConnect={() => void client.connect()} onDisconnect={() => void client.disconnect()} onCreate={client.connected && client.repository.configured ? () => setWizard(true) : undefined}>
       <section className="dashboard-hero">
-        <div><span className="eyebrow"><Signal size={16} aria-hidden="true" /> {network === "celo" ? "Celo signal room" : "Stacks signal room"}</span><h1>Your mutual moments.</h1><p>Create a public card, pass the link, and let the other wallet make it mutual.</p></div>
+        <div><span className="eyebrow"><Signal size={16} aria-hidden="true" /> {network === "celo" ? "Celo signal room" : "Stacks signal room"}</span><h1>Your mutual moments.</h1><p>Create a public card, share the link, and let the other wallet make it mutual.</p></div>
         {client.connected && client.repository.configured ? <button type="button" className="button hero-create" onClick={() => setWizard(true)}><Plus aria-hidden="true" /> Create a CoSign</button> : null}
       </section>
 
