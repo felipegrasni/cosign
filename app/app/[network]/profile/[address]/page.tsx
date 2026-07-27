@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: { params: Promise<{ network: 
   const decodedAddress = decodeURIComponent(address);
   const compactAddress = decodedAddress.length > 12 ? `${decodedAddress.slice(0, 6)}…${decodedAddress.slice(-4)}` : decodedAddress;
   const title = `${networkLabel} profile ${compactAddress}`;
-  const description = `Review public CoSign collaboration cards for ${compactAddress} on ${networkLabel}.`;
+  const description = `Review public CoSign shared cards for ${compactAddress} on ${networkLabel}.`;
   const url = `/app/${network}/profile/${address}`;
 
   return {
