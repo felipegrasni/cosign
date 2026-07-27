@@ -8,11 +8,11 @@ import { kinds } from "@/lib/cosign";
 
 export const metadata: Metadata = {
   title: "Make the moment mutual",
-  description: "Create a public collaboration card, pass one clean link, and let a second wallet co-sign it on Celo or Stacks.",
+  description: "Create a public collaboration card, share one clean link, and let a second wallet co-sign it on Celo or Stacks.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "CoSign — Make the moment mutual",
-    description: "Create a shared public collaboration card for two wallets on Celo or Stacks.",
+    description: "Create a public shared collaboration card for two wallets on Celo or Stacks.",
     url: "/",
     siteName: "CoSign",
     images: [{ url: "/og.png", width: 1200, height: 630 }]
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "CoSign — Make the moment mutual",
-    description: "Create a shared public collaboration card for two wallets on Celo or Stacks.",
+    description: "Create a public shared collaboration card for two wallets on Celo or Stacks.",
     images: ["/og.png"]
   }
 };
