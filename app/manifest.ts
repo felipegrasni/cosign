@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
-  const description = "Create a public collaboration card and invite another wallet to make it mutual on Celo or Stacks.";
+  const description = "Create a public shared card and invite another wallet to make it mutual on Celo or Stacks.";
 
   return {
     id: "/app",
