@@ -31,7 +31,11 @@ export function AppEntryPage() {
         <span className="eyebrow">Choose a network</span>
         <h1>Which network will both wallets use?</h1>
         <p>Pick the one network both wallets can sign on.</p>
-        <p>Public cards stay readable without connecting a wallet, but creating or co-signing only works on the network you choose. If the wallets live on different networks, create one card on Celo and another on Stacks because CoSign does not carry the same receipt across networks.</p>
+        <ul className="entry-guidance" aria-label="Before you choose a network">
+          <li><strong>Public by link:</strong> anyone can read a shared card without connecting a wallet.</li>
+          <li><strong>Same network required:</strong> creating and co-signing only work when both wallets use the network you choose.</li>
+        </ul>
+        <p>If the wallets live on different networks, create one card on Celo and another on Stacks because CoSign does not carry the same receipt across networks.</p>
         {redirectingToMiniPay ? (
           <>
             <p className="entry-note" role="status" aria-live="polite">MiniPay detected. Opening Celo…</p>
