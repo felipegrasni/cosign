@@ -6,6 +6,6 @@ Set `PRIVATE_KEY` plus the matching RPC URL, then run `npm run deploy:celo:sepol
 
 ## Stacks
 
-Set `STACKS_PRIVATE_KEY`, `STACKS_NETWORK`, and a positive `STACKS_DEPLOY_FEE_MICROSTX`, then run `npm run deploy:stacks:testnet` or `npm run deploy:stacks:mainnet`. Record the printed contract ID, split it into the public address and `cosign-registry` name, and rebuild.
+Set `STACKS_PRIVATE_KEY`, `STACKS_NETWORK`, and a positive `STACKS_DEPLOY_FEE_MICROSTX`, then run `npm run deploy:stacks:testnet` or `npm run deploy:stacks:mainnet`. Record the printed contract ID in the matching `COSIGN_STACKS_CONTRACT_ID_*` value, split it into `NEXT_PUBLIC_COSIGN_STACKS_CONTRACT_ADDRESS` plus `NEXT_PUBLIC_COSIGN_STACKS_CONTRACT_NAME`, set the matching `NEXT_PUBLIC_STACKS_NETWORK`, and rebuild.
 
 Before either production deployment, run `npm run verify`, confirm the deployer is funded, confirm network selectors, and save every receipt. No contract is upgradeable; a changed contract requires a new deployment and app configuration.
