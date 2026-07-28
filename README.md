@@ -7,9 +7,11 @@ CoSign creates small public shared cards that become mutual when a second wallet
 Use Node 22.13.0 or newer.
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
+
+Use `npm install` only when you intentionally need to update `package-lock.json` after changing dependencies.
 
 Install Playwright browsers only when you plan to run `npm run test:e2e` on this machine:
 
