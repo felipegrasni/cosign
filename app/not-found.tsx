@@ -27,7 +27,12 @@ export default function NotFound() {
       </Link>
       <span className="eyebrow">Signal lost</span>
       <h1>This CoSign page is not available on this network.</h1>
-      <p>The invitation or receipt link may have opened on the wrong network, lost characters, been copied incompletely, or point to a card that was never published here. Ask for the full link again or rescan the QR code, then choose Celo or Stacks before retrying.</p>
+      <p>The invitation or receipt link may have opened on the wrong network, lost characters, been copied incompletely, or point to a card that was never published here.</p>
+      <ul className="not-found-guidance" aria-label="How to recover from a missing CoSign page">
+        <li><strong>Try the full link again:</strong> ask for the original message or rescan the QR code instead of retyping the URL.</li>
+        <li><strong>Check the network first:</strong> choose Celo or Stacks before reopening the invitation or receipt.</li>
+        <li><strong>Still missing?</strong> The card may never have been published on this network.</li>
+      </ul>
       <div className="not-found-actions">
         <Link className="button" href="/app" aria-label="Choose Celo or Stacks to recover from a missing link">
           Choose Celo or Stacks <ArrowRight aria-hidden="true" />

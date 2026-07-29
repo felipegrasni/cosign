@@ -297,6 +297,9 @@ summary::-webkit-details-marker { display: none; }
 .not-found-brand svg { width: 80px; color: var(--coral); }
 .not-found h1 { max-width: 770px; }
 .not-found p { max-width: 58ch; color: var(--muted); line-height: 1.7; }
+.not-found-guidance { width: min(100%, 58ch); margin: 0 0 24px; padding: 18px 22px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255, 250, 242, .8); list-style: none; display: grid; gap: 10px; text-align: left; }
+.not-found-guidance li { color: var(--muted); line-height: 1.6; }
+.not-found-guidance strong { color: var(--ink); }
 .not-found-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
