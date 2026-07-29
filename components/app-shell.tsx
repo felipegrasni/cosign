@@ -20,10 +20,10 @@ export function AppShell({ network, account, connecting, isMiniPay, onConnect, o
         <Link href="/" className="app-brand" aria-label="CoSign home"><BrandMark /><strong>CoSign</strong></Link>
         <div className="app-actions">
           <details className="network-menu">
-            <summary aria-label={`Choose shared network. Current network: ${networkLabel}.`}><span className={`network-dot ${network}`} aria-hidden="true" />{networkLabel}<ChevronDown size={15} aria-hidden="true" /></summary>
-            <nav aria-label="Choose shared network">
-              <Link href="/app/celo" aria-current={network === "celo" ? "page" : undefined} aria-label="Switch to the Celo shared network dashboard">Celo</Link>
-              <Link href="/app/stacks" aria-current={network === "stacks" ? "page" : undefined} aria-label="Switch to the Stacks shared network dashboard">Stacks</Link>
+            <summary aria-label={`Choose Celo or Stacks. Current network: ${networkLabel}.`}><span className={`network-dot ${network}`} aria-hidden="true" />{networkLabel}<ChevronDown size={15} aria-hidden="true" /></summary>
+            <nav aria-label="Choose Celo or Stacks">
+              <Link href="/app/celo" aria-current={network === "celo" ? "page" : undefined} aria-label="Switch to the Celo dashboard for both wallets">Celo</Link>
+              <Link href="/app/stacks" aria-current={network === "stacks" ? "page" : undefined} aria-label="Switch to the Stacks dashboard for both wallets">Stacks</Link>
             </nav>
           </details>
           {onCreate ? <button type="button" className="button compact" onClick={onCreate}><Plus size={17} aria-hidden="true" /> Create a CoSign</button> : null}
