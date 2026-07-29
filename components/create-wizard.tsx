@@ -26,6 +26,7 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
   const [transaction, setTransaction] = useState<TransactionState>({ phase: "idle", message: "" });
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const wizardRef = useRef<HTMLElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
   const validation = useMemo(() => validateCard(context, note), [context, note]);
   const addressValid = mode === "open" || (network === "celo" ? isAddress(intendedSigner) : stacksAddress.test(intendedSigner));
   const contextErrorId = "context-error";
@@ -36,6 +37,7 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
   const descriptionId = useId();
 
   useEffect(() => {
+    previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     closeButtonRef.current?.focus();
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -59,7 +61,10 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
     };
 
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      previousFocusRef.current?.focus();
+    };
   }, [onClose, submitting]);
 
   useEffect(() => {
