@@ -17,7 +17,7 @@ export function ShareSheet({
   onClose(): void;
   variant?: ShareSheetVariant;
 }) {
-  const [copied, setCopied] = useState(false);
+  const [copyState, setCopyState] = useState<"idle" | "copied" | "manual">("idle");
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const sheetRef = useRef<HTMLElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -25,18 +25,25 @@ export function ShareSheet({
   const descriptionId = useId();
   const hintId = useId();
   const canNativeShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
+  const canCopyToClipboard = typeof navigator !== "undefined" && typeof navigator.clipboard?.writeText === "function";
   const copyLabel = variant === "receipt" ? "Copy receipt link" : "Copy invitation link";
-  const copyButtonText = copied
+  const copyButtonText = copyState === "copied"
     ? variant === "receipt" ? "Receipt link copied" : "Invitation link copied"
-    : variant === "receipt" ? "Copy receipt link" : "Copy invitation link";
-  const statusMessage = variant === "receipt" ? "Receipt link copied to clipboard." : "Invitation link copied to clipboard.";
+    : copyState === "manual"
+      ? "Select link manually"
+      : variant === "receipt" ? "Copy receipt link" : "Copy invitation link";
+  const statusMessage = copyState === "copied"
+    ? variant === "receipt" ? "Receipt link copied to clipboard." : "Invitation link copied to clipboard."
+    : copyState === "manual"
+      ? "Clipboard copy is unavailable here. Select the link text manually."
+      : "";
   const title = variant === "receipt" ? "Share the receipt." : "Share the invitation.";
   const description = variant === "receipt"
     ? "Let someone scan this code or open the link to view the shared receipt."
     : "Let the other wallet scan this code or open the invitation link.";
   const qrHint = variant === "receipt"
-    ? "Scan with another device or copy the receipt link below."
-    : "Scan with another device or copy the invitation link below.";
+    ? canCopyToClipboard ? "Scan with another device or copy the receipt link below." : "Scan with another device or select the receipt link below."
+    : canCopyToClipboard ? "Scan with another device or copy the invitation link below." : "Scan with another device or select the invitation link below.";
   const shareLabel = variant === "receipt" ? "Share receipt" : "Share invitation";
   const closeLabel = variant === "receipt" ? "Close share receipt dialog" : "Close share invitation dialog";
   const explorerLabel = variant === "receipt" ? "View receipt on explorer" : "View invitation on explorer";
@@ -44,9 +51,14 @@ export function ShareSheet({
     ? "View this receipt on the blockchain explorer (opens in a new tab)"
     : "View this invitation on the blockchain explorer (opens in a new tab)";
   const copy = async () => {
+    if (!canCopyToClipboard) {
+      setCopyState("manual");
+      return;
+    }
+
     await navigator.clipboard.writeText(url);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1600);
+    setCopyState("copied");
+    window.setTimeout(() => setCopyState("idle"), 1600);
   };
   const share = async () => {
     if (!canNativeShare) {
@@ -118,11 +130,11 @@ export function ShareSheet({
         <div className="copy-row">
           <code aria-label={variant === "receipt" ? "Receipt link" : "Invitation link"} title={url}>{url}</code>
           <button type="button" onClick={copy} aria-label={copyLabel}>
-            {copied ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
+            {copyState === "copied" ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
             <span>{copyButtonText}</span>
           </button>
         </div>
-        <p className="sr-only" role="status" aria-live="polite">{copied ? statusMessage : ""}</p>
+        <p className="sr-only" role="status" aria-live="polite">{statusMessage}</p>
         <div className="share-actions">{canNativeShare ? <button type="button" className="button" onClick={share}><Share2 size={18} aria-hidden="true" /> {shareLabel}</button> : null}{explorerUrl ? <a className="button secondary" href={explorerUrl} target="_blank" rel="noreferrer" aria-label={explorerAriaLabel}>{explorerLabel} <ExternalLink size={17} aria-hidden="true" /></a> : null}</div>
       </section>
     </div>
