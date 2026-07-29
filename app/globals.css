@@ -232,6 +232,8 @@ summary::-webkit-details-marker { display: none; }
 .share-hint { margin: -4px 0 18px; color: var(--muted); font-size: .8rem; }
 .copy-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; text-align: left; }
 .copy-row code { padding: 12px; background: var(--paper); border-radius: 10px; overflow-wrap: anywhere; word-break: break-word; white-space: normal; font-size: .71rem; line-height: 1.45; }
+.copy-row .share-link-text { cursor: text; }
+.copy-row .share-link-text:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
 .copy-row button { border: 1px solid var(--line); border-radius: 10px; background: white; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 12px; min-width: 118px; font: inherit; font-weight: 600; white-space: nowrap; }
 .share-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
 

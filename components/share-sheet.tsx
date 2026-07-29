@@ -20,6 +20,7 @@ export function ShareSheet({
   const [copyState, setCopyState] = useState<"idle" | "copied" | "manual">("idle");
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const sheetRef = useRef<HTMLElement>(null);
+  const linkTextRef = useRef<HTMLElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const titleId = useId();
   const descriptionId = useId();
@@ -50,6 +51,15 @@ export function ShareSheet({
   const explorerAriaLabel = variant === "receipt"
     ? "View this receipt on the blockchain explorer (opens in a new tab)"
     : "View this invitation on the blockchain explorer (opens in a new tab)";
+  const selectLinkText = () => {
+    if (!linkTextRef.current) return;
+
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(linkTextRef.current);
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+  };
   const copy = async () => {
     if (!canCopyToClipboard) {
       setCopyState("manual");
@@ -128,7 +138,17 @@ export function ShareSheet({
         <div className="qr-wrap"><QRCodeSVG value={url} size={210} bgColor="#fffaf2" fgColor="#17151f" level="M" aria-hidden="true" focusable="false" /></div>
         <p id={hintId} className="share-hint">{qrHint}</p>
         <div className="copy-row">
-          <code aria-label={variant === "receipt" ? "Receipt link" : "Invitation link"} title={url}>{url}</code>
+          <code
+            ref={linkTextRef}
+            className="share-link-text"
+            tabIndex={0}
+            aria-label={variant === "receipt" ? "Receipt link" : "Invitation link"}
+            title={url}
+            onFocus={selectLinkText}
+            onClick={selectLinkText}
+          >
+            {url}
+          </code>
           <button type="button" onClick={copy} aria-label={copyLabel}>
             {copyState === "copied" ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
             <span>{copyButtonText}</span>
