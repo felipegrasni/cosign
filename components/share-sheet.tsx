@@ -66,9 +66,13 @@ export function ShareSheet({
       return;
     }
 
-    await navigator.clipboard.writeText(url);
-    setCopyState("copied");
-    window.setTimeout(() => setCopyState("idle"), 1600);
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopyState("copied");
+      window.setTimeout(() => setCopyState("idle"), 1600);
+    } catch {
+      setCopyState("manual");
+    }
   };
   const share = async () => {
     if (!canNativeShare) {
