@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <main id="main-content" className="landing-page">
-      <a href="#how" className="skip-link">Skip to main content</a>
+      <a href="#how" className="skip-link">Skip to how it works</a>
       <header className="landing-nav"><Link href="/" className="landing-brand" aria-label="CoSign home"><BrandMark /><strong>CoSign</strong></Link><nav aria-label="Primary"><a href="#how">How it works</a><a href="#public">What is public</a><Link className="button compact" href="/app" aria-label="Choose Celo or Stacks for both wallets">Choose Celo or Stacks <ArrowRight aria-hidden="true" /></Link></nav></header>
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-copy"><span className="eyebrow"><Sparkles aria-hidden="true" /> Two wallets · one shared receipt</span><h1 id="hero-title">Make the moment <em>mutual.</em></h1><p>Write a small card for something you shared. Share the link. When the other wallet co-signs, the memory belongs to both of you.</p><div className="hero-actions"><Link className="button large" href="/app" aria-label="Choose Celo or Stacks to create a shared card">Choose Celo or Stacks <ArrowRight aria-hidden="true" /></Link><a className="text-link" href="#preview-title" aria-label="Jump to the interactive preview">See the preview <span aria-hidden="true">↓</span></a></div><div className="hero-foot"><span><Check aria-hidden="true" /> No account</span><span><Check aria-hidden="true" /> No database</span><span><Check aria-hidden="true" /> Just your wallets</span></div></div>
