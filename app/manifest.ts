@@ -24,16 +24,16 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
     shortcuts: [
       {
-        name: "Open Celo",
+        name: "Create or co-sign on Celo",
         short_name: "Celo",
-        description: "Open CoSign on Celo to create or co-sign a shared card.",
+        description: "Jump straight to the Celo flow to create or co-sign a shared card.",
         url: "/app/celo",
         icons: [{ src: "/icon-192.png", sizes: "192x192", type: "image/png" }]
       },
       {
-        name: "Open Stacks",
+        name: "Create or co-sign on Stacks",
         short_name: "Stacks",
-        description: "Open CoSign on Stacks to create or co-sign a shared card.",
+        description: "Jump straight to the Stacks flow to create or co-sign a shared card.",
         url: "/app/stacks",
         icons: [{ src: "/icon-192.png", sizes: "192x192", type: "image/png" }]
       }
