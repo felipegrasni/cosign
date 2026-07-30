@@ -54,6 +54,7 @@ export function ShareSheet({
   const selectLinkText = () => {
     if (!linkTextRef.current) return;
 
+    linkTextRef.current.focus();
     const selection = window.getSelection();
     const range = document.createRange();
     range.selectNodeContents(linkTextRef.current);
@@ -63,6 +64,7 @@ export function ShareSheet({
   const copy = async () => {
     if (!canCopyToClipboard) {
       setCopyState("manual");
+      selectLinkText();
       return;
     }
 
@@ -72,6 +74,7 @@ export function ShareSheet({
       window.setTimeout(() => setCopyState("idle"), 1600);
     } catch {
       setCopyState("manual");
+      selectLinkText();
     }
   };
   const share = async () => {
@@ -153,7 +156,7 @@ export function ShareSheet({
           >
             {url}
           </code>
-          <button type="button" onClick={copy} aria-label={copyLabel}>
+          <button type="button" onClick={copyState === "manual" ? selectLinkText : copy} aria-label={copyLabel}>
             {copyState === "copied" ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
             <span>{copyButtonText}</span>
           </button>
