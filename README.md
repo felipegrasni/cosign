@@ -48,6 +48,8 @@ npm run test:e2e
 
 If Playwright browsers are not installed on this machine yet, run `npx playwright install` before `npm run test:e2e`.
 
+For landing-page copy, docs, or metadata-only changes, `npm run build` is the lightest useful validation before you decide whether a broader `npm run verify` pass is necessary.
+
 Individual checks are available through `lint`, `typecheck`, `compile:celo`, `test:celo`, `check:stacks`, `check:stacks:clarinet`, `test:stacks`, `test:ui`, and `build` scripts.
 
 ## Architecture
