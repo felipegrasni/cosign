@@ -34,8 +34,8 @@ export default function NotFound() {
         <li><strong>Still missing?</strong> The card may never have been published on this network.</li>
       </ul>
       <div className="not-found-actions">
-        <Link className="button" href="/app" aria-label="Choose Celo or Stacks to recover from a missing link">
-          Choose Celo or Stacks <ArrowRight aria-hidden="true" />
+        <Link className="button" href="/app" aria-label="Choose Celo or Stacks as the shared network to recover from a missing link">
+          Choose a shared network <ArrowRight aria-hidden="true" />
         </Link>
         <Link className="button secondary" href="/app/celo" aria-label="Open the Celo CoSign network to recover from a missing link">
           Open Celo
