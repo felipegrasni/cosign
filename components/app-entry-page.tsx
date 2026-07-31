@@ -36,7 +36,7 @@ export function AppEntryPage() {
           <li><strong>Same network required:</strong> creating and co-signing only work when both wallets use the network you choose.</li>
         </ul>
         <p>You can still open any public invitation or receipt link first, then come back here when both wallets are ready to use the same network.</p>
-        <p>If the wallets live on different networks, create one card on each network because CoSign does not carry the same receipt across networks.</p>
+        <p>Each CoSign card stays on the network where it was created. If the wallets live on different networks, create one card on each network because CoSign does not carry the same receipt across networks.</p>
         {redirectingToMiniPay ? (
           <>
             <p className="entry-note" role="status" aria-live="polite">MiniPay detected. Opening Celo…</p>

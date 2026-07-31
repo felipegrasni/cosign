@@ -33,7 +33,7 @@ For local UI work, fill in only the `NEXT_PUBLIC_*` values you actually need. Le
 
 The landing preview and `/app` network chooser both work without contracts. Live network routes intentionally show an unconfigured state until their public contract values are supplied.
 
-CoSign cards are public and permanent on the selected network. If two wallets do not share the same network, create one card on Celo and another on Stacks because CoSign does not mirror receipts between those networks.
+CoSign cards are public and permanent on the selected network. Each card stays on the network where it was created. If two wallets do not share the same network, create one card on Celo and another on Stacks because CoSign does not mirror receipts between those networks.
 
 Inside MiniPay, opening `/app` automatically redirects to the Celo route so the network chooser does not interrupt the wallet-native flow.
 
