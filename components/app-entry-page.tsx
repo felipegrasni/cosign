@@ -30,7 +30,7 @@ export function AppEntryPage() {
       <section>
         <span className="eyebrow">Choose a shared network</span>
         <h1>Which shared network will both wallets use?</h1>
-        <p>Pick the one network both wallets can use before creating or co-signing this card.</p>
+        <p>Pick the one network both wallets can use before creating a card or co-signing an invitation.</p>
         <ul className="entry-guidance" aria-label="Before you choose a network">
           <li><strong>Public by link:</strong> anyone can read a shared card without connecting a wallet.</li>
           <li><strong>Same network required:</strong> creating and co-signing only work when both wallets use the network you choose.</li>
