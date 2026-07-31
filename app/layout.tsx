@@ -4,8 +4,8 @@ import "@fontsource-variable/manrope";
 import "./globals.css";
 import { publicEnv } from "@/lib/env";
 
-const description = "Create a public shared card, share one clean link, and let a second wallet co-sign it on the same Celo or Stacks network.";
-const socialDescription = "Create a public shared card, share one clean link, and let a second wallet co-sign it on the same Celo or Stacks network.";
+const description = "Create a public shared card, share one clean link, and let a second wallet co-sign it on Celo or Stacks as long as both wallets use the same network.";
+const socialDescription = "Create a public shared card, share one clean link, and let a second wallet co-sign it on Celo or Stacks as long as both wallets use the same network.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(publicEnv.appUrl),

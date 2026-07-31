@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
-  const description = "Create a public shared card, share one clean link, and let a second wallet co-sign it on the same Celo or Stacks network.";
+  const description = "Create a public shared card, share one clean link, and let a second wallet co-sign it on Celo or Stacks as long as both wallets use the same network.";
 
   return {
     id: "/app",
