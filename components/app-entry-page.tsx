@@ -35,7 +35,7 @@ export function AppEntryPage() {
           <li><strong>Public by link:</strong> anyone can read a shared card without connecting a wallet.</li>
           <li><strong>Same network required:</strong> creating and co-signing only work when both wallets use the network you choose.</li>
         </ul>
-        <p>You can still open any public invitation or receipt link first, then come back here when both wallets are ready to use the same network.</p>
+        <p>Public invitation and receipt links still open directly. Come back here when both wallets are ready to create or co-sign on the same network.</p>
         <p>Each CoSign card stays on the network where it was created. If the wallets live on different networks, create one card on each network because CoSign does not carry the same receipt across networks.</p>
         {redirectingToMiniPay ? (
           <>
