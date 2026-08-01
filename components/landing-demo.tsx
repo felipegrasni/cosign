@@ -9,10 +9,10 @@ export function LandingDemo({ compact = false }: { compact?: boolean }) {
   const [ready, setReady] = useState(false);
   const statusId = useId();
   const statusLabel = !ready
-    ? "Interactive preview is preparing controls"
+    ? "Simulated preview is preparing controls"
     : complete
-      ? "Preview shows a shared receipt signed by both wallets"
-      : "Preview shows a shared invitation waiting for the second wallet";
+      ? "Simulated preview shows a shared receipt signed by both wallets"
+      : "Simulated preview shows a shared invitation waiting for the second wallet";
   const buttonLabel = !ready
     ? "Preview controls are loading"
     : complete
@@ -22,7 +22,7 @@ export function LandingDemo({ compact = false }: { compact?: boolean }) {
   useEffect(() => { const timer = window.setTimeout(() => setReady(true), 0); return () => window.clearTimeout(timer); }, []);
   return (
     <div className={`landing-demo ${complete ? "is-complete" : ""} ${compact ? "compact" : ""}`}>
-      <div className="demo-label"><span>Interactive preview</span><strong id={statusId} role="status" aria-live="polite" aria-atomic="true">{statusLabel}</strong></div>
+      <div className="demo-label"><span>Simulated preview</span><strong id={statusId} role="status" aria-live="polite" aria-atomic="true">{statusLabel}</strong></div>
       <div className="demo-people"><div><AddressGlyph address="0xcosigncreator" size={compact ? 42 : 56} /><span>Alex</span></div><span className="demo-signal"><i aria-hidden="true" /><b><Check aria-hidden="true" /></b></span><div><AddressGlyph address="SPcosignfriend" size={compact ? 42 : 56} /><span>Sam</span></div></div>
       <div className="demo-copy"><span>BUILT</span><h3>Open source lounge</h3><p>We paired on the release flow and got it over the line.</p></div>
       <button type="button" disabled={!ready} aria-label={buttonLabel} aria-pressed={complete} aria-describedby={statusId} aria-busy={!ready} onClick={() => setComplete((value) => !value)}>{complete ? <><RotateCcw size={16} aria-hidden="true" /> {buttonText}</> : <>{buttonText} <Check size={16} aria-hidden="true" /></>}</button>
