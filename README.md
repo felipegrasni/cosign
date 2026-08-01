@@ -35,6 +35,8 @@ The landing preview and `/app` network chooser both work without contracts. Live
 
 CoSign cards are public and permanent on the selected network. Each card stays on the network where it was created. If two wallets do not share the same network, create one card on Celo and another on Stacks because CoSign does not mirror receipts between those networks.
 
+Public invitation and receipt links still open directly. Use `/app` only when both wallets are ready to create or co-sign on the same network.
+
 Inside MiniPay, opening `/app` automatically redirects to the Celo route so the network chooser does not interrupt the wallet-native flow.
 
 ## Verify
