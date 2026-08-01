@@ -5,7 +5,7 @@ import { BrandMark } from "@/components/brand-mark";
 
 export const metadata: Metadata = {
   title: "CoSign link not found on this network",
-  description: "Recover from a CoSign invitation or receipt link that opened on the wrong network, or from an incomplete, broken, or unpublished link.",
+  description: "Recover from a CoSign invitation or receipt link that opened on the wrong network, then reopen the public link directly once Celo or Stacks is correct.",
   robots: {
     index: false,
     follow: false,
@@ -28,6 +28,7 @@ export default function NotFound() {
       <span className="eyebrow">Signal lost</span>
       <h1>This CoSign link is not available on this network.</h1>
       <p>The invitation or receipt link may have opened on the wrong network, lost characters, been copied incompletely, or point to a card that was never published here.</p>
+      <p>After you switch to the correct network, reopen the public invitation or receipt link directly. Use `/app` only when both wallets still need to choose the same network before creating or co-signing.</p>
       <ul className="not-found-guidance" aria-label="How to recover from a missing CoSign page">
         <li><strong>Try the full link again:</strong> ask for the original message or rescan the QR code instead of retyping the URL.</li>
         <li><strong>Check the network first:</strong> choose Celo or Stacks before reopening the invitation or receipt.</li>
