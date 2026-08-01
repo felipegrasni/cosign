@@ -8,4 +8,6 @@ Set `PRIVATE_KEY` plus the matching RPC URL, then run `npm run deploy:celo:sepol
 
 Set `STACKS_PRIVATE_KEY`, `STACKS_NETWORK`, and a positive `STACKS_DEPLOY_FEE_MICROSTX`, then run `npm run deploy:stacks:testnet` or `npm run deploy:stacks:mainnet`. Record the printed contract ID in the matching `COSIGN_STACKS_CONTRACT_ID_*` value, split it into `NEXT_PUBLIC_COSIGN_STACKS_CONTRACT_ADDRESS` plus `NEXT_PUBLIC_COSIGN_STACKS_CONTRACT_NAME`, set the matching `NEXT_PUBLIC_STACKS_NETWORK`, and rebuild.
 
+Only values that already start with `NEXT_PUBLIC_` should flow into the client bundle. Keep deployer secrets such as `PRIVATE_KEY`, `STACKS_PRIVATE_KEY`, RPC credentials, and explorer API keys local to the machine or CI environment that performs the deployment.
+
 Before either production deployment, set `NEXT_PUBLIC_APP_URL` to the final HTTPS origin so canonical metadata, OG links, and the manifest all point at the right host. Then run `npm run verify`, confirm the deployer is funded, confirm network selectors, and save every receipt. No contract is upgradeable; a changed contract requires a new deployment and app configuration.
