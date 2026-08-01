@@ -26,14 +26,14 @@ export default function manifest(): MetadataRoute.Manifest {
       {
         name: "Create or co-sign on Celo",
         short_name: "Celo",
-        description: "Jump straight to the Celo flow to create or co-sign a shared card.",
+        description: "Jump straight to the Celo flow when both wallets will create or co-sign on Celo.",
         url: "/app/celo",
         icons: [{ src: "/icon-192.png", sizes: "192x192", type: "image/png" }]
       },
       {
         name: "Create or co-sign on Stacks",
         short_name: "Stacks",
-        description: "Jump straight to the Stacks flow to create or co-sign a shared card.",
+        description: "Jump straight to the Stacks flow when both wallets will create or co-sign on Stacks.",
         url: "/app/stacks",
         icons: [{ src: "/icon-192.png", sizes: "192x192", type: "image/png" }]
       }
