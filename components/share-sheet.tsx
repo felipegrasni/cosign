@@ -41,7 +41,7 @@ export function ShareSheet({
   const title = variant === "receipt" ? "Share the receipt." : "Share the invitation.";
   const description = variant === "receipt"
     ? "Let someone scan this code or open the link to view the shared receipt."
-    : "Let the other wallet scan this code or open the invitation link.";
+    : "Let the other wallet scan this code or open the invitation link on the same network.";
   const qrHint = variant === "receipt"
     ? canCopyToClipboard ? "Scan with another device or copy the receipt link below." : "Scan with another device or select the receipt link below."
     : canCopyToClipboard ? "Scan with another device or copy the invitation link below." : "Scan with another device or select the invitation link below.";
@@ -86,7 +86,7 @@ export function ShareSheet({
     try {
       await navigator.share({
         title: variant === "receipt" ? "CoSign receipt" : "CoSign invitation",
-        text: variant === "receipt" ? "View this shared CoSign receipt." : "Open this CoSign invitation and add the second wallet signature.",
+        text: variant === "receipt" ? "View this shared CoSign receipt." : "Open this CoSign invitation on the same network and add the second wallet signature.",
         url
       });
     } catch (error) {
