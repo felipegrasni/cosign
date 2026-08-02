@@ -15,13 +15,13 @@ export const metadata: Metadata = {
     description: "Create a public shared card, share one clean link, and let a second wallet co-sign it on Celo or Stacks as long as both wallets use the same network.",
     url: "/",
     siteName: "CoSign",
-    images: [{ url: "/og.png", width: 1200, height: 630 }]
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "CoSign preview showing a shared card co-signed by two wallets" }]
   },
   twitter: {
     card: "summary_large_image",
     title: "CoSign — Make the moment mutual",
     description: "Create a public shared card, share one clean link, and let a second wallet co-sign it on Celo or Stacks as long as both wallets use the same network.",
-    images: ["/og.png"]
+    images: [{ url: "/og.png", alt: "CoSign preview showing a shared card co-signed by two wallets" }]
   }
 };
 
