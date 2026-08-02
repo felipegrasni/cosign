@@ -26,7 +26,7 @@ export function AppShell({ network, account, connecting, isMiniPay, onConnect, o
               <Link href="/app/stacks" aria-current={network === "stacks" ? "page" : undefined} aria-label="Switch to the Stacks dashboard for both wallets">Stacks</Link>
             </nav>
           </details>
-          {onCreate ? <button type="button" className="button compact" onClick={onCreate}><Plus size={17} aria-hidden="true" /> Create a CoSign</button> : null}
+          {onCreate ? <button type="button" className="button compact" onClick={onCreate} aria-haspopup="dialog"><Plus size={17} aria-hidden="true" /> Create a CoSign</button> : null}
           {account ? (
             <details className="wallet-menu">
               <summary aria-label={`Open wallet menu for ${account}`} title={account}><AddressGlyph address={account} size={34} /><span>{shortAddress(account, 4)}</span></summary>
