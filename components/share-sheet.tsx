@@ -27,11 +27,15 @@ export function ShareSheet({
   const hintId = useId();
   const canNativeShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
   const canCopyToClipboard = typeof navigator !== "undefined" && typeof navigator.clipboard?.writeText === "function";
-  const copyLabel = variant === "receipt" ? "Copy receipt link" : "Copy invitation link";
   const copyButtonText = copyState === "copied"
     ? variant === "receipt" ? "Receipt link copied" : "Invitation link copied"
     : copyState === "manual"
       ? "Select link manually"
+      : variant === "receipt" ? "Copy receipt link" : "Copy invitation link";
+  const copyButtonLabel = copyState === "copied"
+    ? variant === "receipt" ? "Receipt link copied" : "Invitation link copied"
+    : copyState === "manual"
+      ? variant === "receipt" ? "Select the receipt link text manually" : "Select the invitation link text manually"
       : variant === "receipt" ? "Copy receipt link" : "Copy invitation link";
   const statusMessage = copyState === "copied"
     ? variant === "receipt" ? "Receipt link copied to clipboard." : "Invitation link copied to clipboard."
@@ -156,7 +160,7 @@ export function ShareSheet({
           >
             {url}
           </code>
-          <button type="button" onClick={copyState === "manual" ? selectLinkText : copy} aria-label={copyLabel}>
+          <button type="button" onClick={copyState === "manual" ? selectLinkText : copy} aria-label={copyButtonLabel}>
             {copyState === "copied" ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
             <span>{copyButtonText}</span>
           </button>
