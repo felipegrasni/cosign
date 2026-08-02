@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main id="main-content" className="not-found">
+    <main id="main-content" className="not-found" tabIndex={-1}>
       <Link href="/" className="not-found-brand" aria-label="Return to the CoSign home page">
         <BrandMark />
         <span className="sr-only">CoSign home</span>

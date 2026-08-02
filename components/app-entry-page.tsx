@@ -22,7 +22,7 @@ export function AppEntryPage() {
   }, [redirectingToMiniPay, router]);
 
   return (
-    <main id="main-content" className="network-entry">
+    <main id="main-content" className="network-entry" tabIndex={-1}>
       <Link href="/" className="landing-brand" aria-label="CoSign home">
         <BrandMark />
         <strong>CoSign</strong>
