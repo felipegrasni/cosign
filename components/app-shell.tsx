@@ -8,9 +8,20 @@ import { shortAddress } from "@/lib/cosign";
 import type { Network } from "@/lib/types";
 import type { ReactNode } from "react";
 
-export function AppShell({ network, account, connecting, isMiniPay, onConnect, onDisconnect, onCreate, children }: {
+export function AppShell({
+  network,
+  account,
+  connecting,
+  isMiniPay,
+  onConnect,
+  onDisconnect,
+  onCreate,
+  createDialogId,
+  createDialogOpen = false,
+  children
+}: {
   network: Network; account: string; connecting: boolean; isMiniPay: boolean;
-  onConnect(): void; onDisconnect(): void; onCreate?(): void; children: ReactNode;
+  onConnect(): void; onDisconnect(): void; onCreate?(): void; createDialogId?: string; createDialogOpen?: boolean; children: ReactNode;
 }) {
   const networkLabel = network === "celo" ? "Celo" : "Stacks";
 
@@ -26,7 +37,7 @@ export function AppShell({ network, account, connecting, isMiniPay, onConnect, o
               <Link href="/app/stacks" aria-current={network === "stacks" ? "page" : undefined} aria-label="Switch to the Stacks dashboard for both wallets">Stacks</Link>
             </nav>
           </details>
-          {onCreate ? <button type="button" className="button compact" onClick={onCreate} aria-haspopup="dialog"><Plus size={17} aria-hidden="true" /> Create a CoSign</button> : null}
+          {onCreate ? <button type="button" className="button compact" onClick={onCreate} aria-haspopup="dialog" aria-controls={createDialogId} aria-expanded={createDialogOpen}><Plus size={17} aria-hidden="true" /> Create a CoSign</button> : null}
           {account ? (
             <details className="wallet-menu">
               <summary aria-label={`Open wallet menu for ${account}`} title={account}><AddressGlyph address={account} size={34} /><span>{shortAddress(account, 4)}</span></summary>

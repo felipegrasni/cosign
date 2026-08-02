@@ -70,6 +70,7 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
   const createdDateTime = card ? formatMomentDateTime(card.createdAt) : undefined;
   const expiresDateTime = card ? formatMomentDateTime(card.expiresAt) : undefined;
   const completedDateTime = card?.completedAt ? formatMomentDateTime(card.completedAt) : undefined;
+  const shareDialogId = `handshake-share-${network}-${id.toString()}`;
 
   const stateCopy = useMemo(() => {
     if (!card || !status) return null;
@@ -100,11 +101,11 @@ export function HandshakeDetail({ network, id }: { network: Network; id: bigint 
         <div className="receipt-actions">
           {status === "pending" && !client.connected && !client.isMiniPay ? <button type="button" className="button" onClick={() => void client.connect()} disabled={client.connecting} aria-busy={client.connecting} aria-label={client.connecting ? `Connecting ${networkLabel} wallet to continue with this invitation` : `Connect ${networkLabel} wallet to continue with this invitation`}>{client.connecting ? `Connecting ${networkLabel}…` : `Connect ${networkLabel} to continue`}</button> : null}
           {eligible ? <button type="button" className="button" onClick={() => void act("cosign")} disabled={Boolean(action)} aria-busy={cosignBusy} aria-label={cosignBusy ? "Co-signing this moment through your wallet" : "Co-sign this moment through your wallet"}>{cosignBusy ? actionLabel : "Co-sign this moment"}</button> : null}
-          {isCreator && status === "pending" ? <><button type="button" className="button" onClick={() => setShare(true)} aria-label="Share this invitation link" aria-haspopup="dialog"><Share2 aria-hidden="true" /> Share invitation</button><button type="button" className="button danger" onClick={() => void act("cancel")} disabled={Boolean(action)} aria-busy={cancelBusy} aria-label={cancelBusy ? "Cancelling this invitation through your wallet" : "Cancel this invitation through your wallet"}>{cancelBusy ? actionLabel : "Cancel invitation"}</button></> : null}
-          {status === "completed" ? <button type="button" className="button" onClick={() => setShare(true)} aria-label="Share this mutual receipt" aria-haspopup="dialog"><Share2 aria-hidden="true" /> Share receipt</button> : null}
+          {isCreator && status === "pending" ? <><button type="button" className="button" onClick={() => setShare(true)} aria-label="Share this invitation link" aria-haspopup="dialog" aria-controls={shareDialogId} aria-expanded={share}><Share2 aria-hidden="true" /> Share invitation</button><button type="button" className="button danger" onClick={() => void act("cancel")} disabled={Boolean(action)} aria-busy={cancelBusy} aria-label={cancelBusy ? "Cancelling this invitation through your wallet" : "Cancel this invitation through your wallet"}>{cancelBusy ? actionLabel : "Cancel invitation"}</button></> : null}
+          {status === "completed" ? <button type="button" className="button" onClick={() => setShare(true)} aria-label="Share this mutual receipt" aria-haspopup="dialog" aria-controls={shareDialogId} aria-expanded={share}><Share2 aria-hidden="true" /> Share receipt</button> : null}
         </div>
       </section>}
-      {share ? <ShareSheet url={canonicalHandshakeUrl(publicEnv.appUrl, network, id)} explorerUrl={lastTx ? txExplorerUrl(network, lastTx) : contractExplorerUrl(network)} variant={status === "completed" ? "receipt" : "invitation"} onClose={() => setShare(false)} /> : null}
+      {share ? <ShareSheet url={canonicalHandshakeUrl(publicEnv.appUrl, network, id)} explorerUrl={lastTx ? txExplorerUrl(network, lastTx) : contractExplorerUrl(network)} variant={status === "completed" ? "receipt" : "invitation"} onClose={() => setShare(false)} dialogId={shareDialogId} /> : null}
     </AppShell>
   );
 }

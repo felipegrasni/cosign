@@ -10,12 +10,14 @@ export function ShareSheet({
   url,
   explorerUrl,
   onClose,
-  variant = "invitation"
+  variant = "invitation",
+  dialogId
 }: {
   url: string;
   explorerUrl?: string;
   onClose(): void;
   variant?: ShareSheetVariant;
+  dialogId?: string;
 }) {
   const [copyState, setCopyState] = useState<"idle" | "copied" | "manual">("idle");
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -141,7 +143,7 @@ export function ShareSheet({
 
   return (
     <div className="modal-backdrop" role="presentation" onPointerDown={(event) => event.target === event.currentTarget && onClose()}>
-      <section ref={sheetRef} className="share-sheet" role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={`${descriptionId} ${hintId}`}>
+      <section id={dialogId} ref={sheetRef} className="share-sheet" role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={`${descriptionId} ${hintId}`}>
         <button ref={closeButtonRef} type="button" className="icon-button close" onClick={onClose} aria-label={closeLabel}><X aria-hidden="true" /></button>
         <span className="eyebrow">{variant === "receipt" ? "Receipt ready" : "Invitation ready"}</span>
         <h2 id={titleId}>{title}</h2>

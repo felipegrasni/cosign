@@ -9,9 +9,9 @@ import type { HandshakeKind, HandshakeRepository, Network, TransactionResult, Tr
 
 const stacksAddress = /^S[PTMN][0-9A-Z]{20,50}$/;
 
-export function CreateWizard({ network, account, repository, onClose, onCreated }: {
+export function CreateWizard({ network, account, repository, onClose, onCreated, dialogId }: {
   network: Network; account: string; repository: HandshakeRepository; onClose(): void;
-  onCreated(id: bigint, result: TransactionResult): void;
+  onCreated(id: bigint, result: TransactionResult): void; dialogId?: string;
 }) {
   const totalSteps = 3;
   const [step, setStep] = useState(1);
@@ -106,7 +106,7 @@ export function CreateWizard({ network, account, repository, onClose, onCreated 
       role="presentation"
       onPointerDown={(event) => event.target === event.currentTarget && !submitting && onClose()}
     >
-      <section ref={wizardRef} className="wizard" role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={descriptionId}>
+      <section id={dialogId} ref={wizardRef} className="wizard" role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={descriptionId}>
         <header><div><span className="eyebrow">New CoSign · {step}/{totalSteps}</span><h2 id={titleId}>{step === 1 ? "What happened?" : step === 2 ? "Add the signal." : "Review before publishing."}</h2></div><button ref={closeButtonRef} type="button" className="icon-button" onClick={onClose} aria-label="Close create wizard" disabled={submitting}><X aria-hidden="true" /></button></header>
         <p id={descriptionId} className="sr-only">Create a CoSign in three steps. The final card text and both wallet addresses will be public on the selected network.</p>
         <div className="wizard-progress" role="progressbar" aria-label="Create CoSign progress" aria-valuemin={1} aria-valuemax={totalSteps} aria-valuenow={step} aria-valuetext={`Step ${step} of ${totalSteps}`}><i style={{ width: `${(step / totalSteps) * 100}%` }} /></div>
