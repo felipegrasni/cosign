@@ -33,6 +33,8 @@ For local UI work, fill in only the `NEXT_PUBLIC_*` values you actually need. Le
 
 The landing preview and `/app` network chooser both work without contracts. Live network routes intentionally show an unconfigured state until their public contract values are supplied.
 
+If only one local network route is configured, open `/app/celo` or `/app/stacks` directly instead of relying on `/app`, so the chooser does not imply that the other network is ready too.
+
 CoSign cards are public and permanent on the selected network. Each card stays on the network where it was created. If two wallets do not share the same network, create one card on Celo and another on Stacks because CoSign does not mirror receipts between those networks.
 
 Public invitation and receipt links still open directly. Use `/app` only when both wallets are ready to create or co-sign on the same network.
