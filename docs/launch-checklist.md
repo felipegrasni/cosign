@@ -8,6 +8,7 @@
 - Deploy the Stacks contract; save contract ID, transaction, and explorer links.
 - Rebuild once with the Celo public contract variables configured, then rebuild again with the Stacks public contract variables configured.
 - Test public invitation and receipt links opening without a wallet connection before signature flows.
+- Test wrong-network or incomplete public links and confirm the recovery page points both wallets back to the same network before reopening the full invitation or receipt.
 - Test open-link, one-wallet invitation, co-signed, cancelled, expired, wrong-wallet, creator-self-sign, and direct-link flows.
 - Test MiniPay automatic connection on a physical mobile device, including `/app` redirecting straight to the Celo route.
 - Test a current Stacks wallet and confirm addresses refresh after reconnect.
