@@ -23,7 +23,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 h1, h2, h3, p { margin-top: 0; }
 h1, h2 { font-family: "Fraunces Variable", serif; letter-spacing: -.045em; }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: .65rem; min-height: 48px; padding: .72rem 1.15rem; border: 2px solid var(--ink); border-radius: 14px; background: var(--ink); color: white; font-weight: 750; cursor: pointer; box-shadow: 4px 4px 0 var(--coral); transition: transform .18s ease, box-shadow .18s ease; }
-.button:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--coral); }
+.button:hover, .button:focus-visible { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--coral); }
 .button:disabled { opacity: .55; cursor: not-allowed; transform: none; }
 .button.secondary { color: var(--ink); background: var(--paper-soft); box-shadow: none; }
 .button.danger { color: var(--coral-dark); background: transparent; border-color: #e29a90; box-shadow: none; }
@@ -56,6 +56,7 @@ h1, h2 { font-family: "Fraunces Variable", serif; letter-spacing: -.045em; }
 .hero-copy > p { max-width: 590px; color: var(--muted); font-size: 1.12rem; line-height: 1.75; }
 .hero-actions { margin-top: 34px; display: flex; align-items: center; gap: 28px; }
 .text-link { font-weight: 750; border-bottom: 1px solid var(--ink); padding: 7px 0; }
+.text-link:hover, .text-link:focus-visible { color: var(--coral-dark); border-bottom-color: currentColor; }
 .hero-foot { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 42px; color: var(--muted); font-size: .78rem; font-weight: 750; }
 .hero-foot span { display: flex; align-items: center; gap: 5px; }
 .hero-foot svg { width: 14px; color: var(--aqua); }
