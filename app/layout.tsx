@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   category: "social networking",
   keywords: ["CoSign", "MiniPay", "Celo", "Stacks", "shared cards", "co-signing", "wallet-to-wallet", "public receipt"],
+  formatDetection: { telephone: false, email: false, address: false },
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "CoSign", statusBarStyle: "default" },
   icons: { icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/icon-192.png", sizes: "192x192" }], apple: "/apple-touch-icon.png" },
