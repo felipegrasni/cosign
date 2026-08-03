@@ -39,6 +39,8 @@ CoSign cards are public and permanent on the selected network. Each card stays o
 
 Public invitation and receipt links still open directly. Use `/app` only when both wallets are ready to create or co-sign on the same network.
 
+If a public link opens on the wrong network, loses characters, or was copied incompletely, CoSign shows a recovery page that tells both wallets to switch to the same network first and then reopen the full invitation or receipt link directly.
+
 Inside MiniPay, opening `/app` automatically redirects to the Celo route so the network chooser does not interrupt the wallet-native flow.
 
 ## Verify
