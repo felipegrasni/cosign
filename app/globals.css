@@ -81,7 +81,35 @@ h1, h2 { font-family: "Fraunces Variable", serif; letter-spacing: -.045em; }
 .demo-copy span { color: var(--coral-dark); font-size: .68rem; font-weight: 900; letter-spacing: .13em; }
 .demo-copy h3 { margin: 7px 0; font-family: "Fraunces Variable"; font-size: 1.75rem; }
 .demo-copy p { color: var(--muted); margin: 0; line-height: 1.55; }
-.landing-demo > button { margin-top: 23px; width: 100%; border: 0; background: transparent; font-weight: 800; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 7px; }
+.landing-demo > button {
+  margin-top: 23px;
+  width: 100%;
+  min-height: 48px;
+  padding: .85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: white;
+  color: var(--ink);
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.landing-demo > button:hover,
+.landing-demo > button:focus-visible {
+  transform: translateY(-1px);
+  border-color: var(--ink);
+  box-shadow: 0 10px 22px rgba(23, 21, 31, .08);
+}
+.landing-demo > button:disabled {
+  opacity: .7;
+  cursor: wait;
+  transform: none;
+  box-shadow: none;
+}
 .trust-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 94px; display: grid; grid-template-columns: repeat(4, 1fr); }
 .trust-strip span { display: flex; justify-content: center; align-items: center; gap: 10px; border-right: 1px solid var(--line); font-weight: 800; font-size: .88rem; }
 .trust-strip svg { color: var(--coral); }
