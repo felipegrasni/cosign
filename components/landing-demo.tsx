@@ -28,6 +28,7 @@ export function LandingDemo({ compact = false }: { compact?: boolean }) {
       <div className="demo-copy"><span>BUILT</span><h3>Open source lounge</h3><p>We paired on the release flow and got it over the line.</p></div>
       <p id={helperId} className="sr-only">This preview is simulated and never connects a wallet.</p>
       <button type="button" disabled={!ready} aria-label={buttonLabel} aria-pressed={complete} aria-describedby={`${statusId} ${helperId}`} aria-busy={!ready} onClick={() => setComplete((value) => !value)}>{complete ? <><RotateCcw size={16} aria-hidden="true" /> {buttonText}</> : <>{buttonText} <Check size={16} aria-hidden="true" /></>}</button>
+      <p className="demo-helper" aria-hidden="true">Preview only. No wallet connection.</p>
     </div>
   );
 }

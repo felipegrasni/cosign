@@ -110,6 +110,13 @@ h1, h2 { font-family: "Fraunces Variable", serif; letter-spacing: -.045em; }
   transform: none;
   box-shadow: none;
 }
+.demo-helper {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.45;
+  text-align: center;
+}
 .trust-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 94px; display: grid; grid-template-columns: repeat(4, 1fr); }
 .trust-strip span { display: flex; justify-content: center; align-items: center; gap: 10px; border-right: 1px solid var(--line); font-weight: 800; font-size: .88rem; }
 .trust-strip svg { color: var(--coral); }
